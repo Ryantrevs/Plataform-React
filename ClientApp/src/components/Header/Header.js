@@ -1,7 +1,6 @@
 ﻿import React from 'react'
-import { BrowserRouter, Link, Route,Switch } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import Logo from '../../Assets/logo.png'
-import { Home } from '../Home';
 import {
     Nav,
     Img,
@@ -21,7 +20,10 @@ export function Header() {
                 <DivUl>
                     <NavUl>
                         <Li>
-                             <Link to="/Home">casa</Link>   
+                            <Link to="/div">lista</Link>
+                        </Li>
+                        <Li>
+                             <Link to="/">casa</Link>   
                         </Li>
                         <Li>
                              <Link to="/Counter">counter</Link>   

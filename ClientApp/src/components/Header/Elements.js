@@ -1,6 +1,4 @@
-﻿import styled, { css } from 'styled-components'
-
-
+﻿import styled from 'styled-components'
 export const Nav = styled.nav`
     display:block;
     background:#f6f6f6;

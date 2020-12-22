@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
-import { BrowserRouter, Route,Switch } from 'react-router-dom';
+import { Route,Switch } from 'react-router-dom';
 import Header from './components/Header/Index'
+import Task from './components/Task/Index';
 
 import './custom.css'
 
@@ -15,9 +16,10 @@ export default class App extends Component {
       <main>
         <Header/>
         <Switch>
-          <Route path="/" component={Home}/>
-          <Route path="/Counter" component={Counter}/>
-          <Route path="/FetchData" component={FetchData}/>
+          <Route path="/" exact component={Home}/>
+          <Route path="/Counter" exact component={Counter}/>
+          <Route path="/FetchData" exact component={FetchData}/>
+          <Route path="/div" exact component={Task}/>
         </Switch>
       </main>
     );
