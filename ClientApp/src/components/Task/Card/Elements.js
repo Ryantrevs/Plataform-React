@@ -2,11 +2,17 @@ import styled from "styled-components";
 
 export const Menu = styled.div`
     display:flex;
+    rigth:-200em;
+    heigth:100%;
+    width:100%;
+    postion:fixed;
+    top:0;
+    z-index:1;
 `
 export const CardBackground = styled.div`
     margin: 0 0 0 0;
     background: #fe4a55;
-    width: 50%;
+    width: 70%;
     height: 100vh;
 `
 export const CloseDiv = styled.div`
@@ -14,6 +20,7 @@ export const CloseDiv = styled.div`
     padding-left: 10px;
     color: #fff;
     font-weight: 600;
+    margin:0.5em 0 0 0;
 `
 export const Background = styled.div`
     width: 30%;

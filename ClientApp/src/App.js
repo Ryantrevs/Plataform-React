@@ -4,7 +4,7 @@ import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { Route,Switch } from 'react-router-dom';
 import Header from './components/Header/Index'
-import Task from './components/Task/Index';
+import Task from './components/Task/Index'
 
 import './custom.css'
 
@@ -25,3 +25,4 @@ export default class App extends Component {
     );
   }
 }
+
