@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const PrincipalSection = styled.main`
     width: 100%;
+    heigth: 100%;
     display: flex;
     margin-top: 5vh;
     margin-bottom: 10vh;

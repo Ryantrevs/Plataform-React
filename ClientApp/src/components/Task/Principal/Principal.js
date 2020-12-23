@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import {  
     PrincipalSection,
     Section,
@@ -11,7 +11,14 @@ import {
     ButtonTools
 } from './Elements'
 import { TiThMenuOutline } from "react-icons/ti";
-export function Principal() {
+
+export function Principal({Request}) {
+    const [TaskList, setTaskList] = useState([]);
+
+    useEffect(()=>{
+        Request("get",{},"/Task/Organization")
+    })
+
     return (
         <PrincipalSection>
             <Section>
@@ -19,7 +26,12 @@ export function Principal() {
                     <TiThMenuOutline size={28} color="#fff"/><br/>
                     <ButtonTools>+Lista</ButtonTools>
                     <ButtonTools>+Escopo</ButtonTools>
-                    <ButtonTools>+Tarefa</ButtonTools>
+                    <ButtonTools 
+                    onClick={(event)=>{
+                        event.preventDefault();
+                        Request("teste",{Nome:"Patrick"},"abc")
+                    }}>
+                        +Tarefa</ButtonTools>
                     <NavMenu>
 
                     </NavMenu>
