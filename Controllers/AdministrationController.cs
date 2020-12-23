@@ -19,8 +19,8 @@ namespace PlataformaTccSuporte.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
-        private readonly IDadosBancariosRepository dadosBancariosRepository;
-        public AdministrationController(RoleManager<IdentityRole> roleManager,UserManager<User> userManager, IDadosBancariosRepository dadosBancariosRepository)
+        private readonly IBankDataRepository dadosBancariosRepository;
+        public AdministrationController(RoleManager<IdentityRole> roleManager,UserManager<User> userManager, IBankDataRepository dadosBancariosRepository)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
@@ -137,7 +137,7 @@ namespace PlataformaTccSuporte.Controllers
 
         [HttpGet]
         [ActionName("EditUsersInRole")]
-        public async Task<IActionResult> EditUsersInRole(string roleId)
+        public async Task<List<UserRoleViewModel>> EditUsersInRole(string roleId)
         {
             ViewBag.roleId = roleId;
             var role = await roleManager.FindByIdAsync(roleId);
@@ -145,7 +145,7 @@ namespace PlataformaTccSuporte.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Nivel de acesso nao pode ser encontrado";
-                return View("NotFound");
+                //return View("NotFound");
             }
             var model = new List<UserRoleViewModel>();
             var userList = userManager.Users.ToList<User>();
@@ -167,17 +167,18 @@ namespace PlataformaTccSuporte.Controllers
                 }
                 model.Add(userRoleViewModel);
             }
-            return View(model);
+            return model;
 
         }
         [HttpPost]
-        public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model,string roleId)
+        [ActionName("EditUsersInRole")]
+        public async Task EditUsersInRole(List<UserRoleViewModel> model,string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
             if (role==null)
             {
                 ViewBag.ErrorMessage = $"Impossivel alterar usuarios em nivel, Nivel de acesso não encontrado";
-                return View("NotFound");
+                return;
             }           
             for (int i = 0; i < model.Count; i++)
             {
@@ -203,14 +204,15 @@ namespace PlataformaTccSuporte.Controllers
                     if (i < (model.Count - 1))
                         continue;
                     else
-                        return RedirectToAction("EditRole", new { Id = roleId });
+                        return;//RedirectToAction("EditRole", new { Id = roleId });
                 }
             }
-            return RedirectToAction("EditRole", new { Id = roleId });
+            return;//RedirectToAction("EditRole", new { Id = roleId });
             
         }
         [HttpGet]
-        public IActionResult ListUsers()
+        [ActionName("ListUsers")]
+        public List<ListUsersViewModel> ListUsers()
         {
             var users = userManager.Users.ToList();
             List<ListUsersViewModel> list = new List<ListUsersViewModel>();
@@ -218,23 +220,24 @@ namespace PlataformaTccSuporte.Controllers
             {
                 var model = new ListUsersViewModel();
                 model.User = user;
-                if (user.ContaBancoId!=null)
+                if (user.BankAccountId!=null)
                 {
-                    var dadosBancarios = dadosBancariosRepository.GetDadosBancarios(user.ContaBancoId);
+                    var dadosBancarios = dadosBancariosRepository.GetBankData(user.BankAccountId);
                     model.DadosBancarios = dadosBancarios;                                        
                 }
                 list.Add(model);
             }
-            return View(list);
+            return list;
         }
         [HttpGet]
-        public async Task<IActionResult> EditUser(string Id)
+        [ActionName("EditUsers")]
+        public async Task<EditUserViewModel> EditUser(string Id)
         {
             var user = await userManager.FindByIdAsync(Id);
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"Não é possivel editar usuario, usuário não encontrado";
-                return View("NotFound");
+                //return View("NotFound");
             }
             var userClaims = await userManager.GetClaimsAsync(user);
             var userRoles = await userManager.GetRolesAsync(user);
@@ -244,14 +247,15 @@ namespace PlataformaTccSuporte.Controllers
                 Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
-                Salario=user.Salario,
+                Salario=user.Salary,
                 Claims = userClaims.Select(c => c.Value).ToList(),
                 Roles = userRoles
             };
 
-            return View(model);
+            return model;
         }
         [HttpPost]
+        [ActionName("EditUsers")]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
             var user = await userManager.FindByIdAsync(model.Id);
@@ -263,7 +267,7 @@ namespace PlataformaTccSuporte.Controllers
             user.Email = model.Email;
             user.UserName = model.UserName;
             user.Nome = model.UserName;
-            user.Salario = model.Salario;
+            user.Salary = model.Salario;
             var result = await userManager.UpdateAsync(user);
             if (result.Succeeded)
             {

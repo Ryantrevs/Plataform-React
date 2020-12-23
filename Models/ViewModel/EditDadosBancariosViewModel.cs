@@ -8,6 +8,6 @@ namespace PlataformaTccSuporte.Models.ViewModel
     public class EditDadosBancariosViewModel
     {
         public User User { get; set; }
-        public DadosBancarios DadosBanco { get; set; }
+        public BankData DadosBanco { get; set; }
     }
 }

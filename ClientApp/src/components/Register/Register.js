@@ -39,12 +39,14 @@ function Register() {
     })    
   }
   async function test() {
-    var resp = await axios.get("/Account/test");
-    alert(resp.data);
+    
+    return 
   }
 
   return (
+    
     <body>      
+      <button onClick={test}>Teste</button>
       <div class="container bg-dark">
         <div class="row text-white">
           <div class="col-2"></div>

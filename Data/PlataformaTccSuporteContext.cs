@@ -23,9 +23,9 @@ namespace PlataformaTccSuporte.Data
             //builder.Entity<User>().HasKey(t => t.Id);
             builder.Entity<User>().HasMany(t => t.Sales);
 
-            builder.Entity<DadosBancarios>().HasKey(t => t.Id);
+            builder.Entity<BankData>().HasKey(t => t.Id);
 
-            builder.Entity<User>().HasOne(t => t.ContaBanco).WithOne(d => d.User).HasForeignKey<User>(t => t.ContaBancoId).HasPrincipalKey<DadosBancarios>(t => t.Id);
+            builder.Entity<User>().HasOne(t => t.BankAccount).WithOne(d => d.User).HasForeignKey<User>(t => t.BankAccountId).HasPrincipalKey<BankData>(t => t.Id);
 
             builder.Entity<Client>().HasKey(t => t.Id);
             builder.Entity<Client>().HasMany(t => t.Sales);
@@ -57,8 +57,8 @@ namespace PlataformaTccSuporte.Data
             builder.Entity<UserTasklist>().HasOne(t => t.Users).WithMany(x => x.UserTasklist).HasForeignKey(y => y.UserId);
             builder.Entity<UserTasklist>().HasOne(t => t.TaskLists).WithMany(x => x.UserTasklist).HasForeignKey(y => y.TaskId);
 
-            builder.Entity<Despesa>().HasKey(t => t.Id);
-            builder.Entity<Receita>().HasKey(t => t.Id);
+            builder.Entity<Expenses>().HasKey(t => t.Id);
+            builder.Entity<Income>().HasKey(t => t.Id);
 
 
         }

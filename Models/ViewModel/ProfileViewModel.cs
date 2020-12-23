@@ -8,12 +8,12 @@ namespace PlataformaTccSuporte.Models.ViewModel
     public class ProfileViewModel
     {
         public User user { get; set; }
-        public DadosBancarios dadosBancarios {get;set;}
+        public BankData dadosBancarios {get;set;}
         public ProfileViewModel(User User)
         {
             user = User;
         }
-        public ProfileViewModel(User User,DadosBancarios dados)
+        public ProfileViewModel(User User,BankData dados)
         {
             user = User;
             dadosBancarios = dados;

@@ -11,13 +11,13 @@ namespace PlataformaTccSuporte.Models
     {
         public String Nome { get; set; }
         public string Cpf { get; set; } 
-        public double Salario { get; set; } 
+        public double Salary { get; set; } 
         public List<Sale> Sales { get; set; }
         public virtual List<UserTasklist> UserTasklist { get; set; }
         public virtual List<UserScope> UserScope { get; set; }
-        public virtual DadosBancarios ContaBanco { get; set; }
+        public virtual BankData BankAccount { get; set; }
         public DateTime TVerifyEmail { get; set; }
-        public string ContaBancoId { get; set; }
+        public string BankAccountId { get; set; }
         public User()
         {
             TVerifyEmail = new DateTime();    

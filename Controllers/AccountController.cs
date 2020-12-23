@@ -18,9 +18,9 @@ namespace PlataformaTccSuporte.Controllers
     {
         private readonly UserManager<User> UserManager;
         private readonly SignInManager<User> SignInManager;
-        private readonly IDadosBancariosRepository dadosBancariosRepository;
+        private readonly IBankDataRepository dadosBancariosRepository;
 
-        public AccountController(UserManager<User> UserManager, SignInManager<User> SignInManager,IDadosBancariosRepository dadosBancariosRepository)
+        public AccountController(UserManager<User> UserManager, SignInManager<User> SignInManager,IBankDataRepository dadosBancariosRepository)
         {
             this.UserManager = UserManager;
             this.SignInManager = SignInManager;
@@ -41,7 +41,7 @@ namespace PlataformaTccSuporte.Controllers
                         UserName = rvm.User.Nome,
                         Email = rvm.User.Email,
                         Cpf = rvm.User.Cpf,
-                        Salario = 0
+                        Salary = 0
                     };
                     var result = await UserManager.CreateAsync(user, rvm.Password);
                     if (result.Succeeded)
@@ -114,9 +114,9 @@ namespace PlataformaTccSuporte.Controllers
         {
             var user = await UserManager.GetUserAsync(User);
             var model = new ProfileViewModel(user);
-            if (user.ContaBancoId!=null)//conta encontrada
+            if (user.BankAccountId!=null)//conta encontrada
             {
-                var dadosBan = dadosBancariosRepository.GetDadosBancarios(user.ContaBancoId);
+                var dadosBan = dadosBancariosRepository.GetBankData(user.BankAccountId);
                 model.dadosBancarios = dadosBan;
             }            
             return model;
@@ -250,18 +250,18 @@ namespace PlataformaTccSuporte.Controllers
                 ViewBag.ErrorMessage = $"Usuario não encontrado";
                 //return View("NotFound");
             }
-            if (user.ContaBancoId==null)//se usuario ainda não cadastrou dados bancarios
+            if (user.BankAccountId==null)//se usuario ainda não cadastrou dados bancarios
             {
-                var dBancarios = new DadosBancarios()
+                var dBancarios = new BankData()
                 {
                     Id = Guid.NewGuid().ToString()                    
                 };
-                user.ContaBanco = dBancarios;
-                user.ContaBancoId = dBancarios.Id;
-                dadosBancariosRepository.CreateDadosBancarios(dBancarios);
+                user.BankAccount = dBancarios;
+                user.BankAccountId = dBancarios.Id;
+                dadosBancariosRepository.CreateBankData(dBancarios);
                 await UserManager.UpdateAsync(user);
             }
-            var dadosBancarios = dadosBancariosRepository.GetDadosBancarios(user.ContaBancoId);//pega conta de um usuario
+            var dadosBancarios = dadosBancariosRepository.GetBankData(user.BankAccountId);//pega conta de um usuario
             var model = new EditDadosBancariosViewModel
             {
                 User = user,
@@ -273,7 +273,7 @@ namespace PlataformaTccSuporte.Controllers
         [ActionName("EditDadosBancarios")]
         public void EditDadosBancarios(EditDadosBancariosViewModel model)
         {
-            dadosBancariosRepository.UpdateDadosBancarios(model.DadosBanco);
+            dadosBancariosRepository.UpdateBankData(model.DadosBanco);
             //return RedirectToAction("Profile", "Account");
         }
         [HttpPost]

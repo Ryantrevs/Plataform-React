@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace PlataformaTccSuporte.Models
 {
-    public class Despesa
+    public class Income
     {
         public string Id { get; set; }
-        public string Descricao { get; set; }
-        public double Valor { get; set; }
-        public DateTime Data { get; set; }
+        public string Description { get; set; }
+        public double Value { get; set; }
+        public DateTime Date { get; set; }
 
     }
 }

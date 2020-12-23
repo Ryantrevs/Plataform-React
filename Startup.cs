@@ -41,7 +41,7 @@ namespace PlataformaTccSuporte
             services.AddTransient<IClientRepository, ClientRepository>();
             services.AddTransient<IJobRepository, JobRepository>();
             services.AddTransient<ISaleRepository, SaleRepository>();
-            services.AddTransient<IDadosBancariosRepository, DadosBancariosRepository>();
+            services.AddTransient<IBankDataRepository, BankDataRepository>();
             services.AddDbContext<PlataformaTccSuporteContext>(options => options.UseMySql(Configuration.GetConnectionString("bd")));
             services.AddIdentity<User, IdentityRole>(options =>
             {
@@ -66,6 +66,7 @@ namespace PlataformaTccSuporte
             }
                 );
 
+            
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -94,6 +95,7 @@ namespace PlataformaTccSuporte
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
