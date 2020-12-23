@@ -279,7 +279,7 @@ namespace PlataformaTccSuporte.Controllers
         [HttpPost]
         [ActionName("CheckEmailExists")]
         public async Task<bool> CheckEmailExists(string email)
-        {
+        {            
             if (await UserManager.FindByEmailAsync(email) !=null)
             {
                 return true;
@@ -289,6 +289,7 @@ namespace PlataformaTccSuporte.Controllers
                 return false;
             }
         }
+        
 
     }
 

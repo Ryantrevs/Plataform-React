@@ -8,19 +8,19 @@ namespace PlataformaTccSuporte.Models
     public class TaskList
     {
         public String Id { get; set; }
-        public String Titulo { get; set; }
+        public String Titule { get; set; }
         public List<Scope> Scopes { get; set; }
         public virtual List<UserTasklist> UserTasklist { get; set; }
 
-        public TaskList(string id, string titulo)
+        public TaskList(string id, string titule)
         {
             Id = id;
-            Titulo = titulo;
+            Titule = titule;
         }
 
         public TaskList(String Titulo, Scope scope, User user)
         {
-            this.Titulo = Titulo;
+            this.Titule = Titulo;
             Scopes.Add(scope);
             
         }
@@ -29,9 +29,9 @@ namespace PlataformaTccSuporte.Models
 
         }
 
-        public TaskList(string titulo)
+        public TaskList(string titule)
         {
-            Titulo = titulo;
+            Titule = titule;
         }
     }
 }

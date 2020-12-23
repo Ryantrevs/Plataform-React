@@ -13,7 +13,7 @@ namespace PlataformaTccSuporte.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class AcademicoController : Controller
+    public class TaskController : Controller
     {
         private readonly IUserRepository userRepository;
         private readonly ITaskListRepository taskListRepository;
@@ -22,7 +22,7 @@ namespace PlataformaTccSuporte.Controllers
         private readonly IUserTasklistRepository userTasklistRepository;
         private readonly UserManager<User> userManager;
         
-        public AcademicoController(IUserRepository userRepository, ITaskListRepository taskListRepository, ICardRepository cardRepository, IScopeRepository scopeRepository, IUserTasklistRepository userTasklistRepository,UserManager<User> userManager)
+        public TaskController(IUserRepository userRepository, ITaskListRepository taskListRepository, ICardRepository cardRepository, IScopeRepository scopeRepository, IUserTasklistRepository userTasklistRepository,UserManager<User> userManager)
         {
             this.userRepository = userRepository;
             this.taskListRepository = taskListRepository;
@@ -34,9 +34,8 @@ namespace PlataformaTccSuporte.Controllers
         }
 
         [HttpGet]
-        [ActionName("Organizacao")]
-        [Authorize]
-        public async Task<List<TasksViewModel>> Organizacao()
+        [ActionName("Organization")]
+        public async Task<List<TasksViewModel>> Organization()
         {
             User user = userRepository.GetUser("teste01");
             User user2 = await userManager.GetUserAsync(User); //retorna Usuario Logado

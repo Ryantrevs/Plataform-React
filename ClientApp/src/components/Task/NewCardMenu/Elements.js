@@ -5,7 +5,7 @@ export const Section = styled.section`
     height: 100%;
     width: 100%;
     z-index: 1;
-    left: 0em;
+    left: -200em;
     display: flex;
     margin: 0;
     top: 0;

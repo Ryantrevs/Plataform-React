@@ -8,7 +8,7 @@ function Register() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
-
+  const [redirect,setRedirect] = useState("");
 
   function ValidaCpf(_cpf) {
     cpf = _cpf.replace(/\D/g, '');
@@ -26,21 +26,25 @@ function Register() {
     return result;
   }
 
-  async function RegisterUser(event) {
-    event.preventDefault();
-    var user = { User: { Id: "",Nome:name,Cpf:cpf}};
-    
-    var resp = await axios.post("/Account/Register",{
+  async function Post(url,data){
+    var resp = await axios.post(url,{
       User:user,
       Pass:pass
     }).then(function(response){
       //redirect to main page
-      return <Redirect to="/"/>
-    })    
+      return setRedirect("/");
+    })
+  }
+
+  async function RegisterUser(event) {
+    event.preventDefault();
+    var user = { User: { Id:"",Nome:name,Cpf:cpf}};
+    var url = "/Account/Register";
+        
   }
   async function test() {
-    
-    return 
+    console.log("click")
+    return setRedirect("/");
   }
 
   return (

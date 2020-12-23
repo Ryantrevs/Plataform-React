@@ -40,7 +40,7 @@ namespace PlataformaTccSuporte.Data
             builder.Entity<Job>().HasOne(t => t.Client).WithMany(c => c.Jobs).HasForeignKey(t => t.ClientId).HasPrincipalKey(c => c.Id);
 
 
-            builder.Entity<Card>().HasKey(t => t.id);
+            builder.Entity<Card>().HasKey(t => t.Id);
 
 
             builder.Entity<TaskList>().HasKey(t => t.Id);

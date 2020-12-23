@@ -7,29 +7,30 @@ namespace PlataformaTccSuporte.Models
 {
     public class Card
     {
-        public String id { get; set; }
-        public String Titulo { get; set; }
-        public String Descricao { get; set; }
-        public int Porcentagem { get; set; }
-        public List<String> Comentarios = new List<string>();
+        public String Id { get; set; }
+        public String Titule { get; set; }
+        public String Describe { get; set; }
+        public int Percentage { get; set; }
+
+        public List<String> Comments = new List<string>();
         public Scope Scope { get; set; }
         public String ScopeId { get; set; }
 
-        public Card(String Titulo, String Descricao)
+        public Card(String Titule, String Describe)
         {
-            this.Titulo = Titulo;
-            this.Descricao = Descricao;
+            this.Titule = Titule;
+            this.Describe = Describe;
         }
         public Card()
         {
         }
 
-        public Card(string id, string titulo, string descricao,int porcentagem, string scopeId)
+        public Card(string id, string titulo, string describe,int percentage, string scopeId)
         {
-            this.id = id;
-            this.Titulo = titulo;
-            Porcentagem = porcentagem;
-            Descricao = descricao;
+            this.Id = id;
+            this.Titule = titulo;
+            Percentage = percentage;
+            Describe = describe;
             ScopeId = scopeId;
         }
     }

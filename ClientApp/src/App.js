@@ -6,9 +6,7 @@ import { Route,Switch} from 'react-router-dom';
 import Header from './components/Header/Index'
 import Task from './components/Task/Index';
 import Register from './components/Register/Index'
-
 import './custom.css'
-//const axios = require('axios').default;
 export default class App extends Component {
   static displayName = App.name;
   
