@@ -1,6 +1,5 @@
 ﻿import styled from 'styled-components'
 export const Nav = styled.nav`
-    display:block;
     background:#f6f6f6;
     display:flex;
     align-items:center;

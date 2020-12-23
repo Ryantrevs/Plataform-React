@@ -1,20 +1,15 @@
 import React from 'react'
-import { MdCancel } from "react-icons/md";
-import {
-    Menu,
-    CardBackground,
-    CloseDiv
-} from './Elements'
+import Card from './Card/Index'
+import MenuList from './MenuList/Index'
+import NewCardMenu from './NewCardMenu/Index'
 
-function Task() {
+export function Task() {
     return (
-        <body>
-            <Menu/>
-            <CardBackground>                
-                <CloseDiv><MdCancel/></CloseDiv>
-            </CardBackground>
-        </body>
+        <main>
+            <Card/>
+            <NewCardMenu/>
+            <MenuList/>
+        </main>
     )
 }
 
-export default Task
