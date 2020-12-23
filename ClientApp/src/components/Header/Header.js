@@ -30,6 +30,9 @@ export function Header() {
                         </Li>
                         <Li>
                              <Link to="/fetch-data">Fetch</Link>   
+                        </Li>
+                        <Li>
+                             <Link to="/Register">Registrar-se</Link>   
                         </Li>   
                     </NavUl>
                 </DivUl>

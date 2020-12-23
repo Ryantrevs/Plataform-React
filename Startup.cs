@@ -1,10 +1,18 @@
+using System;
+using PlataformaTccSuporte.Models.Repository;
+using PlataformaTccSuporte.Servicos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PlataformaTccSuporte.Data;
+using Microsoft.AspNetCore.Identity;
+using PlataformaTccSuporte.Models;
+using System.Threading.Tasks;
 
 namespace PlataformaTccSuporte
 {
@@ -23,6 +31,41 @@ namespace PlataformaTccSuporte
 
             services.AddControllersWithViews();
 
+            services.AddTransient<IServicoEmail, MailService>();
+            services.AddTransient<ITwilioService, TwilioService>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ITaskListRepository, TaskListRepository>();
+            services.AddTransient<ICardRepository, CardRepository>();
+            services.AddTransient<IScopeRepository, ScopeRepository>();
+            services.AddTransient<IUserTasklistRepository, UserTasklistRepository>();
+            services.AddTransient<IClientRepository, ClientRepository>();
+            services.AddTransient<IJobRepository, JobRepository>();
+            services.AddTransient<ISaleRepository, SaleRepository>();
+            services.AddTransient<IDadosBancariosRepository, DadosBancariosRepository>();
+            services.AddDbContext<PlataformaTccSuporteContext>(options => options.UseMySql(Configuration.GetConnectionString("bd")));
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ·ÈÌÛ˙‚ÍÓÙ˚„ı‚ÍÓÙ˚„ı";
+                //options.SignIn.RequireConfirmedAccount=true;
+                options.SignIn.RequireConfirmedEmail = true;
+
+
+            })
+                .AddEntityFrameworkStores<PlataformaTccSuporteContext>().AddDefaultTokenProviders();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Role"));
+            }
+                );
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -31,7 +74,7 @@ namespace PlataformaTccSuporte
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -49,6 +92,8 @@ namespace PlataformaTccSuporte
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -66,6 +111,33 @@ namespace PlataformaTccSuporte
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+            CreateUser(serviceProvider).Wait();
+        }
+        private async Task CreateUser(IServiceProvider serviceProvider)
+        {
+            var user = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Nome = "admin",
+                UserName = "admin",
+                Email = "admin@gmail.com",
+                EmailConfirmed = true
+            };
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            await userManager.CreateAsync(user, "admin");
+            //cadastraUserFromStartup();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            string[] rolesNames = { "Admin", "User" };
+            IdentityResult result;
+            foreach (var namesRole in rolesNames)
+            {
+                var roleExist = await roleManager.RoleExistsAsync(namesRole);
+                if (!roleExist)
+                {
+                    result = await roleManager.CreateAsync(new IdentityRole(namesRole));
+                }
+            }
+            await userManager.AddToRoleAsync(user, "Admin");
         }
     }
 }

@@ -10,7 +10,7 @@ function Task() {
     return (
         <body>
             <Menu/>
-            <CardBackground>
+            <CardBackground>                
                 <CloseDiv><MdCancel/></CloseDiv>
             </CardBackground>
         </body>
