@@ -5,7 +5,11 @@ export const Section = styled.section`
     height: 100%;
     width: 100%;
     z-index: 1;
+<<<<<<< HEAD
     left:-200em;
+=======
+    left: -200em;
+>>>>>>> 8ea1b458227f8259ea35838a8b9211e79b9d50f1
     display: flex;
     margin: 0;
     top: 0;

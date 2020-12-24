@@ -32,8 +32,11 @@ export function Header() {
                             <Link to="/Counter">counter</Link>
                         </Li>
                         <Li>
-                            <Link to="/fetch-data">Fetch</Link>
+                             <Link to="/fetch-data">Fetch</Link>   
                         </Li>
+                        <Li>
+                             <Link to="/Register">Registrar-se</Link>   
+                        </Li>   
                     </NavUl>
                 </DivUl>
             </Nav>

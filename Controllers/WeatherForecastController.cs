@@ -35,5 +35,6 @@ namespace PlataformaTccSuporte.Controllers
             })
             .ToArray();
         }
+        
     }
 }
