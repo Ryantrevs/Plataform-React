@@ -1,6 +1,11 @@
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  color: #fff;
+  text-decoration: none;
+  transition: all .2s
+}
+a:hover{
+  color: #fe4a55;
 }
 
 code {

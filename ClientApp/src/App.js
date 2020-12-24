@@ -5,6 +5,7 @@ import { Counter } from './components/Counter';
 import { Route,Switch } from 'react-router-dom';
 import Header from './components/Header/Index'
 import Task from './components/Task/Index'
+import vendas from './components/vendas/Index'
 
 import './custom.css'
 
@@ -20,6 +21,7 @@ export default class App extends Component {
           <Route path="/Counter" exact component={Counter}/>
           <Route path="/FetchData" exact component={FetchData}/>
           <Route path="/div" exact component={Task}/>
+          <Route path="/vendas" exact component={vendas}/>
         </Switch>
       </main>
     );
