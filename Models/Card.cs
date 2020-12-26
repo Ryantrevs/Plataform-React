@@ -8,7 +8,7 @@ namespace PlataformaTccSuporte.Models
     public class Card
     {
         public String Id { get; set; }
-        public String Titule { get; set; }
+        public String Title { get; set; }
         public String Describe { get; set; }
         public int Percentage { get; set; }
 
@@ -18,7 +18,7 @@ namespace PlataformaTccSuporte.Models
 
         public Card(String Titule, String Describe)
         {
-            this.Titule = Titule;
+            this.Title = Titule;
             this.Describe = Describe;
         }
         public Card()
@@ -28,7 +28,7 @@ namespace PlataformaTccSuporte.Models
         public Card(string id, string titulo, string describe,int percentage, string scopeId)
         {
             this.Id = id;
-            this.Titule = titulo;
+            this.Title = titulo;
             Percentage = percentage;
             Describe = describe;
             ScopeId = scopeId;

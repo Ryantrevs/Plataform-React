@@ -239,22 +239,22 @@ namespace PlataformaTccSuporte.Migrations
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Card", b =>
                 {
-                    b.Property<string>("id")
+                    b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Descricao")
+                    b.Property<string>("Describe")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("Porcentagem")
+                    b.Property<int>("Percentage")
                         .HasColumnType("int");
 
                     b.Property<string>("ScopeId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Titulo")
+                    b.Property<string>("Title")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("ScopeId");
 
@@ -432,7 +432,7 @@ namespace PlataformaTccSuporte.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Titulo")
+                    b.Property<string>("Titule")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
@@ -480,7 +480,7 @@ namespace PlataformaTccSuporte.Migrations
                     b.Property<string>("Cpf")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<double>("Salary")

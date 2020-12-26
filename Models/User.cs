@@ -9,7 +9,7 @@ namespace PlataformaTccSuporte.Models
 {
     public class User : IdentityUser
     {
-        public String Nome { get; set; }
+        public String Name { get; set; }
         public string Cpf { get; set; } 
         public double Salary { get; set; } 
         public List<Sale> Sales { get; set; }

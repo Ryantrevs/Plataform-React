@@ -27,18 +27,35 @@ namespace PlataformaTccSuporte.Controllers
             this.dadosBancariosRepository = dadosBancariosRepository;
         }
 
+        [HttpGet]
+        [ActionName("test")]
+        public async Task<string> test()
+        {
+            return "teste funciona";
+        }
+        [HttpPost]
+        [ActionName("test")]
+        public async Task<string> test(string var1)
+        {
+            return var1+" : novo teste";
+        }
+
+
+
         [HttpPost]
         [ActionName("Register")]
-        public async Task Register(RegisterViewModel rvm)
+        public async Task<bool> Register([FromBody] string test)
         {
+            //https://localhost:44366/Account/Register?test=some text
             if (ModelState.IsValid)
             {
+                RegisterViewModel rvm = new RegisterViewModel();
                 if (await UserManager.FindByEmailAsync(rvm.User.Email) == null)//se usuario não existe
                 {
                     User user = new User() {
                         Id = Guid.NewGuid().ToString(),
-                        Nome = rvm.User.Nome,
-                        UserName = rvm.User.Nome,
+                        Name = rvm.User.Name,
+                        UserName = rvm.User.Name,
                         Email = rvm.User.Email,
                         Cpf = rvm.User.Cpf,
                         Salary = 0
@@ -46,19 +63,16 @@ namespace PlataformaTccSuporte.Controllers
                     var result = await UserManager.CreateAsync(user, rvm.Password);
                     if (result.Succeeded)
                     {
-                        if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                        {
-                            //return RedirectToAction("ListUsers", "Administration");
-                        }
-                        //await SignInManager.SignInAsync(user, isPersistent: false);
-                       // return RedirectToAction("Index", "Home");
+                        return true;
                     }
-                    foreach (var error in result.Errors)
+                    else
                     {
-                        ModelState.AddModelError(" ", error.Description);
-                    }
+                        return false;
+                    }                   
                 }
-            }            
+                return false;
+            }
+            return false;
         }
         [HttpPost]
         [ActionName("LogIn")]
@@ -141,8 +155,8 @@ namespace PlataformaTccSuporte.Controllers
                 ViewBag.ErrorMessage = $"Usuario não encontrado";
                 //return View("NotFound");
             }
-            user.Nome = profileViewModel.user.Nome;
-            user.UserName = profileViewModel.user.Nome;
+            user.Name = profileViewModel.user.Name;
+            user.UserName = profileViewModel.user.Name;
             user.Email = profileViewModel.user.Email;
             var result = await UserManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -176,7 +190,7 @@ namespace PlataformaTccSuporte.Controllers
             }
             var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
             var link = Url.Action("VerifyAccount", "Account",new { userId=user.Id,token=token}, Request.Scheme);
-            var nome = user.Nome;
+            var nome = user.Name;
             var destinatario = user.Email;
             var assunto = "Verificação de email para Conta TccSuporte";
             var Mensagem = "Olá, para confirmarmos sua conta e permitir acesso, precisamos que verifique sua conta clicando no link a seguir: \n"

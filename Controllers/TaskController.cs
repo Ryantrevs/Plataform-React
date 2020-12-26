@@ -122,9 +122,9 @@ namespace PlataformaTccSuporte.Controllers
         public String ChangeCard(String Id,String Titule,String Describe,int Porc)
         {
             var card = GetCard(Id);
-            card.Titulo = Titule;
-            card.Descricao = Describe;
-            card.Porcentagem = Porc;
+            card.Title = Titule;
+            card.Describe = Describe;
+            card.Percentage = Porc;
             cardRepository.UpdateCard(card);
             return "funcionou";
         }

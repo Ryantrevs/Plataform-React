@@ -266,7 +266,7 @@ namespace PlataformaTccSuporte.Controllers
             }
             user.Email = model.Email;
             user.UserName = model.UserName;
-            user.Nome = model.UserName;
+            user.Name = model.UserName;
             user.Salary = model.Salario;
             var result = await userManager.UpdateAsync(user);
             if (result.Succeeded)

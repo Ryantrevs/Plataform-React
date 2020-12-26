@@ -30,7 +30,9 @@ namespace PlataformaTccSuporte
         {
 
             services.AddControllersWithViews();
-
+            services.AddCors(options => options.AddDefaultPolicy(
+                    buider => buider.AllowAnyOrigin()
+                )); 
             services.AddTransient<IServicoEmail, MailService>();
             services.AddTransient<ITwilioService, TwilioService>();
             services.AddTransient<IUserRepository, UserRepository>();
@@ -93,6 +95,7 @@ namespace PlataformaTccSuporte
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
             
@@ -120,7 +123,7 @@ namespace PlataformaTccSuporte
             var user = new User
             {
                 Id = Guid.NewGuid().ToString(),
-                Nome = "admin",
+                Name = "admin",
                 UserName = "admin",
                 Email = "admin@gmail.com",
                 EmailConfirmed = true
