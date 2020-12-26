@@ -8,6 +8,7 @@ import vendas from './components/vendas/Index'
 import Task from './components/Task/Index';
 import Register from './components/Register/Index'
 import './custom.css'
+import Perfil from './components/Perfil/Index';
 //const axios = require('axios').default;
 export default class App extends Component {
   static displayName = App.name;
@@ -22,6 +23,7 @@ export default class App extends Component {
           <Route path="/FetchData" exact component={FetchData}/>
           <Route path="/div" exact component={Task}/>
           <Route path="/vendas" exact component={vendas}/>
+          <Route path="/Perfil" exact component={Perfil}/>
           <Route path="/Register" exact component={Register}/>
         </Switch>
       </main>

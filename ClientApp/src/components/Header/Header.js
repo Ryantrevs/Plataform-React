@@ -35,6 +35,9 @@ export function Header() {
                              <Link to="/fetch-data">Fetch</Link>   
                         </Li>
                         <Li>
+                             <Link to="/Perfil">Perfil</Link>   
+                        </Li> 
+                        <Li>
                              <Link to="/Register">Registrar-se</Link>   
                         </Li>   
                     </NavUl>
