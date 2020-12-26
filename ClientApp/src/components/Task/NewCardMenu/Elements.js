@@ -5,7 +5,11 @@ export const Section = styled.section`
     height: 100%;
     width: 100%;
     z-index: 1;
+<<<<<<< HEAD
+    left:-200em;
+=======
     left: -200em;
+>>>>>>> 8ea1b458227f8259ea35838a8b9211e79b9d50f1
     display: flex;
     margin: 0;
     top: 0;
@@ -36,4 +40,23 @@ export const Background = styled.section`
     width: 60%;
     opacity: 0.8;
     background: #000000;
+`
+export const Select = styled.select`
+    border-radius:8px;
+`
+export const Input = styled.input`
+    border-radius:8px;
+    width:100%;
+`
+export const Textarea = styled.textarea`
+    border-radius:8px;
+    resize:none;
+    width:100%;
+`
+export const Button = styled.button`
+    border:none;
+    border-radius:8px;
+    background-color: #fe4a55;
+    color:#fff;
+    width:5em;
 `

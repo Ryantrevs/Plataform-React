@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const Menu = styled.div`
-    display:flex;
-    rigth:-200em;
-    heigth:100%;
-    width:100%;
-    postion:fixed;
-    top:0;
-    z-index:1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    right: -200em;
+    display: flex;
+    margin: 0;
+    top: 0;
 `
 export const CardBackground = styled.div`
     margin: 0 0 0 0;
@@ -67,4 +68,27 @@ export const Section = styled.section`
     margin-top: 10vh;
     box-shadow: 5px 5px 15px 5px #000000;
 `
+export const InputData = styled.input`
+    border-radius:8px;
+
+`
+export const ButtonCopiar = styled.button`
+    border:none;
+    border-radius:8px;
+    background-color:#5aac44;
+    color:#fff;
+    height:3em;
+    width:6em;
+
+`
+export const ButtonLixo = styled.button`
+    border:none;
+    border-radius:8px;
+    background-color:#d50000;
+    color:#000000;
+    height:3em;
+    width:4em;
+    margin-left:0.4em;
+`
+
 
