@@ -24,14 +24,14 @@ namespace PlataformaTccSuporte.Models.Repository
 
         public Card GetCard(String id)
         {
-            return dbSet.Where(t => t.id == id).FirstOrDefault();
+            return dbSet.Where(t => t.Id == id).FirstOrDefault();
         }
         public List<ScopeViewModel> getCards(List<ScopeViewModel> lista)
         {
             List<CardViewModel> cards = new List<CardViewModel>();
             foreach(var item in lista)
             {
-                var teste = dbSet.Where(x => x.ScopeId == item.Id).Select(x => new CardViewModel(x.Titulo,x.id)).ToList();
+                var teste = dbSet.Where(x => x.ScopeId == item.Id).Select(x => new CardViewModel(x.Titule,x.Id)).ToList();
                 item.AddCards(teste);
             }
             return lista;

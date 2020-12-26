@@ -36,7 +36,7 @@ namespace PlataformaTccSuporte.Models.Repository
             List<TasksViewModel> tasks = new List<TasksViewModel>();
             foreach (var item in lista)
             {
-                tasks.Add(dbSet.Where(t=>t.Id==item).Select(t=>new TasksViewModel(t.Titulo,t.Id)).FirstOrDefault());
+                tasks.Add(dbSet.Where(t=>t.Id==item).Select(t=>new TasksViewModel(t.Titule,t.Id)).FirstOrDefault());
             }
             return tasks;
         }
@@ -50,7 +50,7 @@ namespace PlataformaTccSuporte.Models.Repository
         public void UpdateTaskList(String id,String titule)
         {
             var list = GetTask(id);
-            list.Titulo = titule;
+            list.Titule = titule;
             dbSet.Update(list);
             context.SaveChanges();
         }

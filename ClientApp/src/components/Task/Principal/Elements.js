@@ -7,6 +7,7 @@ export const PrincipalSection = styled.main`
     margin-top: 5vh;
     margin-bottom: 10vh;
     flex-direction: row;
+    display:flex;
 `
 
 export const Section = styled.section`
@@ -39,6 +40,7 @@ export const Item = styled.div`
     color: #242424;
     border-bottom: 2px solid #242424;
     width:100%;
+    cursor:pointer;
 `
 
 export const Configure = styled.div`
@@ -65,4 +67,32 @@ export const ButtonTools = styled.button`
     width: 5em;
     transition: all .2s linear;
     margin:0.5em 0 0.3em 0.7em;
+`
+export const TaskMenu = styled.section`
+    margin-left: 10px !important;
+    display: -webkit-box;
+    flex-direction:row;
+    align-content: center;
+    transition: 0.5s;
+    overflow: auto;
+    margin: auto;
+    height: 22em;
+    width: 70%;
+`
+export const ScopeList = styled.section`
+    background: #fff;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 5px !important;
+    padding: 20px;
+    width: 12em;
+    height: 8em;
+    box-shadow: 0 1px 4px 0 rgba(21, 27, 38, 0.08);
+    cursor: pointer;
+    margin: auto;
+`
+export const Card = styled.div`
+    background: #f6f6f6;
+    margin: 0.25em 0 0 0;
+    border-radius: 0px,0px,10px,10px;
 `
