@@ -1,9 +1,10 @@
 ﻿import styled from 'styled-components'
 export const Nav = styled.nav`
-    background:#f6f6f6;
+    background:#4c4c4c;
     display:flex;
     align-items:center;
     justify-content:space-between;
+    height: 5em;
 `
 export const Img = styled.img`
     height: 3em;
@@ -27,5 +28,3 @@ export const NavUl = styled.ul`
 export const Li = styled.li`
     margin:0.5em 1.5em 0 0;
 `
-
-

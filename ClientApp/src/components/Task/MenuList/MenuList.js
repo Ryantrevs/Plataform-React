@@ -1,31 +1,42 @@
 import React from 'react'
-import { Section } from '../Card/Elements'
-import { 
+import {
     ConfigurationSection,
-    ManageUsersSection, 
+    ManageUsersSection,
     ExcludeSection,
-    Background
+    Background,
+    Section,
+    Input,
+    Select,
+    Button,
+    Main,
+    Body
 } from './Elements'
 
 export function MenuList() {
     return (
-        <Section>
-            <ConfigurationSection>
-                <input type="text"/>
-            </ConfigurationSection>
-            <ManageUsersSection>
-                <label>Usuários que estão na lista</label>
-                <select name="Usuários que estão incluídos nessa lista">
-                    
-                </select>
-                <button type="button">Adicionar</button>
-                <button type="button">Excluir</button>
-            </ManageUsersSection>
-            <ExcludeSection>
-                <button type="button">Excluir Lista</button>
-            </ExcludeSection>
-            <Background/>
-        </Section>
+        <Body>
+            <Main>
+                <Section>
+                    <ConfigurationSection>
+                        <Input type="text" />
+                    </ConfigurationSection>
+                    <ManageUsersSection>
+                        <label>Se deseja Adicionar um na lista, aperte no botão abaixo</label>
+                        <Button type="button">+</Button>
+                    </ManageUsersSection>
+                    <ExcludeSection>
+                        <label>Usuários que estão na lista</label>
+                        <Select name="Usuários que estão incluídos nessa lista">
+                        </Select>
+                        <Button type="button">Excluir</Button>
+                    </ExcludeSection>
+                </Section>
+            </Main>
+            <Background>
+                
+            </Background>
+        </Body>
+
     )
 }
 
