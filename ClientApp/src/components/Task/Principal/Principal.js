@@ -64,12 +64,6 @@ export function Principal({Request}) {
         });
     }
 
-    async function teste(){
-        if(Scope){
-            console.log("hgasusahasuah");
-        }
-    }
-
     return (
         <PrincipalSection>
             <Section>
