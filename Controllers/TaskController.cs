@@ -37,8 +37,7 @@ namespace PlataformaTccSuporte.Controllers
         [ActionName("Organization")]
         public async Task<List<TasksViewModel>> Organization()
         {
-            User user = userRepository.GetUser("teste01");
-            User user2 = await userManager.GetUserAsync(User); //retorna Usuario Logado
+            User user2 = await userManager.FindByIdAsync("eafbf9ab-b705-4ba8-afa9-7dde116d4432"); //retorna Usuario Logado
             var lista = userTasklistRepository.GetListId(user2.Id);
             List<TasksViewModel> tasks = taskListRepository.getTasks(lista);
             return tasks;
@@ -122,9 +121,9 @@ namespace PlataformaTccSuporte.Controllers
         public String ChangeCard(String Id,String Titule,String Describe,int Porc)
         {
             var card = GetCard(Id);
-            card.Titulo = Titule;
-            card.Descricao = Describe;
-            card.Porcentagem = Porc;
+            card.Titule = Titule;
+            card.Describe = Describe;
+            card.Percentage = Porc;
             cardRepository.UpdateCard(card);
             return "funcionou";
         }
