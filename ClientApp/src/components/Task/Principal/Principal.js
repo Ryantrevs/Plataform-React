@@ -50,9 +50,7 @@ export function Principal({Request}) {
             }
         }
     },[Scope])
-
     
-
     async function GetTask(ActiveList){
         Request("post",{Id:ActiveList},"/Task/GetTasks",function(data){
             try{
@@ -63,6 +61,21 @@ export function Principal({Request}) {
             }
         });
     }
+
+    async function GetCard(id){
+        var obj = new FormData();
+        obj.append("Id",id)
+        Request("post",obj,"/Task/GetCard",function(data){
+            try{
+                console.log(data)
+                //SetScope(data)
+            }
+            catch(error){
+                console.log(error)
+            }
+        });
+    }
+
 
     return (
         <PrincipalSection>
@@ -99,7 +112,15 @@ export function Principal({Request}) {
                 Scope.map((scope,index)=>(
                 <ScopeList key={index}>
                     {scope.cards.map((card,subIndex)=>(
-                        <Card key={subIndex}>{card.Titulo}</Card>
+                        <Card 
+                        onClick={(event)=>{
+                            event.preventDefault();
+                            GetCard(event.target.id);
+                            
+                            }
+                        }
+                        id={card.id} 
+                        key={subIndex}>{card.Titulo}</Card>
                     ))}
                     <h3>{scope.titulo}</h3>  
                 </ScopeList>   
@@ -110,10 +131,4 @@ export function Principal({Request}) {
     )
 }
 
-/*{ScopeList.map(scope=>(
-    <ScopeList key={scope.Id}>
-        {scope.cards.map(card=>(
-            <Card key={card.Id}>{card.Titulo}</Card>
-        ))}  
-    </ScopeList>   
-))}*/
+

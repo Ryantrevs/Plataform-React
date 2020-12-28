@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Body = styled.body`
+export const Body = styled.section`
     background-color: #fe4a55;
     position: absolute;
     height: 100%;

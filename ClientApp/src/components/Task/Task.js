@@ -10,6 +10,9 @@ export function Task() {
     return (
         <main>
             <Principal Request={Request}/>
+            <Card/>
+            <NewCardMenu/>
+            <MenuList/>
         </main>
     )
 }
@@ -20,6 +23,7 @@ async function Request(method,obj,url,callback){
         case "post":
             axios.post(url,obj).then(t=>{
                 console.log(obj);
+                console.log(t)
                 callback(t.data);
             })
             break;
@@ -42,6 +46,8 @@ async function Request(method,obj,url,callback){
             break;
     }
 }
+
+async function CardMenu(){}
 
 
 

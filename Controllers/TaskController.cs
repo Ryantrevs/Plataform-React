@@ -45,7 +45,7 @@ namespace PlataformaTccSuporte.Controllers
 
         [HttpPost]
         [ActionName("GetCard")]
-        public Card GetCard(String Id)
+        public Card GetCard([FromForm]String Id)
         {
             var task = cardRepository.GetCard(Id);
             return task;

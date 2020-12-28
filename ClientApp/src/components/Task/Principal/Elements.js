@@ -8,6 +8,7 @@ export const PrincipalSection = styled.main`
     margin-bottom: 10vh;
     flex-direction: row;
     display:flex;
+    z-index:1;
 `
 
 export const Section = styled.section`
@@ -92,7 +93,9 @@ export const ScopeList = styled.section`
     margin: auto;
 `
 export const Card = styled.div`
-    background: #f6f6f6;
+    background: #f6f6;
     margin: 0.25em 0 0 0;
     border-radius: 0px,0px,10px,10px;
+    height:2em;
+    width:2em;
 `

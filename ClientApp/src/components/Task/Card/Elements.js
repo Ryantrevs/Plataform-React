@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-export const Menu = styled.div`
+export const CardMenu = styled.div`
     position: absolute;
     height: 100%;
     width: 100%;
     z-index: 1;
-    right: -200em;
     display: flex;
     margin: 0;
     top: 0;
+    right: ${t=>(!t.isVisible ? `-200em`: `0em`)};
 `
 export const CardBackground = styled.div`
     margin: 0 0 0 0;

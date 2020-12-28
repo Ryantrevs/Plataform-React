@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { MdCancel } from "react-icons/md";
 import { BsFillTrashFill } from "react-icons/bs";
 
@@ -12,19 +12,28 @@ import {
     Section,
     DescribeP,
     DescribreText,
-    Menu,
+    CardMenu,
     InputData,
     ButtonCopiar,
     ButtonLixo
 } from './Elements'
 
 function Card() {
+    const [menuCard,SetMenuCard] = useState(true);
+
+    useEffect(()=>{
+        console.log(menuCard)
+        console.log("ashndiuashgduahgdaiuohdas")
+    },[menuCard])
+
     return (
-        <Menu>
+        <CardMenu isVisible={menuCard}>
             <Background />
             <CardBackground>
                 <CloseDiv>
-                    <MdCancel size={32} />
+                    <MdCancel size={32} onClick={(event)=>{
+                        event.preventDefault();
+                        SetMenuCard(false)}} />
                 </CloseDiv>
                 <Section>
                     <label>Título</label>
@@ -58,7 +67,7 @@ function Card() {
                     <ButtonLixo><BsFillTrashFill /></ButtonLixo>
                 </Section>
             </CardBackground>
-        </Menu>
+        </CardMenu>
 
     )
 }
