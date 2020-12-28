@@ -1,4 +1,6 @@
-﻿using PlataformaTccSuporte.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using PlataformaTccSuporte.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,28 +8,12 @@ using System.Threading.Tasks;
 
 namespace PlataformaTccSuporte.Models.Repository
 {
-    public interface IUserRepository
+    
+    public static class UserRepository 
     {
-        public Task CreateUser(User newUser);
-        public User GetUser(String id);
-
-    }
-    public class UserRepository : BaseRepository<User>, IUserRepository
-    {
-
-        public UserRepository(PlataformaTccSuporteContext context):base(context)
+        public  static async Task<User> FindByCpfAsync(this UserManager<User> um, string cpf)
         {
-        }
-
-        public User GetUser(String id)
-        {
-            User user = dbSet.Where(t => t.Id == id).SingleOrDefault();
-            return user;
-        }
-        public async Task CreateUser(User newUser)
-        {
-            dbSet.Add(newUser);
-            await context.SaveChangesAsync();
+            return await um?.Users?.SingleOrDefaultAsync(x => x.Cpf== cpf);
         }
 
     }

@@ -16,15 +16,13 @@ namespace PlataformaTccSuporte.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly IClientRepository ClientRepository;
-        private readonly IUserRepository UserRepository;
         private readonly IJobRepository JobRepository;
         private readonly ISaleRepository SaleRepository;
 
-        public SaleController(UserManager<User> userManager,IClientRepository ClientRepository,IUserRepository UserRepository,IJobRepository JobRepository,ISaleRepository SaleRepository)
+        public SaleController(UserManager<User> userManager,IClientRepository ClientRepository,IJobRepository JobRepository,ISaleRepository SaleRepository)
         {
             this.userManager = userManager;
             this.ClientRepository = ClientRepository;
-            this.UserRepository = UserRepository;
             this.JobRepository = JobRepository;
             this.SaleRepository = SaleRepository;
         }
@@ -75,15 +73,15 @@ namespace PlataformaTccSuporte.Controllers
             return cli;
         }
         [HttpGet]
-        public IActionResult Table()//retorana lista completa de vendas com clientes
+        public async Task<IActionResult> Table()//retorana lista completa de vendas com clientes
         {
             List<Sale> sales=SaleRepository.GetSales();
             List<SaleViewModel> lista = new List<SaleViewModel>();
             foreach (Sale s in sales)
             {
                 Job j = JobRepository.GetJob(s.JobId);
-                Client c = ClientRepository.GetClient(s.ClientId);
-                User u = UserRepository.GetUser(s.UserId);
+                Client c = ClientRepository.GetClient(s.ClientId);                                   
+                User u = await userManager.FindByIdAsync(s.UserId);
 
                 SaleViewModel svm = new SaleViewModel(c,j,s,u);
                 lista.Add(svm);
@@ -91,13 +89,14 @@ namespace PlataformaTccSuporte.Controllers
             return View(lista);
         }
         [HttpGet]
-        public IActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
             Sale sale=SaleRepository.GetSale(id);
             
             Job job = JobRepository.GetJob(sale.JobId);
             Client client =  ClientRepository.GetClient(sale.ClientId);
-            User user = UserRepository.GetUser(sale.UserId);
+            
+            User user = await userManager.FindByIdAsync(sale.UserId);
             SaleViewModel svm = new SaleViewModel(client, job, sale,user);
 
             return View(svm);

@@ -35,7 +35,6 @@ namespace PlataformaTccSuporte
                 )); 
             services.AddTransient<IServicoEmail, MailService>();
             services.AddTransient<ITwilioService, TwilioService>();
-            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITaskListRepository, TaskListRepository>();
             services.AddTransient<ICardRepository, CardRepository>();
             services.AddTransient<IScopeRepository, ScopeRepository>();
