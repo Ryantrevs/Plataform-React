@@ -31,7 +31,7 @@ namespace PlataformaTccSuporte.Models.Repository
             List<CardViewModel> cards = new List<CardViewModel>();
             foreach(var item in lista)
             {
-                var teste = dbSet.Where(x => x.ScopeId == item.Id).Select(x => new CardViewModel(x.Titule,x.Id)).ToList();
+                var teste = dbSet.Where(x => x.ScopeId == item.Id).Select(x => new CardViewModel(x.Title,x.Id)).ToList();
                 item.AddCards(teste);
             }
             return lista;

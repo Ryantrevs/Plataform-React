@@ -15,16 +15,15 @@ namespace PlataformaTccSuporte.Controllers
     [Route("[controller]/[action]")]
     public class TaskController : Controller
     {
-        private readonly IUserRepository userRepository;
         private readonly ITaskListRepository taskListRepository;
         private readonly ICardRepository cardRepository;
         private readonly IScopeRepository scopeRepository;
         private readonly IUserTasklistRepository userTasklistRepository;
         private readonly UserManager<User> userManager;
         
-        public TaskController(IUserRepository userRepository, ITaskListRepository taskListRepository, ICardRepository cardRepository, IScopeRepository scopeRepository, IUserTasklistRepository userTasklistRepository,UserManager<User> userManager)
+        public TaskController(ITaskListRepository taskListRepository, ICardRepository cardRepository, IScopeRepository scopeRepository, IUserTasklistRepository userTasklistRepository,UserManager<User> userManager)
         {
-            this.userRepository = userRepository;
+            
             this.taskListRepository = taskListRepository;
             this.cardRepository = cardRepository;
             this.scopeRepository = scopeRepository;
@@ -82,10 +81,8 @@ namespace PlataformaTccSuporte.Controllers
         {
             var id = Guid.NewGuid().ToString();
             var task = taskListRepository.InsertTaskList(id, Titulo);
-            var user = userRepository.GetUser("teste01");
-            var user2 = await userManager.GetUserAsync(User);
-            userTasklistRepository.InsertUserTasklist(task, user2);
-
+            var user = await userManager.GetUserAsync(User);
+            userTasklistRepository.InsertUserTasklist(task, user);
             return id;
         }
         [HttpPost]
@@ -121,7 +118,7 @@ namespace PlataformaTccSuporte.Controllers
         public String ChangeCard(String Id,String Titule,String Describe,int Porc)
         {
             var card = GetCard(Id);
-            card.Titule = Titule;
+            card.Title = Titule;
             card.Describe = Describe;
             card.Percentage = Porc;
             cardRepository.UpdateCard(card);
@@ -135,11 +132,10 @@ namespace PlataformaTccSuporte.Controllers
             return "teste";
         }
         [HttpPost]
-        public String AddUserOnList(String Email, String Id)
-        {
-            userRepository.GetUser(Email);
+        public async Task<String> AddUserOnList(String Email, String Id)
+        {   
             var task = taskListRepository.GetTask(Id);
-            var user = userRepository.GetUser("teste01");
+            var user = await userManager.FindByEmailAsync(Email);
             userTasklistRepository.InsertUserTasklist(task, user);
             return "teste";
         }

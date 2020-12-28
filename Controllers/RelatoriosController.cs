@@ -23,22 +23,22 @@ namespace PlataformaTccSuporte.Controllers
         }
 
         [HttpPost]
-        public async Task<List<Receita>> GenerateDataChartDespesasReceita()
+        public async Task<List<Income>> GenerateDataChartDespesasReceita()
         {
 
-            List<Receita> list = new List<Receita>();            
+            List<Income> list = new List<Income>();            
             return list;
         }
         [HttpPost]
-        public async Task<List<Despesa>> DespesasMensal()
+        public async Task<List<Expenses>> DespesasMensal()
         {
             double despesas;            
             var users = userManager.Users.ToList<User>();
             foreach(var user in users){//conta salario de todos os funcionarios
-                despesas =+ user.Salario;
+                despesas =+ user.Salary;
             }
             //mais despesas;
-            List<Despesa> lista = new List<Despesa>();
+            List<Expenses> lista = new List<Expenses>();
             return lista; 
         }
         [HttpPost]
