@@ -28,7 +28,7 @@ export class CadastrarVendas extends Component {
                         <option>Feminino</option>
                     </Select><br/>
                     <Label>Número do Cliente : </Label><br />
-                    <Input type="number" /><br />
+                    <Input type="tel" /><br />
                     <Label>Insira o número colocando o DDD </Label><br />
                     <Label>Pagamento com Cartão de crédito : </Label>
                     <Label> Sim  </Label>
