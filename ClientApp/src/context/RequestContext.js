@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { Children, useContext } from "react"
 import axios from "axios";
 const RequestContext = React.createContext(
     {
@@ -6,6 +6,15 @@ const RequestContext = React.createContext(
     }
 );
 RequestContext.displayName = "GenralRequest"
+
+export function RequestProvider({children}) { 
+
+    return (
+        <RequestContext.Provider value={{Request:Request}}>
+            {children}
+        </RequestContext.Provider>
+    );
+}
 
 
 export function useRequest() {

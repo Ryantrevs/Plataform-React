@@ -74,10 +74,13 @@ namespace PlataformaTccSuporte.Controllers
         }
         [HttpPost]
         [ActionName("LogIn")]
-        public async Task LogIn(LogInViewModel livm, string returnUrl)
+        public async Task<bool> LogIn([FromForm]LogInViewModel livm, string returnUrl)
         {
             if (ModelState.IsValid)
             {
+                var resutnValue = new { };
+
+                               
                 User user = await UserManager.FindByEmailAsync(livm.Email);
                 if (user != null)
                 {
@@ -91,6 +94,7 @@ namespace PlataformaTccSuporte.Controllers
 
                         }
                         await SignInManager.SignInAsync(user, false);
+                        return true;
                         if (!string.IsNullOrEmpty(returnUrl))//se usuario tentou abrir um recurso
                         {
 
@@ -108,15 +112,18 @@ namespace PlataformaTccSuporte.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Usuário não encontrado!");
+                    return false;
                 }
 
             }
+            return false;
         }
 
         [ActionName("Logout")]
-        public async Task Logout()
+        public async Task<bool> Logout()
         {
             await SignInManager.SignOutAsync();
+            return true;
         }
 
         [Authorize]
@@ -305,7 +312,7 @@ namespace PlataformaTccSuporte.Controllers
         [ActionName("CheckCpfExists")]
         public async Task<bool> CheckCpfExists([FromForm] string cpf)
         {
-            //a ser implementado
+            
             if (await UserManager.FindByCpfAsync(cpf) != null)
             {
                 return true;
@@ -316,6 +323,36 @@ namespace PlataformaTccSuporte.Controllers
             }
             
         }
+        [HttpPost]
+        [ActionName("isLogged")]
+        public async Task<bool> IsLogged()
+        {
+            
+            if (SignInManager.IsSignedIn(User))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        [HttpPost]
+        [ActionName("getCurrentUser")]
+        public async Task<User> GetCurrentUser()
+        {
+            if (SignInManager.IsSignedIn(User))
+            {
+                return await UserManager.GetUserAsync(User);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
     }
 
 }

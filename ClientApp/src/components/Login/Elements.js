@@ -6,12 +6,12 @@ export const Body = styled.div`
     height:100%;  
 `
 
-export const Div = styled.div`
+export const Form = styled.form`
     background-color:#4c4c4c;
     margin:auto;
     margin-top:10em;
     width:40em;
-    height:20em;
+    min-height:20em;
     padding:3em;
     border-radius:8px;
 `
@@ -24,7 +24,7 @@ export const H1 = styled.h1`
     
 `
 export const Input = styled.input`
-    color:#fff;
+    color:#333333;
     width:30em;
     border:none;
     border-radius:8px;
@@ -42,5 +42,6 @@ export const Button = styled.button`
     border:none;
     border-radius:8px;
     color:#fff;
+    margin:0.5em;
 
 `
