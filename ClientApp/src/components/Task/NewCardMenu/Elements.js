@@ -8,7 +8,7 @@ export const Section = styled.section`
     display: flex;
     margin: 0;
     top: 0;
-    left: ${t=>(!t.isVisible ? `-200em`: `0em`)}
+    left: ${t=>(!t.visible ? `-200em`: `0em`)}
 `
 export const NewCardSection = styled.div`
     background: #fe4a55;

@@ -15,15 +15,16 @@ import {
     Card
 } from './Elements'
 import { TiThMenuOutline } from "react-icons/ti";
+import useCard from '../../../hooks/useCard';
 
 
 
-export function Principal({Request}) {
+export function Principal({Request,ChangeCardState,MenuCard}) {
 
     const [TaskList,SetTaskList] = useState([]);
     const [ActiveList,SetActiveList] = useState();
     const [Scope,SetScope] = useState([]);
-
+    const [infoCard,setCard,changeCard] = useCard();
 
     useEffect(() => {
         Request("get",{},"/Task/Organization",function(data){
@@ -36,23 +37,25 @@ export function Principal({Request}) {
 
     useEffect(()=>{
         if(ActiveList){
-            console.log(ActiveList)
             GetTask(ActiveList)
-            
+            console.log("a")
         }
     },[ActiveList])
 
     useEffect(()=>{
         if(Scope){
             console.log(Scope)
-            for(var item in Scope){
-                console.log(item)
-            }
         }
     },[Scope])
+
+    useEffect(()=>{
+        console.log(TaskList);
+    },[TaskList])
     
     async function GetTask(ActiveList){
-        Request("post",{Id:ActiveList},"/Task/GetTasks",function(data){
+        var obj = new FormData();
+        obj.append("Id",ActiveList)
+        Request("post",obj,"/Task/GetTasks",function(data){
             try{
                 SetScope(data)
             }
@@ -67,13 +70,28 @@ export function Principal({Request}) {
         obj.append("Id",id)
         Request("post",obj,"/Task/GetCard",function(data){
             try{
-                console.log(data)
-                //SetScope(data)
-            }
+                    console.log(data);
+                    ChangeCardState(true,data);
+                }
             catch(error){
                 console.log(error)
             }
         });
+    }
+
+    async function NewTaskList(){
+        const newList = {id:"teste",titulo:"novoCard",cards:[]}
+        SetTaskList([...TaskList,newList]);
+    }
+
+    async function newScope(){
+        const newscopes = {id:"abc", titulo:"patrick_TESTE",cards:[]}
+        SetScope([...Scope,newscopes]);
+    }
+
+    async function newCard(){
+        console.log(Scope)
+        MenuCard(true,Scope)
     }
 
 
@@ -82,9 +100,19 @@ export function Principal({Request}) {
             <Section>
                 <Menu>
                     <TiThMenuOutline size={28} color="#fff"/><br/>
-                    <ButtonTools>+Lista</ButtonTools>
-                    <ButtonTools>+Escopo</ButtonTools>
-                    <ButtonTools>+Tarefa</ButtonTools>
+                    <ButtonTools onClick={(event)=>{
+                        event.preventDefault();
+                        console.log("Adicionar Lista");
+                        NewTaskList();
+                    }}>+Lista</ButtonTools>
+                    <ButtonTools onClick={(event)=>{
+                        console.log("Adicionar Escopo");
+                        newScope();
+                    }}>+Escopo</ButtonTools>
+                    <ButtonTools onClick={(event)=>{
+                        console.log("Adicionar Tarefa");
+                        newCard();
+                    }}>+Tarefa</ButtonTools>
                     <NavMenu>
 
                     </NavMenu>

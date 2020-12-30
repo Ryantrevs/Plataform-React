@@ -1,17 +1,55 @@
-import React,{useState} from 'react'
+import React,{useState, useContext} from 'react'
 import Card from './Card/Index'
 import Principal  from './Principal/Index'
 import MenuList from './MenuList/Index'
 import NewCardMenu from './NewCardMenu/Index'
 import axios from 'axios'
+import useCard from '../../hooks/useCard'
+import CardContext from '../../Context/CardContext'
 
 export function Task() {
+    const context = useContext(CardContext)
+    const [infoCard, AddCard] = useCard(context)
+    const [menuCardState,SetMenuCardState] = useState(false);
+    const [visible,setVisible] = useState({visibility:false,scope:[]})
+
+    
+    async function ChangeCardState(state,obj){
+        if(state==true){
+            AddCard(obj);
+            console.log(infoCard);
+            SetMenuCardState(state);
+        }
+        else{
+            AddCard(context)
+            SetMenuCardState(state);
+        }
+    }
+
+    async function ChangeMenuCardState(state,scope){
+        if(state==true){
+            console.log(scope)
+            setVisible({visibility:state,scope:scope});
+            console.log(visible);
+        }
+        else{
+            setVisible({visibility:state,scope:context});
+            console.log(visible);
+        }
+    }
 
     return (
         <main>
-            <Principal Request={Request}/>
-            <Card/>
-            <NewCardMenu/>
+            <Principal Request={Request} 
+            ChangeCardState={ChangeCardState}
+            MenuCard={ChangeMenuCardState}/>
+            <Card 
+            isVisible={menuCardState} 
+            ChangeCardState={ChangeCardState}
+            infoCard={infoCard}
+            setCard={AddCard}/>
+            <NewCardMenu
+            visible={visible}/>
             <MenuList/>
         </main>
     )
@@ -22,7 +60,6 @@ async function Request(method,obj,url,callback){
     switch (method){
         case "post":
             axios.post(url,obj).then(t=>{
-                console.log(obj);
                 console.log(t)
                 callback(t.data);
             })
@@ -47,7 +84,7 @@ async function Request(method,obj,url,callback){
     }
 }
 
-async function CardMenu(){}
+
 
 
 

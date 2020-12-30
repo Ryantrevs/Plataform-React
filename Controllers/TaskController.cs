@@ -36,7 +36,7 @@ namespace PlataformaTccSuporte.Controllers
         [ActionName("Organization")]
         public async Task<List<TasksViewModel>> Organization()
         {
-            User user2 = await userManager.FindByIdAsync("eafbf9ab-b705-4ba8-afa9-7dde116d4432"); //retorna Usuario Logado
+            User user2 = await userManager.FindByIdAsync("39601aa7-2a63-4574-9a39-27758182d464"); //retorna Usuario Logado
             var lista = userTasklistRepository.GetListId(user2.Id);
             List<TasksViewModel> tasks = taskListRepository.getTasks(lista);
             return tasks;
@@ -53,12 +53,12 @@ namespace PlataformaTccSuporte.Controllers
 
         [HttpPost]
         [ActionName("GetTasks")]
-        public List<ScopeViewModel> GetTasks(String Id)
+        public List<ScopeViewModel> GetTasks([FromForm]String Id)
         {
             
             var list = scopeRepository.getScope(Id);
-            var cards = cardRepository.getCards(list);
-            return cards;
+            List<ScopeViewModel> scope = cardRepository.getCards(list);
+            return scope;
         }
         [HttpPost]
         [ActionName("InsertScope")]

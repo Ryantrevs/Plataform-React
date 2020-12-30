@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import { MdCancel } from "react-icons/md";
 import { BsFillTrashFill } from "react-icons/bs";
+import useCard from '../../../hooks/useCard'
 
 import {
     CardBackground,
@@ -18,35 +19,45 @@ import {
     ButtonLixo
 } from './Elements'
 
-function Card() {
-    const [menuCard,SetMenuCard] = useState(true);
+function Card({isVisible,ChangeCardState,infoCard,setCard}) {
 
     useEffect(()=>{
-        console.log(menuCard)
-        console.log("ashndiuashgduahgdaiuohdas")
-    },[menuCard])
+        console.log(infoCard);
+    },[])
+
 
     return (
-        <CardMenu isVisible={menuCard}>
-            <Background />
+        <CardMenu isVisible={isVisible}>
+            <Background onClick={(event)=>{
+                event.preventDefault();
+                ChangeCardState(false);
+            }}/>
             <CardBackground>
                 <CloseDiv>
                     <MdCancel size={32} onClick={(event)=>{
                         event.preventDefault();
-                        SetMenuCard(false)}} />
+                        ChangeCardState(false)}} />
                 </CloseDiv>
                 <Section>
                     <label>Título</label>
-                    <InputTitule />
+                    <InputTitule 
+                    value={infoCard.title}
+                    onChange={(event)=>{
+                        setCard({title:event.target.value})
+                    }}/>
                     <label>Descricão</label>
-                    <AddDescribe>
-                        <DescribeP>Adicionar descrição</DescribeP>
+                    <AddDescribe >
+                        <DescribeP>{infoCard.describe}</DescribeP>
                     </AddDescribe>
                     <DescribeContent>
                         <DescribreText placeholder="Descrição do card" />
                     </DescribeContent>
                     <label>Porcentagem</label><br />
-                    <select name="Porcento">
+                    <select name="Porcento" 
+                    value={infoCard.percentage}
+                    onChange={(event)=>{
+                        setCard({percentage:parseInt(event.target.value)});
+                    }}>
                         <option value="0">0%</option>
                         <option value="10">10%</option>
                         <option value="20">20%</option>
@@ -62,7 +73,14 @@ function Card() {
                     <label>Data Final : </label>
                     <InputData type="date" /><br />
                     <label>Concluído</label>
-                    <input type="checkbox" /><br />
+                    <input type="checkbox" 
+                    checked={infoCard.conclude}
+                    onChange={(event)=>
+                        {
+                            console.log(event.target.checked)
+                            setCard({conclude:event.target.checked})
+                        }
+                    }/><br />
                     <ButtonCopiar>Copiar Card</ButtonCopiar>
                     <ButtonLixo><BsFillTrashFill /></ButtonLixo>
                 </Section>
