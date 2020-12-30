@@ -1,6 +1,6 @@
-import React,{useState,useEffect} from 'react';
-
-import {  
+import React, { useState, useEffect } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {
     PrincipalSection,
     Section,
     Menu,
@@ -18,6 +18,7 @@ import { TiThMenuOutline } from "react-icons/ti";
 import useCard from '../../../hooks/useCard';
 
 
+export function Principal({ Request }) {
 
 export function Principal({Request,ChangeCardState,MenuCard}) {
 
@@ -27,7 +28,7 @@ export function Principal({Request,ChangeCardState,MenuCard}) {
     const [infoCard,setCard,changeCard] = useCard();
 
     useEffect(() => {
-        Request("get",{},"/Task/Organization",function(data){
+        Request("get", {}, "/Task/Organization", function (data) {
             SetTaskList(data);
             SetActiveList(data[0].id.toString())
             console.log(data)
@@ -40,13 +41,14 @@ export function Principal({Request,ChangeCardState,MenuCard}) {
             GetTask(ActiveList)
             console.log("a")
         }
-    },[ActiveList])
+    }, [ActiveList])
 
-    useEffect(()=>{
-        if(Scope){
+    useEffect(() => {
+        if (Scope) {
             console.log(Scope)
         }
-    },[Scope])
+    }, [Scope])
+
 
     useEffect(()=>{
         console.log(TaskList);
@@ -59,12 +61,13 @@ export function Principal({Request,ChangeCardState,MenuCard}) {
             try{
                 SetScope(data)
             }
-            catch(error){
+            catch (error) {
                 console.log(error)
             }
         });
     }
 
+<<<<<<< HEAD
     async function GetCard(id){
         var obj = new FormData();
         obj.append("Id",id)
@@ -117,15 +120,15 @@ export function Principal({Request,ChangeCardState,MenuCard}) {
 
                     </NavMenu>
                     <MenuItem>
-                    {TaskList.map(teste=>(
-                        <Item key={teste.id}
-                        id={teste.id}
-                        onClick={(event)=>{
-                            event.preventDefault();
-                            SetActiveList(event.target.id)
-                        }}>
-                            {teste.titulo}
-                        </Item>))}
+                        {TaskList.map(teste => (
+                            <Item key={teste.id}
+                                id={teste.id}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    SetActiveList(event.target.id)
+                                }}>
+                                {teste.titulo}
+                            </Item>))}
                         <Configure>
                             <ButtonConfigure>
 
@@ -133,7 +136,6 @@ export function Principal({Request,ChangeCardState,MenuCard}) {
                         </Configure>
                     </MenuItem>
                 </Menu>
-                
             </Section>
             <TaskMenu>
             {
@@ -155,8 +157,7 @@ export function Principal({Request,ChangeCardState,MenuCard}) {
                 ))
             }
                 </TaskMenu>
+
         </PrincipalSection>
     )
 }
-
-

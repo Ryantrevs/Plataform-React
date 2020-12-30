@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import React,{useState, useContext} from 'react'
+=======
+import React,{useState} from 'react'
+import { DragDropContext } from 'react-beautiful-dnd';
+>>>>>>> 000d614316bc5939edc690cd5dc737cf3a26846d
 import Card from './Card/Index'
 import Principal  from './Principal/Index'
 import MenuList from './MenuList/Index'

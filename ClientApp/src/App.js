@@ -26,7 +26,6 @@ export default class App extends Component {
             <Route path="/Register" exact component={Register} />
           </Switch>
         </RequestContext.Provider>
-
       </main>
     );
   }

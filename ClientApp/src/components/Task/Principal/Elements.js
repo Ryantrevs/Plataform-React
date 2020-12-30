@@ -3,9 +3,8 @@ import styled from 'styled-components'
 export const PrincipalSection = styled.main`
     width: 100%;
     heigth: 100%;
+    background-color:#fe4a55;
     display: flex;
-    margin-top: 5vh;
-    margin-bottom: 10vh;
     flex-direction: row;
     display:flex;
     z-index:1;
@@ -13,11 +12,11 @@ export const PrincipalSection = styled.main`
 
 export const Section = styled.section`
     width: 310px;
-    background-color: #242424;
+    background-color: #fe4a55;
 `
 export const Menu = styled.div`
     background-color: #242424;
-    height: 700%;
+    height: 100%;
     display: block;
     transition: all .2s linear;
     border: 1px solid;
@@ -77,25 +76,25 @@ export const TaskMenu = styled.section`
     transition: 0.5s;
     overflow: auto;
     margin: auto;
-    height: 22em;
+    height: 35em;
     width: 70%;
 `
-export const ScopeList = styled.section`
-    background: #fff;
+export const ScopeList = styled.div`
     border-radius: 10px;
     text-align: center;
-    margin-top: 5px !important;
+    margin-top: 1em !important;
     padding: 20px;
-    width: 12em;
-    height: 8em;
+    width: 18em;
+    height: 90%;
     box-shadow: 0 1px 4px 0 rgba(21, 27, 38, 0.08);
-    cursor: pointer;
-    margin: auto;
+    margin: 1em;
+    overflow-y: scroll;
+    overflow-x: hidden;
 `
 export const Card = styled.div`
-    background: #f6f6;
+    background: #f6f6f6;
+    width:15em;
+    height:10em;
     margin: 0.25em 0 0 0;
-    border-radius: 0px,0px,10px,10px;
-    height:2em;
-    width:2em;
+    border-radius: 10px;
 `
