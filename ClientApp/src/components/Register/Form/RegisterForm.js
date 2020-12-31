@@ -3,12 +3,16 @@ import {
     RegisterForm as Form,
     FormDivRow,
     FormLabel,
-    FormInput
-} from "../Elements";
-import { useRequest } from "../../../Context/RequestContext"
+    FormInput,
+    FormButton
+} from "./../Elements";
+import { useRequest } from "./../../../context/RequestContext"
+import { useUser } from "./../../../context/UserContext"
+
 function RegisterForm() {
     const RequestContext = useRequest();
-
+    const UserContext = useUser();
+    
     function ValidaCpf(_cpf) {
         cpf = _cpf.replace(/\D/g, '');
         if (cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
@@ -80,7 +84,6 @@ function RegisterForm() {
         }
 
     }
-
     const [cpf, setCpf] = useState("");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -90,10 +93,8 @@ function RegisterForm() {
     const [valid, setValid] = useState("");
     const [validateConfirmPass, setValidateConfirmPass] = useState("");
     const [validateCpf, setValidateCpf] = useState("");
-    
-
-
     return (
+
         <Form id="RegisterForm" onSubmit={(event) => { RegisterUser(event) }} method="post">
             <FormDivRow>
                 <FormLabel htmlFor="cpf">CPF</FormLabel>
@@ -119,10 +120,9 @@ function RegisterForm() {
                 <div>{validateConfirmPass}</div>
             </FormDivRow>
             <FormDivRow>
-                <button type="submit" id="submitRegister" >Registrar</button>
+                <FormButton type="submit" id="submitRegister" >Registrar</FormButton>
             </FormDivRow>
         </Form>
     );
 }
-
 export default RegisterForm;

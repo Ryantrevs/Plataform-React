@@ -1,0 +1,236 @@
+#salvaDoc {
+    position: fixed;
+}
+body {
+    background-color: #e0dede;
+    font-family: Arial;
+}
+
+.pagina {
+    background-color: white;
+    padding: 15px;
+    width: 700px;
+    min-height: 800px;
+    text-align: center;
+    margin: auto;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.452);
+}
+
+.titulo, .agradecimento {
+    border: 1px;
+    border-style: dashed;
+    margin-top: 15vh;
+}
+
+.agradecimento-texto {
+    border: 1px;
+    margin-top: 15vh;
+    height: 54px;
+}
+
+    .agradecimento-texto textarea {
+        width: 670px;
+        height: 54px;
+        border-style: dashed;
+    }
+
+input {
+    border: none;
+    text-align: center;
+    width: 550px
+}
+
+.texto {
+    margin-top: 10vh;
+    border-style: dashed;
+    resize: none;
+    font-size: 12px;
+    float: right;
+    text-align: left;
+    height: 58px;
+    width: 50%;
+}
+
+.nome {
+    border: 1px;
+    border-style: dashed;
+    margin-top: 35vh;
+}
+
+.Tcc {
+    border: 1px;
+    border-style: dashed;
+    margin-top: 20vh;
+}
+
+.volume, .professor, .universidade {
+    border: 1px;
+    border-style: dashed;
+}
+
+.ano {
+    border: 1px;
+    border-style: dashed;
+    margin-bottom: 15px;
+}
+
+.descricao {
+    width: 50%;
+    float: right;
+}
+
+.cidade {
+    border: 1px;
+    border-style: dashed;
+    margin-top: 20vh;
+}
+
+.cidade2 {
+    width: 100%;
+    float: right;
+    margin-top: 10vh;
+}
+
+    .cidade2 input {
+        border: 1px;
+        border-style: dashed;
+        width: 50%;
+        float: right;
+    }
+
+.orientador {
+    padding: 10px;
+    width: 100%;
+    float: right;
+}
+
+    .orientador input {
+        border: 1px;
+        border-style: dashed;
+        width: 25%;
+        float: right;
+    }
+
+.banca {
+    border: 1px;
+    border-style: dashed;
+    margin-top: 35vh;
+}
+
+.resumo, .abstract {
+    border: 1px;
+    border-style: dashed;
+    margin-top: 15vh;
+}
+
+.resumo-texto textarea, .abstract-texto textarea {
+    width: 670px;
+    height: 54px;
+    border-style: dashed;
+}
+
+.palavrasChave, .key, .glossario-texto {
+    width: 100%;
+}
+
+    .palavrasChave input, .key input, .siglas input, .simbolo input, .glossario-texto input {
+        width: 30%;
+        float: left;
+        border-style: dashed;
+    }
+
+    .palavrasChave span, .key span, .siglas span, .simbolo span, .glossario-texto span {
+        width: 1%;
+    }
+
+    .palavrasChave textarea, .key textarea, .siglas textarea, .simbolo textarea, .glossario-texto textarea {
+        width: 69%;
+        float: right;
+        border-style: dashed;
+    }
+
+.listaIlustracao, .listaSiglas, .listaSimbolo, .sumario, .desenvolvimento, .referencia, .glossario {
+    border: 1px;
+    border-style: dashed;
+    margin-top: 15vh;
+}
+
+.tabelaSumario, .tabelaReferencia {
+    text-align: center;
+    width: 100%;
+}
+
+    .tabelaSumario td, .tabelaReferencia td {
+        text-align: left;
+    }
+
+.desenvolvimento-texto textarea {
+    width: 670px;
+    border-style: dashed;
+}
+
+.apendice, .anexo {
+    margin-top: 15vh;
+}
+
+    .apendice input, .anexo input {
+        text-align: center;
+    }
+
+.apendice-texto textarea, .anexo-texto textarea {
+    width: 670px;
+    height: 54px;
+}
+
+img {
+    width: 10px;
+    height: 10px;
+}
+
+
+
+
+.paginaAssist {
+    display: flex;
+}
+
+
+
+.introducao {
+    margin-top: 15vh;
+}
+
+    .introducao textarea {
+        width: 70%;
+        border-style: dashed;
+    }
+
+        .introducao textarea:focus {
+            outline: none !important;
+            border-color: transparent;
+        }
+
+.conteudo {
+    margin-top: 15vh;
+}
+
+/* .conclusao {
+} */
+
+    .conclusao textarea {
+        width: 70%;
+        border-style: dashed;
+    }
+
+.conclusão textarea:focus {
+    outline: none !important;
+    border-color: transparent;
+}
+
+.textoRodape{
+    display:flex;
+    
+    align-items:flex-end;
+    flex-direction:row-reverse;
+    
+}

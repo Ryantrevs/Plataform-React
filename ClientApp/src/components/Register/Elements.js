@@ -39,12 +39,12 @@ export const FormInput = styled.input`
     max-width:70%;
 `
 
-export const formButton = styled.button`
+export const FormButton = styled.button`
+    width:5em;
+    height:3em;
+    background-color:#005cb2;
+    border:none;
+    border-radius:8px;
+    color:#fff;
     align-self:flex-start;
-    font-size: 1em;
-    color:red;    
-    margin: 1em;
-    padding: 0.25em 1em;
-    border: 2px solid red;
-    border-radius: 3px;
 `

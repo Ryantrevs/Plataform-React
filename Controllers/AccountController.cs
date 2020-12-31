@@ -19,12 +19,14 @@ namespace PlataformaTccSuporte.Controllers
         private readonly UserManager<User> UserManager;
         private readonly SignInManager<User> SignInManager;
         private readonly IBankDataRepository dadosBancariosRepository;
-        
-        public AccountController(UserManager<User> UserManager, SignInManager<User> SignInManager, IBankDataRepository dadosBancariosRepository)
+        private readonly RoleManager<IdentityRole> roleManager;
+
+        public AccountController(UserManager<User> UserManager, SignInManager<User> SignInManager, IBankDataRepository dadosBancariosRepository,RoleManager<IdentityRole> roleManager)
         {
             this.UserManager = UserManager;
             this.SignInManager = SignInManager;
             this.dadosBancariosRepository = dadosBancariosRepository;
+            this.roleManager = roleManager;
         }
 
         [HttpGet]
@@ -74,10 +76,10 @@ namespace PlataformaTccSuporte.Controllers
         }
         [HttpPost]
         [ActionName("LogIn")]
-        public async Task LogIn(LogInViewModel livm, string returnUrl)
+        public async Task<Object> LogIn([FromForm]LogInViewModel livm, string returnUrl)
         {
             if (ModelState.IsValid)
-            {
+            {                                
                 User user = await UserManager.FindByEmailAsync(livm.Email);
                 if (user != null)
                 {
@@ -87,10 +89,13 @@ namespace PlataformaTccSuporte.Controllers
                     {
                         if (!user.EmailConfirmed)//Verifica se conta está confirmada, se não retorna a mensagem
                         {
-                            ModelState.AddModelError("", "Email ainda não confirmado");
+                            return new { success = false, error = "Email ainda não confirmado" };
+                            //ModelState.AddModelError("", "Email ainda não confirmado");
 
                         }
                         await SignInManager.SignInAsync(user, false);
+                        return new { success = true, error = "" };
+                        //return true;
                         if (!string.IsNullOrEmpty(returnUrl))//se usuario tentou abrir um recurso
                         {
 
@@ -102,21 +107,25 @@ namespace PlataformaTccSuporte.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Senha Incorreta!");
+                        return new { success = false, error = "Senha incorreta" };
+                        //ModelState.AddModelError("", "Senha Incorreta!");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Usuário não encontrado!");
+                    //ModelState.AddModelError("", "Usuário não encontrado!");
+                    return new { success = false, error = "Usuario Não Encontrado" };
                 }
 
             }
+            return false;
         }
 
         [ActionName("Logout")]
-        public async Task Logout()
+        public async Task<bool> Logout()
         {
             await SignInManager.SignOutAsync();
+            return true;
         }
 
         [Authorize]
@@ -305,7 +314,7 @@ namespace PlataformaTccSuporte.Controllers
         [ActionName("CheckCpfExists")]
         public async Task<bool> CheckCpfExists([FromForm] string cpf)
         {
-            //a ser implementado
+            
             if (await UserManager.FindByCpfAsync(cpf) != null)
             {
                 return true;
@@ -316,6 +325,54 @@ namespace PlataformaTccSuporte.Controllers
             }
             
         }
+        [HttpPost]
+        [ActionName("isLogged")]
+        public async Task<bool> IsLogged()
+        {
+            
+            if (SignInManager.IsSignedIn(User))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        [HttpPost]
+        [ActionName("getCurrentUser")]
+        public async Task<User> GetCurrentUser()
+        {
+            if (SignInManager.IsSignedIn(User))
+            {
+                return await UserManager.GetUserAsync(User);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        [HttpPost]
+        [ActionName("UserIsInRole")]
+        public async Task<Object> UserIsInRole([FromForm]string  role)
+        {
+            User user = await UserManager.GetUserAsync(User);
+            
+            if (await UserManager.IsInRoleAsync(user, role))
+            {
+                return new { success=true , erro=""};
+            }
+            else
+            {
+                return new { success=false, erro="Usuário não possui acesso." };
+            }
+        }
+
+
+
+
+
     }
 
 }
