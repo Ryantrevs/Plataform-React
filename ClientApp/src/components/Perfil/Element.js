@@ -8,7 +8,7 @@ export const Body = styled.div`
 `
 
 export const Div = styled.div`
-    background-color:#4c4c4c;
+    background-color:#242424;
     margin:auto;
     margin-top:10em;
     width:40em;
@@ -38,4 +38,11 @@ export const Select = styled.select`
     width:30em;
     border:none;
     border-radius:8px;
+`
+export const Button = styled.button`
+    border-radius:8px;
+    border: none;
+    background-color: #fe4a55;
+    height:2em;
+    margin-top:1em;
 `

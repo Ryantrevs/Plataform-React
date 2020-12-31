@@ -4,12 +4,11 @@ export const Body = styled.div`
     position:absolute;
     background-color: #fe4a55;
     width:100%;
-    height:100em;  
+    height:60em;  
 `
 
 export const Div = styled.div`
     background-color:#242424;
-    text-aling:center;
     margin:auto;
     margin-top:10em;
     width:40em;
@@ -18,15 +17,14 @@ export const Div = styled.div`
 `
 export const Label = styled.label`
    color:#fff;
+   margin-right:0.5em;  
 `
 export const H1 = styled.h1`
     color:#fff;
-    width:100%;
-    text-align: center;
     
 `
 export const Input = styled.input`
-    width:100%;
+    width:30em;
     border:none;
     border-radius:8px;
 `
@@ -37,7 +35,7 @@ export const InputRadio = styled.input`
     border-radius:8px;
 `
 export const Select = styled.select`
-    width:100%;
+    width:30em;
     border:none;
     border-radius:8px;
 `

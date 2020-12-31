@@ -7,7 +7,8 @@ import {
     A,
     DivUl,
     NavUl,
-    Li
+    Li,
+    Button
 } from './Elements'
 
 
@@ -20,25 +21,31 @@ export function Header() {
                 <DivUl>
                     <NavUl>
                         <Li>
-                            <Link to="/vendas">Cadastrar Vendas</Link>
+                            <Link style={{"text-decoration":"none"}} to="/vendas">Cadastrar Vendas</Link>
                         </Li>
                         <Li>
-                            <Link to="/div">lista</Link>
+                            <Link style={{"text-decoration":"none"}} to="/ListaDeClientes">Lista de Clientes</Link>
                         </Li>
                         <Li>
-                            <Link to="/">casa</Link>
+                            <Link style={{"text-decoration":"none"}} to="/ListaDeVendas">Lista de Vendas</Link>
                         </Li>
                         <Li>
-                            <Link to="/Counter">counter</Link>
+                            <Link style={{"text-decoration":"none"}} to="/div">Tarefas</Link>
                         </Li>
                         <Li>
-                             <Link to="/fetch-data">Fetch</Link>   
+                            <Link style={{"text-decoration":"none"}} to="/">Home</Link>
+                        </Li>
+                        {/* <Li>
+                            <Link style={{"text-decoration":"none"}} to="/Counter">counter</Link>
                         </Li>
                         <Li>
-                             <Link to="/Perfil">Perfil</Link>   
+                             <Link style={{"text-decoration":"none"}} to="/fetch-data">Fetch</Link>   
+                        </Li> */}
+                        <Li>
+                             <Link style={{"text-decoration":"none"}} to="/Perfil">Perfil</Link>   
                         </Li> 
                         <Li>
-                             <Link to="/Register">Registrar-se</Link>   
+                             <Link style={{"text-decoration":"none"}} to="/Register">Registrar-se</Link>   
                         </Li>   
                     </NavUl>
                 </DivUl>

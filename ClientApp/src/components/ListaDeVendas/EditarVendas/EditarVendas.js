@@ -8,16 +8,16 @@ import {
     InputRadio,
     H1,
     Select
-} from './Elements';
+} from './Element';
 
-export class CadastrarVendas extends Component {
-    static displayName = CadastrarVendas.name;
+export class EditarVendas extends Component {
+    static displayName = EditarVendas.name;
 
     render() {
         return (
             <Body>
                 <Div>
-                    <H1>Cadastrar Vendas</H1>
+                    <H1>Editar Vendas</H1>
                     <Label>Email : </Label><br />
                     <Input type="email" /><br />
                     <Label>Nome do Cliente : </Label><br />
@@ -53,5 +53,5 @@ export class CadastrarVendas extends Component {
     }
 }
 
-export default CadastrarVendas;
+export default EditarVendas;
 

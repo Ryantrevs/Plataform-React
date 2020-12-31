@@ -3,8 +3,13 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { Route,Switch} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Header from './components/Header/Index'
-import vendas from './components/vendas/Index'
+import Vendas from './components/Vendas/Index'
+import ListaDeClientes from './components/ListaDeClientes/ListaDeClientes'
+import EditarCliente from './components/ListaDeClientes/EditarCliente/EditarCliente'
+import EditarVendas from './components/ListaDeVendas/EditarVendas/EditarVendas'
+import ListaDeVendas from './components/ListaDeVendas/ListaDeVendas'
 import Task from './components/Task/Index';
 import Register from './components/Register/Index'
 import './custom.css'
@@ -22,7 +27,11 @@ export default class App extends Component {
           <Route path="/Counter" exact component={Counter}/>
           <Route path="/FetchData" exact component={FetchData}/>
           <Route path="/div" exact component={Task}/>
-          <Route path="/vendas" exact component={vendas}/>
+          <Route path="/Vendas" exact component={Vendas}/>
+          <Route path="/ListaDeClientes" exact component={ListaDeClientes}/>
+          <Route path="/EditarCliente" exact component={EditarCliente}/>
+          <Route path="/ListaDeVendas" exact component={ListaDeVendas}/>
+          <Route path="/EditarVendas" exact component={EditarVendas}/>
           <Route path="/Perfil" exact component={Perfil}/>
           <Route path="/Register" exact component={Register}/>
         </Switch>
