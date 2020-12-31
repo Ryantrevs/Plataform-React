@@ -12,7 +12,7 @@ import {
 } from './Elements'
 import { MdCancel } from "react-icons/md";
 
-export function NewCardMenu({visible}) {
+export function NewCardMenu({visible,Scope}) {
     const [cardState,setCardState] = useState({
         title:"",
         describe:"",
@@ -20,7 +20,7 @@ export function NewCardMenu({visible}) {
         conclude:false
     })
     return (
-        <Section visible={visible.visibility}>
+        <Section visible={visible}>
             <NewCardSection>
                 <Header>
                     <h2>Novo Card</h2>
@@ -29,8 +29,8 @@ export function NewCardMenu({visible}) {
                 <Main>
                     <label>Na Lista:  </label>
                     <Select>
-                        {visible.scope.map((sco,index)=>(
-                            <option key={index} value={sco.id}>{sco.title}</option>
+                        {Scope.map((sco,index)=>(
+                            <option key={index} value={sco.id}>{sco.titulo}</option>
                         ))}
                     </Select><br/>
                     <label>

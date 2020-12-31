@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const PrincipalSection = styled.main`
     width: 100%;
-    heigth: 100%;
+    height: 100vh;
     background-color:#fe4a55;
     display: flex;
     flex-direction: row;
@@ -12,11 +12,12 @@ export const PrincipalSection = styled.main`
 
 export const Section = styled.section`
     width: 310px;
+    margin:2em 0 0 0;
     background-color: #fe4a55;
 `
 export const Menu = styled.div`
     background-color: #242424;
-    height: 100%;
+    height: 70vh;
     display: block;
     transition: all .2s linear;
     border: 1px solid;
@@ -76,7 +77,7 @@ export const TaskMenu = styled.section`
     transition: 0.5s;
     overflow: auto;
     margin: auto;
-    height: 35em;
+    height: 38em;
     width: 70%;
 `
 export const ScopeList = styled.div`
@@ -97,4 +98,8 @@ export const Card = styled.div`
     height:10em;
     margin: 0.25em 0 0 0;
     border-radius: 10px;
+`
+export const CardTitle = styled.h3`
+    color:red;
+    margin:1em 0 0 0;
 `

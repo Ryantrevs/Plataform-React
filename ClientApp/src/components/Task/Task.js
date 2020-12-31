@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import React,{useState, useContext} from 'react'
-=======
-import React,{useState} from 'react'
-import { DragDropContext } from 'react-beautiful-dnd';
->>>>>>> 000d614316bc5939edc690cd5dc737cf3a26846d
 import Card from './Card/Index'
 import Principal  from './Principal/Index'
 import MenuList from './MenuList/Index'
@@ -11,12 +6,16 @@ import NewCardMenu from './NewCardMenu/Index'
 import axios from 'axios'
 import useCard from '../../hooks/useCard'
 import CardContext from '../../Context/CardContext'
+import ScopeContext from '../../Context/ScopeContext'
+import useScope from '../../hooks/useScope'
 
 export function Task() {
-    const context = useContext(CardContext)
-    const [infoCard, AddCard] = useCard(context)
+    const cardContext = useContext(CardContext);
+    const scopeContext = useContext(ScopeContext);
+    const [infoCard, AddCard] = useCard(cardContext);
+    const [ScopeList, AddScope] = useScope(scopeContext);
     const [menuCardState,SetMenuCardState] = useState(false);
-    const [visible,setVisible] = useState({visibility:false,scope:[]})
+    const [visible,setVisible] = useState(false);
 
     
     async function ChangeCardState(state,obj){
@@ -26,35 +25,38 @@ export function Task() {
             SetMenuCardState(state);
         }
         else{
-            AddCard(context)
+            AddCard(cardContext)
             SetMenuCardState(state);
         }
     }
 
-    async function ChangeMenuCardState(state,scope){
+    async function ChangeMenuCardState(state,obj){
         if(state==true){
-            console.log(scope)
-            setVisible({visibility:state,scope:scope});
-            console.log(visible);
+            setVisible(state)
+            AddScope(obj);
         }
         else{
-            setVisible({visibility:state,scope:context});
-            console.log(visible);
+            setVisible(state);
+            AddScope(scopeContext);
         }
     }
 
     return (
         <main>
-            <Principal Request={Request} 
+            <Principal 
+            Request={Request} 
             ChangeCardState={ChangeCardState}
-            MenuCard={ChangeMenuCardState}/>
+            MenuCard={ChangeMenuCardState}
+            ListScope={ScopeList}
+            newScopeList={AddScope}/>
             <Card 
             isVisible={menuCardState} 
             ChangeCardState={ChangeCardState}
             infoCard={infoCard}
             setCard={AddCard}/>
             <NewCardMenu
-            visible={visible}/>
+            visible={visible}
+            Scope={ScopeList}/>
             <MenuList/>
         </main>
     )
