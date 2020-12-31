@@ -24,11 +24,11 @@ export function UserProvider({ children }) {
                         setIsLogged(true);
                         setUser(promise.data);
                     }
-
                 })
             }
         });
     }, []);
+
 
     return (
         <UserContext.Provider value={{ User: user, isLogged: isLogged, setUser: setUser, setIsLogged: setIsLogged }}>

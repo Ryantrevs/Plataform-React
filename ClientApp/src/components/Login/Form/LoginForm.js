@@ -13,7 +13,6 @@ import {useUser} from "../../../context/UserContext"
 function LoginForm() {
     const Request = useRequest().Request;
     var localUserContext = useUser();
-    console.log(localUserContext);
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
     const [rememberMe,setRememberMe] = useState(false);
@@ -27,13 +26,16 @@ function LoginForm() {
         data.append("livm.Password",pass);
         data.append("livm.RememberMe",rememberMe);
         Request("post",data,"Account/LogIn",(promise)=>{
-            if(promise.data){ 
+            console.log(promise.data)
+            if(promise.data.success){ 
                 localUserContext.setIsLogged(promise.data);
                 Request("post","","Account/getCurrentUser",(promise2)=>{
                     if(promise2.data!=null){                                               
                         localUserContext.setUser(promise2.data)
                     }
                 })
+            }else{
+                setError(promise.data.error);                
             }
         });
     }
@@ -43,15 +45,15 @@ function LoginForm() {
     return (
         <Body>
             <Form onSubmit={event=>LogInUser(event)}>
-                <H1>Login</H1>
-                <span>{error}</span>
+                <H1>Login</H1>                
                 <Label>Email : </Label><br />
-                <Input type="email" onChange={(event)=>setEmail(event.target.value) }/><br />
+                <Input type="email" onChange={(event)=>setEmail(event.target.value) } required/><br />
                 <Label>Senha : </Label><br />
-                <Input type="password" onChange={(event)=>setPass(event.target.value)} /><br />
+                <Input type="password" onChange={(event)=>setPass(event.target.value)} required/><br />
                 {/* <Label>Lembrar : </Label> */}
                 {/* <InputCheckbox type="checkbox" onClick={event=>{setRememberMe(!rememberMe)}} /><br /> */}
-                <Button >Login</Button>
+                <Button >Login</Button><br/>
+                <span style={{color:"#fff",fontWeight:'bold'}}>{error}</span>
             </Form>
         </Body>
     );

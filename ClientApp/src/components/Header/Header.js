@@ -16,8 +16,7 @@ import { useRequest } from "./../../context/RequestContext"
 export function Header() {
     var myContext = useUser();;
     var Request = useRequest().Request;
-    console.log(myContext);
-
+    
     async function LogOff() {
         Request("post", "", "Account/Logout", (promise) => {
             if (promise.data) {
@@ -53,7 +52,7 @@ export function Header() {
                 <DivUl>                    
                     <NavUl>
                         <Li>
-                            <Link to="/vendas">Cadastrar Vendas</Link>
+                            <Link to="/Vendas">Cadastrar Vendas</Link>
                         </Li>
                         <Li>
                             <Link to="/div">lista</Link>
@@ -69,6 +68,9 @@ export function Header() {
                         </Li>
                         <Li>
                             <Link to="/Register">Registrar-se</Link>
+                        </Li>
+                        <Li>
+                            <Link to="/DocEditor">Editor de documento</Link>
                         </Li>
                         <UserArea/>
                     </NavUl>

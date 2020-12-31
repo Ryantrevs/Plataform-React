@@ -12,8 +12,7 @@ import { useUser } from "./../../../context/UserContext"
 function RegisterForm() {
     const RequestContext = useRequest();
     const UserContext = useUser();
-    console.log(UserContext.isLogged);
-    console.log(UserContext);
+    
     function ValidaCpf(_cpf) {
         cpf = _cpf.replace(/\D/g, '');
         if (cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
