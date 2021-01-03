@@ -13,9 +13,9 @@ import { UserProvider } from './context/UserContext'
 import './custom.css';
 import DocEditor from "./components/DocEditor/Index"
 import PrivateRoute from './components/PrivateRoute';
+import AccessDenied from "./components/AccessDenied";
 export default class App extends Component {
   static displayName = App.name;
-
   render() {
     return (
       <main>
@@ -24,15 +24,15 @@ export default class App extends Component {
             <Header />
             <Switch>
               <Route path="/" exact component={Login} />
-              <Route path="/AcessoNegado" component={<div>AcessoNegado</div>}/>
+              <Route path="/AcessoNegado" component={AccessDenied}/>
               {/* <Route path="/" exact component={Home} /> */}
               <Route path="/Counter" exact component={Counter} />
               <Route path="/FetchData" exact component={FetchData} />
               <Route path="/div" exact component={Task} />
               {/* <Route path="/vendas" exact component={Vendas} /> */}
               <Route path="/Register" exact component={Register} />
-              <PrivateRoute path="/Vendas" component={Vendas} Role={"admin"}/>
               <Route path="/DocEditor" component={DocEditor} />
+              <PrivateRoute path="/Vendas" component={Vendas} Role={"admin"} />              
             </Switch>
           </RequestProvider>
         </UserProvider>

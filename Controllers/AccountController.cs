@@ -94,7 +94,8 @@ namespace PlataformaTccSuporte.Controllers
 
                         }
                         await SignInManager.SignInAsync(user, false);
-                        return new { success = true, error = "" };
+                        user.PasswordHash = "";//não passa a senha de volta para a aplicação
+                        return new { success = true, error = "" ,user = user};
                         //return true;
                         if (!string.IsNullOrEmpty(returnUrl))//se usuario tentou abrir um recurso
                         {

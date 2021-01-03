@@ -25,17 +25,12 @@ function LoginForm() {
         data.append("livm.Email",email);
         data.append("livm.Password",pass);
         data.append("livm.RememberMe",rememberMe);
-        Request("post",data,"Account/LogIn",(promise)=>{
-            console.log(promise.data)
+        Request("post",data,"Account/LogIn",(promise)=>{            
             if(promise.data.success){ 
-                localUserContext.setIsLogged(promise.data);
-                Request("post","","Account/getCurrentUser",(promise2)=>{
-                    if(promise2.data!=null){                                               
-                        localUserContext.setUser(promise2.data)
-                    }
-                })
+                localUserContext.setIsLogged(true);
+                localUserContext.setUser(promise.data.user);
             }else{
-                setError(promise.data.error);                
+                setError(promise.data.error);//caso usuario não seja encontrado mostra o erro retornado                
             }
         });
     }

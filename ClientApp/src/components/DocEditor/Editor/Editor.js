@@ -4,12 +4,31 @@ import { Document, Packer, Paragraph, TextRun } from "docx";
 import { writeFile } from 'fs-web';
 
 
-export default function Editor({ doc, setDoc }) {
+export default function Editor({ doc, setDoc, desen, setDesen }) {
     //console.log(props);
+    function teste() {
+        console.log("entrou aqui");
+    }
+    function updateParagrafo(e, index, value) {
+        e.preventDefault();
+        desen.paragrafos[index] = value;
+        setDesen({ paragrafos: desen.paragrafos });
+        console.log(desen.paragrafos);
+    }
+    function addParagrafoDesen() {
+        setDesen({ paragrafos: [...desen.paragrafos, ""] });
+    }
+    function removeParagrafoDesen(e, index) {
+        index = index-1;
+        console.log("posicao de deleção",index);
+        desen.paragrafos.splice(index, 1);
+        console.log(desen.paragrafos)
+        setDesen({ paragrafos: [...desen.paragrafos] });
+    }
     function updateField(field, value) {
         setDoc({ ...doc, [field]: value })
     }
-    async function GenerateDoc(event) {
+    async function Generate(event) {
         event.preventDefault();
         console.log("click");
         const doc = new Document();
@@ -51,7 +70,7 @@ export default function Editor({ doc, setDoc }) {
         });
     }
     return (
-        <form onSubmit={event => GenerateDoc(event)}>
+        <form onSubmit={event => Generate(event)}>
             {JSON.stringify(doc)}
             {/* <button onClick={updateDoc}>TesteUpdate</button> */}
             <button type="submit" id="salvaDoc">Gerar Docx</button>
@@ -61,7 +80,7 @@ export default function Editor({ doc, setDoc }) {
                     <input type="text" onChange={e => updateField('nomeUniv', e.target.value)} value={doc['nomeUniv']} placeholder="Sua Universidade" />
                 </div>
                 <div className="nome">
-                    <input type="text" onChange={e => updateField('autor', e.target.value)} value={doc['autor']} placeholder="Autor" id="autorCapa"  />
+                    <input type="text" onChange={e => updateField('autor', e.target.value)} value={doc['autor']} placeholder="Autor" id="autorCapa" />
                 </div>
                 <div className="Tcc">
                     <input type="text" asp-for="@Model.nomeTCC" placeholder="meu TCC" id="tccCapa" onkeyup="updateTccField(this.id)" />
@@ -460,6 +479,20 @@ export default function Editor({ doc, setDoc }) {
                 <br />
                 <div className="desenvolvimento-texto">
                     <textarea asp-for="@Model.TextoDesenvolvimento"></textarea>
+                    {
+                        desen.paragrafos.map((paragrafo, index) => {
+                            return (
+                                <div key={index}>
+                                    <div >
+                                        <textarea onChange={e => updateParagrafo(e, index, e.target.value)}>{paragrafo}</textarea>
+                                    </div>
+                                    <button onclick={(e) => { e.preventDefault(); removeParagrafoDesen(e, index) }}  >- remover</button>
+                                    <button onClick={(e) => { e.preventDefault(); console.log("item: ", index); removeParagrafoDesen(e, index) }}>Teste</button>
+                                </div>
+                            );
+                        })
+                    }
+                    <button onClick={e => addParagrafoDesen(e)}>+ paragrafo</button>
                 </div>
             </section>
             {/* <!--conclusao--> */}
@@ -549,7 +582,7 @@ export default function Editor({ doc, setDoc }) {
                     <textarea asp-for="@Model.anexoATexto"></textarea>
                 </div>
             </section>
-        </form>
+        </form >
 
 
     );

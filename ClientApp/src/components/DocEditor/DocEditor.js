@@ -4,10 +4,16 @@ import Editor from "./Editor/Editor"
 export default function DocEditor() {
     const [doc, setDoc] = useState(
         {
-            nomeUniv:"",
+            nomeUniv: "",
             title: 'This is first list',
-            autor:"initialAuthor"
+            autor: "initialAuthor"
         }
     );
-    return <Editor doc={doc} setDoc={setDoc} />
+    const [desenvolvimento, setDesenvolvimento] = useState(
+        {
+            paragrafos:["exemplo", ""]
+        }
+    );
+
+    return <Editor doc={doc} setDoc={setDoc} desen={desenvolvimento} setDesen={setDesenvolvimento} />
 }
