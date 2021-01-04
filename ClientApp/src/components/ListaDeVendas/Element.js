@@ -4,40 +4,43 @@ export const Body = styled.div`
     position:absolute;
     background-color: #fe4a55;
     width:100%;
-    height:100em;  
+    height:60em;  
 `
 
 export const Div = styled.div`
     background-color:#242424;
-    text-aling:center;
     margin:auto;
     margin-top:10em;
-    width:40em;
+    width:90%;
     padding:3em;
     border-radius:8px;
 `
 export const Label = styled.label`
    color:#fff;
+   margin-right:0.5em;  
 `
 export const H1 = styled.h1`
     color:#fff;
-    width:100%;
-    text-align: center;
     
 `
-export const Input = styled.input`
-    width:100%;
+export const Button = styled.button`
+    width:4em;
+    color:white;
+    background-color: #fe4a55;
     border:none;
     border-radius:8px;
+    height:3em;
 `
-export const InputRadio = styled.input`
-    margin-left:0.5em;
-    margin-right:0.5em;
-    border:none;
-    border-radius:8px;
-`
-export const Select = styled.select`
+export const Tr = styled.tr`
     width:100%;
+    height:4em;
+    border-bottom:solid 1px #2c2c2c;
+`
+export const Td = styled.td`
     border:none;
-    border-radius:8px;
+    text-align: center;
+`
+export const Table = styled.table`
+    color:white;
+    width:100%;
 `

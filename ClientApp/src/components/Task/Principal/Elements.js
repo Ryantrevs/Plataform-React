@@ -2,21 +2,20 @@ import styled from 'styled-components'
 
 export const PrincipalSection = styled.main`
     width: 100%;
-    heigth: 100%;
+    height: 100vh;
+    background-color:#fe4a55;
     display: flex;
-    margin-top: 5vh;
-    margin-bottom: 10vh;
     flex-direction: row;
-    display:flex;
 `
 
 export const Section = styled.section`
+    margin-top:1em;
     width: 310px;
-    background-color: #242424;
+    background-color: #fe4a55;
 `
 export const Menu = styled.div`
     background-color: #242424;
-    height: 700%;
+    height: 100%;
     display: block;
     transition: all .2s linear;
     border: 1px solid;
@@ -27,35 +26,35 @@ export const NavMenu = styled.nav`
     width: 100%;
     top: 60px;
 `
-export const MenuItem = styled.a`
-    text-decoration: none;
+export const MenuItem = styled.div`
+    width:100%;
 `
 
 export const Item = styled.div`
     background-color: #fff;
-    padding: 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     transition: all .2s linear;
     color: #242424;
     border-bottom: 2px solid #242424;
     width:100%;
+    height:100%;
     cursor:pointer;
 `
 
 export const Configure = styled.div`
-    width: 0%;
+    width: 20%;
+    height:1.2em;
+    float:right;
     font-family: Arial, Helvetica, sans-serif;  /*config "escondido" só aparece quando passa o mouse por cima*/
-    font-size: 0pt;
-    display: flex;
-    justify-content: space-around;
-    background-color: #fff;
+    font-size: 15pt;
+    background-color: #000000;
     transition: all .2s linear;
 `
 export const ButtonConfigure = styled.button`
-    font: #fff;
+    font: #000000;
     color: #fff;
-    background:#000000;
+    background:red;
     border:none;
 `
 export const ButtonTools = styled.button`
@@ -64,7 +63,6 @@ export const ButtonTools = styled.button`
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    width: 5em;
     transition: all .2s linear;
     margin:0.5em 0 0.3em 0.7em;
 `
@@ -76,23 +74,28 @@ export const TaskMenu = styled.section`
     transition: 0.5s;
     overflow: auto;
     margin: auto;
-    height: 22em;
+    height: 35em;
     width: 70%;
 `
-export const ScopeList = styled.section`
-    background: #fff;
+export const ScopeList = styled.div`
     border-radius: 10px;
     text-align: center;
-    margin-top: 5px !important;
+    margin-top: 1em !important;
     padding: 20px;
-    width: 12em;
-    height: 8em;
+    width: 18em;
+    height: 90%;
     box-shadow: 0 1px 4px 0 rgba(21, 27, 38, 0.08);
-    cursor: pointer;
-    margin: auto;
+    margin: 1em;
+    overflow-y: scroll;
+    overflow-x: hidden;
 `
 export const Card = styled.div`
     background: #f6f6f6;
+    width:15em;
+    height:10em;
     margin: 0.25em 0 0 0;
-    border-radius: 0px,0px,10px,10px;
+    border-radius: 10px;
+`
+export const Icone = styled.i`
+    color:white;
 `

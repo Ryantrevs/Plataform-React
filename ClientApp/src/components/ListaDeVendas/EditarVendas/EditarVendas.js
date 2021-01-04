@@ -8,16 +8,16 @@ import {
     InputRadio,
     H1,
     Select
-} from './Elements';
+} from './Element';
 
-export class CadastrarVendas extends Component {
-    static displayName = CadastrarVendas.name;
+export class EditarVendas extends Component {
+    static displayName = EditarVendas.name;
 
     render() {
         return (
             <Body>
                 <Div>
-                    <H1>Cadastrar Vendas</H1>
+                    <H1>Editar Vendas</H1>
                     <Label>Email : </Label><br />
                     <Input type="email" /><br />
                     <Label>Nome do Cliente : </Label><br />
@@ -42,35 +42,16 @@ export class CadastrarVendas extends Component {
                         <option>Pago</option>
                         <option>Não Pago</option>
                     </Select><br/>
-                    <Label>Valor Total : </Label><br />
+                    <Label>Valor Total : </Label>
                     <Input type="number" /><br />
-                    <Label>Valor Pago : </Label><br />
+                    <Label>Valor Pago : </Label>
                     <Input type="number" /><br />
-                    <Label>Instituição de Ensino : </Label><br />
-                    <Input type="text" /><br />
-                    <Label>Orientador : </Label><br />
-                    <Input type="text" /><br />
-                    <Label>Curso : </Label><br />
-                    <Input type="text" /><br />
-                    <Label>Tema : </Label><br />
-                    <Input type="text" /><br />
-                    <Label>Número de Páginas : </Label><br />
-                    <Input type="number" /><br />
-                    <Label>Prévia 1 : </Label><br />
-                    <Input type="date" /><br />
-                    <Label>Prévia 2 : </Label><br />
-                    <Input type="date" /><br />
-                    <Label>Prévia 3 : </Label><br />
-                    <Input type="date" /><br />
-                    <Label>Data da Entrega : </Label><br />
-                    <Input type="date" /><br />
-                    <Label>Observações : </Label><br />
-                    <Input type="text" /><br />
+                    
                 </Div>
             </Body>
         );
     }
 }
 
-export default CadastrarVendas;
+export default EditarVendas;
 

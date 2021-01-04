@@ -1,6 +1,6 @@
 ﻿import styled from 'styled-components'
 export const Nav = styled.nav`
-    background:#4c4c4c;
+    background:#242424;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -15,6 +15,7 @@ export const A = styled.a`
     white-space: normal;
     text-align: center;
     word-break: break-all;
+    
 `
 export const DivUl = styled.div`
     display:flex;
@@ -27,4 +28,11 @@ export const NavUl = styled.ul`
 `
 export const Li = styled.li`
     margin:0.5em 1.5em 0 0;
+    font-size:14pt;
 `
+export const Button = styled.button`
+    border:none;
+    border-radius:8px;
+    backgroud-color: #fe4a55;
+`
+

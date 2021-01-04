@@ -34,11 +34,11 @@ body {
         border-style: dashed;
     }
 
-input {
+/* input {
     border: none;
     text-align: center;
     width: 550px
-}
+} */
 
 .texto {
     margin-top: 10vh;
