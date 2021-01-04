@@ -21,19 +21,29 @@ export function Header() {
                 <DivUl>
                     <NavUl>
                         <Li>
-                            <Link style={{"text-decoration":"none"}} to="/vendas">Cadastrar Vendas</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/vendas">Cadastrar Vendas</Link>
+                            </Button>
                         </Li>
                         <Li>
-                            <Link style={{"text-decoration":"none"}} to="/ListaDeClientes">Lista de Clientes</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeClientes">Lista de Clientes</Link>
+                            </Button>
                         </Li>
                         <Li>
-                            <Link style={{"text-decoration":"none"}} to="/ListaDeVendas">Lista de Vendas</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeVendas">Lista de Vendas</Link>
+                            </Button>
                         </Li>
                         <Li>
-                            <Link style={{"text-decoration":"none"}} to="/div">Tarefas</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/div">Tarefas</Link>
+                            </Button>
                         </Li>
                         <Li>
-                            <Link style={{"text-decoration":"none"}} to="/">Home</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/">Home</Link>
+                            </Button>
                         </Li>
                         {/* <Li>
                             <Link style={{"text-decoration":"none"}} to="/Counter">counter</Link>
@@ -42,10 +52,14 @@ export function Header() {
                              <Link style={{"text-decoration":"none"}} to="/fetch-data">Fetch</Link>   
                         </Li> */}
                         <Li>
-                             <Link style={{"text-decoration":"none"}} to="/Perfil">Perfil</Link>   
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/Perfil">Perfil</Link>
+                            </Button>  
                         </Li> 
                         <Li>
-                             <Link style={{"text-decoration":"none"}} to="/Register">Registrar-se</Link>   
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/Register">Registrar-se</Link>
+                            </Button>   
                         </Li>   
                     </NavUl>
                 </DivUl>

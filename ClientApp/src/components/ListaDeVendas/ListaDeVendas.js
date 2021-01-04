@@ -69,11 +69,13 @@ export class ListaDeVendas extends Component {
                             </Td>
                             <Td>
                                 <Button>
-                                        <Link to="/EditarVendas">Editar</Link>
+                                    <Link style={{"text-decoration":"none"}} to="/EditarVendas">Editar</Link>
                                 </Button>
                             </Td>
                             <Td>
-                                <Button style={{background:"green"}}>Mais</Button>
+                                <Button style={{background:"green"}}>
+                                    <Link style={{"text-decoration":"none"}} to="/InformacoesVendas">Mais</Link>
+                                </Button>
                             </Td>
                             <Td>
                                 <Button style={{background:"Red"}}>Deletar</Button>

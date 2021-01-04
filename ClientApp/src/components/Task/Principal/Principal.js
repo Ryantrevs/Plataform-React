@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { cog } from '@fortawesome/free-solid-svg-icons';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useDrag } from 'react-dnd';
+import {DndProvider} from 'react-dnd';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { cog } from '@fortawesome/free-solid-svg-icons';
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
     PrincipalSection,
     Section,
@@ -17,6 +19,7 @@ import {
     Icone
 } from './Elements'
 import { TiThMenuOutline } from "react-icons/ti";
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 //const element = <FontAwesomeIcon icon={cog} />
 
@@ -74,25 +77,15 @@ export function Principal({ Request }) {
 
 
     
-    /*
-    function handleOnDragEnd(result) {
-        const items = Array.from(card);
-        const [reorderedItem] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reorderedItem);
 
-        updateCard(items);  
-        
-    }
-
-    const [card, updateCard] = useState();
-    */
+    
 
 
 
 
 
-
-   const onDragEnd = (result, scope, setScope) => {
+/*
+   const onDragEnd = (result) => {
     if (!result.destination) return;
     const { source, destination } = result;
   
@@ -128,6 +121,28 @@ export function Principal({ Request }) {
       });
     }
   };
+
+  */
+
+/*
+function handleOnDragEnd(result) {
+    const items = Array.from(card);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 1, reorderedItem);
+
+    updateCard(items);  
+}
+
+const [card, updateCard] = useState(Scope);
+*/
+
+const [{isDragging}, dragRef] = useDrag({
+    item:{type:'card'},
+    collect: monitor =>({
+        isDragging: monitor.isDragging()
+    })
+})
+
     return (
         <PrincipalSection>
             <Section>
@@ -157,35 +172,22 @@ export function Principal({ Request }) {
                 </Menu>
             </Section>
             <TaskMenu>
-                {
-                    <DragDropContext onDragEnd={result => onDragEnd(result, Scope, SetScope)}>
-                        {Scope.map((scope, index) => (
+                <DndProvider backend={HTML5Backend}>
+                {Scope.map((scope, index) => (
                             <ScopeList key={scope.id}>
-                                <Droppable droppableId={scope.id} key={scope.id}>
-                                    {(provided) => (
-                                        <div className="ScopeList"
-                                            {...provided.droppableProps}
-                                            ref={provided.innerRef}>
-                                            <h3>{scope.titulo}</h3>
-                                            {scope.cards.map((card, subIndex) => {
-                                                return (
-                                                    <Draggable draggableId={card.id} key={card.id} index={index}>
-                                                        {(provided) => (
-                                                            <Card key={card.id}
-                                                                ref={provided.innerRef}
-                                                                {...provided.draggableProps}
-                                                                {...provided.dragHandleProps}>{card.titulo}</Card>
-                                                        )}
-                                                    </Draggable>
-                                                )
-                                            })}
-                                        </div>
+                                <h3>{scope.titulo}</h3>
+                                {scope.cards.map((card, subIndex) => {
+                                return(
+                                    <Card ref={dragRef} 
+                                    key={card.id}
+                                    index={subIndex}>
+                                    {card.titulo}
+                                    </Card>
                                     )}
-                                </Droppable>
+                                )}
                             </ScopeList>
                         ))}
-                    </DragDropContext>
-                }
+                </DndProvider>
             </TaskMenu>
         </PrincipalSection>
     )

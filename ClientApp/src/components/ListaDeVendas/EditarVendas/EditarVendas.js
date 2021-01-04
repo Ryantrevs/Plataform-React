@@ -5,9 +5,11 @@ import {
     Div,
     Label,
     Input,
-    InputRadio,
     H1,
-    Select
+    H3,
+    Button,
+    Select,
+    InputCheck
 } from './Element';
 
 export class EditarVendas extends Component {
@@ -17,35 +19,45 @@ export class EditarVendas extends Component {
         return (
             <Body>
                 <Div>
-                    <H1>Editar Vendas</H1>
-                    <Label>Email : </Label><br />
-                    <Input type="email" /><br />
-                    <Label>Nome do Cliente : </Label><br />
-                    <Input type="text" /><br />
-                    <Label>Sexo : </Label><br/>
-                    <Select>
-                        <option>Masculino</option>
-                        <option>Feminino</option>
-                    </Select><br/>
-                    <Label>Número do Cliente : </Label><br />
-                    <Input type="tel" /><br />
-                    <Label>Insira o número colocando o DDD </Label><br />
-                    <Label>Pagamento com Cartão de crédito : </Label>
-                    <Label> Sim  </Label>
-                    <InputRadio type="radio" name="pagamento" />
-                    <Label>Não  </Label>
-                    <InputRadio type="radio" name="pagamento" /><br />
-                    <Label>Data do fechamento : </Label><br />
-                    <Input type="date" /><br />
-                    <Label>Estagio do Pagamento : </Label>
-                    <Select>
-                        <option>Pago</option>
-                        <option>Não Pago</option>
-                    </Select><br/>
-                    <Label>Valor Total : </Label>
-                    <Input type="number" /><br />
-                    <Label>Valor Pago : </Label>
-                    <Input type="number" /><br />
+                    <div style={{"padding":"1em"}}>
+                        <H1>Editar Vendas</H1>
+                        <H3>Venda de Cliente</H3>
+                        <Button style={{"background-color":"gray", "color":"white"}}>Voltar</Button><br/>
+                        <H3>Editar Vendas</H3><br/>
+                        <InputCheck type="checkbox"/><Label>Cartão</Label><br/>
+                        <Label>Fechamento : </Label><br />
+                        <Input type="date" /><br />
+                        <Label>Estagio do Pagamento : </Label><br/>
+                        <Select>
+                            <option>Pago</option>
+                            <option>Não Pago</option>
+                        </Select><br/>
+                        <Label>Valor Total : </Label><br/>
+                        <Input type="number" /><br />
+                        <Label>Valor Pago : </Label><br/>
+                        <Input type="number" /><br />
+                    </div>
+                    <div style={{"margin-top":"5.5em"}}>
+                        <H3>Editar Trabalho</H3><br/>
+                        <Label>Instituição de Ensino : </Label><br />
+                        <Input type="text" /><br />
+                        <Label>Nome do Orientador : </Label><br />
+                        <Input type="text" /><br />
+                        <Label>Curso : </Label><br />
+                        <Input type="text" /><br />
+                        <Label>Tema : </Label><br />
+                        <Input type="text" /><br />
+                        <Label>Número de Páginas : </Label><br />
+                        <Input type="number" /><br />
+                        <Label>Prévia 1: </Label><br />
+                        <Input type="date" /><br />
+                        <Label>Prévia 2: </Label><br />
+                        <Input type="date" /><br />
+                        <Label>Prévia 3: </Label><br />
+                        <Input type="date" /><br />
+                        <Label>Observações : </Label><br />
+                        <Input type="text" /><br />
+                    </div>
                     
                 </Div>
             </Body>

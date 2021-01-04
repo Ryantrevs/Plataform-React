@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Body,
     Div,
@@ -24,9 +25,13 @@ export class Perfil extends Component {
                         <Label>Nome do Banco :</Label><br/>
                         <Label>Agência : </Label><br/>
                         <Label>Conta : </Label><br/>
-                        <Button>Editar Dados Bancarios</Button>
+                        <Button>
+                            <Link to="/EditarBancarios">Editar Dados Bancarios</Link>
+                        </Button>
                     </div>
-                    <Button>Editar Dados</Button>    
+                    <Button>
+                        <Link to="/EditarPerfil">Editar</Link>
+                    </Button>    
                 </Div>
                 
             </Body>

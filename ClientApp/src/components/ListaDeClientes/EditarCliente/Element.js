@@ -9,9 +9,10 @@ export const Body = styled.div`
 
 export const Div = styled.div`
     background-color:#242424;
+    text-aling:center;
     margin:auto;
     margin-top:10em;
-    width:40em;
+    width:50%;
     padding:3em;
     border-radius:8px;
 `
@@ -24,7 +25,8 @@ export const H1 = styled.h1`
     
 `
 export const Input = styled.input`
-    width:30em;
+    width:100%;
+    height:2em;
     border:none;
     border-radius:8px;
 `
@@ -35,7 +37,8 @@ export const InputRadio = styled.input`
     border-radius:8px;
 `
 export const Select = styled.select`
-    width:30em;
+    width:100%;
+    height:2em;
     border:none;
     border-radius:8px;
 `

@@ -1,4 +1,8 @@
 import React, { useState } from "react"
+import {
+  Body,
+  Div,
+} from './Elements';
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 
@@ -44,8 +48,8 @@ function Register() {
   }
 
   return (
-    <body>      
-      <div class="container bg-dark">
+    <Body>      
+      <Div class="container bg-dark">
         <div class="row text-white">
           <div class="col-2"></div>
           <div class="col-8 h1 mt-4 mb-4">Cadastrar</div>
@@ -55,15 +59,15 @@ function Register() {
           <form id="RegisterForm" class="col-8 mb-4 mt-4" onSubmit={(event) => { RegisterUser(event) }}>
             <div class="form-group">
               <label for="cpf">CPF</label>
-              <input value={cpf} onChange={(event)=>setCpf(event.target.value)} type="text" class="form-control" id="cpf" placeholder="Insira CPF com ou sem - e ." required />
+              <input value={cpf} onChange={(event)=>setCpf(event.target.value)} type="text" class="form-control" id="cpf" placeholder="Insira CPF com - e ." required />
             </div>
             <div class="form-group">
               <label for="nome">Nome</label>
-              <input value={name} onChange={(event)=>setName(event.target.value)} type="text" class="form-control" id="nome" required />
+              <input value={name} onChange={(event)=>setName(event.target.value)} type="text" class="form-control" id="nome" placeholder="Digite seu Nome" required />
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" value={email} onChange={(event)=>setEmail(event.target.value)} onfocus="limpaCheckEmail(this.id)" onblur="verificaEmail(this.id)" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Digite Email" required />
+              <input type="email" value={email} onChange={(event)=>setEmail(event.target.value)} onfocus="limpaCheckEmail(this.id)" onblur="verificaEmail(this.id)" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Digite seu Email" required />
               <div id="validEmailCheck" class="text-danger"></div>
             </div>
             <div class="form-group">
@@ -79,8 +83,8 @@ function Register() {
             <button type="submit" class="btn btn-primary" onclick="validaRegister()" id="submitRegister" >Registrar</button>
           </form>
         </div>
-      </div>
-    </body>
+      </Div>
+    </Body>
   );
 }
 

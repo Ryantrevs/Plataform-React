@@ -5,7 +5,6 @@ import {
     Div,
     Label,
     Input,
-    InputRadio,
     H1,
     Select
 } from './Element';
