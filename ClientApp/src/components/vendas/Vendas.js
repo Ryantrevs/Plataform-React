@@ -1,6 +1,9 @@
 import React from 'react';
-export default function Vendas() {
+
+function Vendas() {
     return (
         <h1>Vendas</h1>
     );
 }
+
+export default Vendas;

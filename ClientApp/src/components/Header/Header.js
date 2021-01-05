@@ -72,6 +72,9 @@ export function Header() {
                         <Li>
                             <Link to="/DocEditor">Editor de documento</Link>
                         </Li>
+                        <Li>
+                            <Link to="/Balance">Balanço</Link>
+                        </Li>
                         <UserArea/>
                     </NavUl>
                 </DivUl>

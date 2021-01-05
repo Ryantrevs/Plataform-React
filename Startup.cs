@@ -43,6 +43,10 @@ namespace PlataformaTccSuporte
             services.AddTransient<IJobRepository, JobRepository>();
             services.AddTransient<ISaleRepository, SaleRepository>();
             services.AddTransient<IBankDataRepository, BankDataRepository>();
+            services.AddTransient<IFinanceRepository, FinanceRepository>();
+            services.AddTransient<IExpensesRepository, ExpensesRepository>();
+            services.AddTransient<IExpenseCategoryRepository, ExpenseCategoryRepository>();
+            services.AddTransient<IIncomingRepository, IncomingRepository>();
             services.AddDbContext<PlataformaTccSuporteContext>(options => options.UseMySql(Configuration.GetConnectionString("bd")));
             services.AddIdentity<User, IdentityRole>(options =>
             {
@@ -80,7 +84,7 @@ namespace PlataformaTccSuporte
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/error-local-development");
             }
             else
             {

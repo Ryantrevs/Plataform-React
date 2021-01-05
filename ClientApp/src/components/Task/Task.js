@@ -5,12 +5,41 @@ import MenuList from './MenuList/Index'
 import NewCardMenu from './NewCardMenu/Index'
 import axios from 'axios'
 import useCard from '../../hooks/useCard'
-import CardContext from '../../Context/CardContext'
-import ScopeContext from '../../Context/ScopeContext'
 import useScope from '../../hooks/useScope'
+import {TaskProvider} from '../../context/TaskContext'
 
 export function Task() {
-    const cardContext = useContext(CardContext);
+    
+    return (
+        <TaskProvider>
+            <Principal/>
+            <Card/>
+            <NewCardMenu/>
+            <MenuList/>
+        </TaskProvider>
+    )
+}
+
+
+/*<main>
+            <Principal 
+            Request={Request} 
+            ChangeCardState={ChangeCardState}
+            MenuCard={ChangeMenuCardState}
+            ListScope={ScopeList}
+            newScopeList={AddScope}/>
+            <Card 
+            isVisible={menuCardState} 
+            ChangeCardState={ChangeCardState}
+            infoCard={infoCard}
+            setCard={AddCard}/>
+            <NewCardMenu
+            visible={visible}
+            Scope={ScopeList}/>
+            <MenuList/>
+        </main>
+
+const cardContext = useContext(CardContext);
     const scopeContext = useContext(ScopeContext);
     const [infoCard, AddCard] = useCard(cardContext);
     const [ScopeList, AddScope] = useScope(scopeContext);
@@ -40,61 +69,6 @@ export function Task() {
             AddScope(scopeContext);
         }
     }
-
-    return (
-        <main>
-            <Principal 
-            Request={Request} 
-            ChangeCardState={ChangeCardState}
-            MenuCard={ChangeMenuCardState}
-            ListScope={ScopeList}
-            newScopeList={AddScope}/>
-            <Card 
-            isVisible={menuCardState} 
-            ChangeCardState={ChangeCardState}
-            infoCard={infoCard}
-            setCard={AddCard}/>
-            <NewCardMenu
-            visible={visible}
-            Scope={ScopeList}/>
-            <MenuList/>
-        </main>
-    )
-}
-
-async function Request(method,obj,url,callback){
-
-    switch (method){
-        case "post":
-            axios.post(url,obj).then(t=>{
-                console.log(t)
-                callback(t.data);
-            })
-            break;
-        case "get":
-            axios.get(url,obj).then(t=>{
-                callback(t.data);
-            })
-            break;
-        case "put":
-            axios.put(url,obj).then(t=>{
-                console.log(t)
-            })
-            break;
-        case "teste":
-            console.log("teste feito com sucesso no request")
-            console.log(obj)
-            return("aaaaaaaaaaa")
-            break
-        default:
-            break;
-    }
-}
-
-
-
-
-
 /*async function GetInitialState(){
     let response = Request("get",{},"/Task/Organization",function(data){
         console.log(data)

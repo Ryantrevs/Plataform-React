@@ -11,16 +11,52 @@ import {
     Button
 } from './Elements'
 import { MdCancel } from "react-icons/md";
+import {useTask} from '../../../context/TaskContext'
 
-export function NewCardMenu({visible,Scope}) {
-    const [cardState,setCardState] = useState({
-        title:"",
-        describe:"",
-        percentage:0,
-        conclude:false
+export function NewCardMenu() {
+    const context = useTask();
+    const [newCard,setNewCard] = useState({
+        titulo:"",
+        descricao:"",
+        finalDate:"",
+        scopeId:""
     })
+
+    console.log(context.visibilityTask);
     return (
-        <Section visible={visible}>
+        <Section isVisible={context.visibilityTask}>
+            <NewCardSection>
+                <Header>
+                    <h2>Novo Card</h2>
+                    <MdCancel size={32} />
+                </Header>
+                <Main>
+                    <label>Na Lista:  </label>
+                    <Select>
+                    </Select><br/>
+                    <label>
+                        Titulo Card
+                    </label><br/>
+                    <Input type="text" value={newCard.titulo} onChange={(event)=>{
+                        setNewCard({...newCard,titulo:event.target.value})
+                    }} />
+                    <label>
+                        Descricão do Card
+                    </label>
+                    <Textarea 
+                    placeholder="Descrição" 
+                    value={newCard.descricao} 
+                    onChange={(event)=>{
+                        setNewCard({...newCard,descricao:event.target.value})}}></Textarea><br/>
+                    <Button type="submit">Salvar</Button>
+                </Main>
+            </NewCardSection>
+            <Background />
+        </Section>
+    )
+}
+
+/*<Section visible={visible}>
             <NewCardSection>
                 <Header>
                     <h2>Novo Card</h2>
@@ -53,7 +89,4 @@ export function NewCardMenu({visible,Scope}) {
                 </Main>
             </NewCardSection>
             <Background />
-        </Section>
-    )
-}
-
+        </Section>*/

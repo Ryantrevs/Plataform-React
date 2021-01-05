@@ -114,15 +114,17 @@ namespace PlataformaTccSuporte.Controllers
             cardRepository.DeleteCard(Id);
             return "funcionou";
         }
-        [HttpPost]
-        public String ChangeCard(String Id,String Titule,String Describe,int Porc)
+        [HttpPut]
+        [ActionName("UpdateCard")]
+        public String ChangeCard([FromForm]Object obj)
         {
-            var card = GetCard(Id);
+            return obj.ToString();
+            /*var card = GetCard(Id);
             card.Title = Titule;
             card.Describe = Describe;
             card.Percentage = Porc;
             cardRepository.UpdateCard(card);
-            return "funcionou";
+            return "funcionou";*/
         }
         [HttpPost]
         public String ExcludeList(String Id)

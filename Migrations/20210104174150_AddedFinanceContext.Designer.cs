@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlataformaTccSuporte.Data;
 
 namespace PlataformaTccSuporte.Migrations
 {
     [DbContext(typeof(PlataformaTccSuporteContext))]
-    partial class PlataformaTccSuporteContextModelSnapshot : ModelSnapshot
+    [Migration("20210104174150_AddedFinanceContext")]
+    partial class AddedFinanceContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -283,19 +285,6 @@ namespace PlataformaTccSuporte.Migrations
                     b.ToTable("Client");
                 });
 
-            modelBuilder.Entity("PlataformaTccSuporte.Models.ExpenseCategory", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExpenseCategory");
-                });
-
             modelBuilder.Entity("PlataformaTccSuporte.Models.Expenses", b =>
                 {
                     b.Property<string>("Id")
@@ -307,25 +296,15 @@ namespace PlataformaTccSuporte.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ExpenseCategoryId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.Property<string>("FinanceId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<double>("Value")
                         .HasColumnType("double");
 
-                    b.Property<string>("userId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ExpenseCategoryId");
-
                     b.HasIndex("FinanceId");
-
-                    b.HasIndex("userId");
 
                     b.ToTable("Expenses");
                 });
@@ -604,17 +583,9 @@ namespace PlataformaTccSuporte.Migrations
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Expenses", b =>
                 {
-                    b.HasOne("PlataformaTccSuporte.Models.ExpenseCategory", "ExpenseCategory")
-                        .WithMany("Expenses")
-                        .HasForeignKey("ExpenseCategoryId");
-
                     b.HasOne("PlataformaTccSuporte.Models.Finance", "Finance")
                         .WithMany("Expenses")
                         .HasForeignKey("FinanceId");
-
-                    b.HasOne("PlataformaTccSuporte.Models.User", "user")
-                        .WithMany()
-                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Income", b =>
