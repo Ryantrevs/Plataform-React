@@ -22,6 +22,16 @@ export function Header() {
                     <NavUl>
                         <Li>
                             <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeNiveis">Lista de Niveis</Link>
+                            </Button>
+                        </Li>
+                        <Li>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeUsuarios">Lista de Usuarios</Link>
+                            </Button>
+                        </Li>
+                        <Li>
+                            <Button>
                                 <Link style={{"text-decoration":"none"}} to="/vendas">Cadastrar Vendas</Link>
                             </Button>
                         </Li>

@@ -8,6 +8,14 @@ import { Route,Switch} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Header from './components/Header/Index'
 import Vendas from './components/Vendas/Index'
+import CriarRole from './components/CriarRole/CriarRole';
+import AdicionarRemover from './components/ListaDeNiveis/AdicionarRemover/AdicionarRemover';
+import GerenciarNiveis from './components/ListaDeUsuarios/EditarUsuario/GerenciarNiveis/GerenciarNiveis';
+import GerenciarPermissoes from './components/ListaDeUsuarios/EditarUsuario/GerenciarPermissoes/GerenciarPermissoes'
+import ListaDeNiveis from './components/ListaDeNiveis/ListaDeNiveis';
+import ListaDeUsuarios from './components/ListaDeUsuarios/ListaDeUsuarios';
+import EditarUsuario from './components/ListaDeUsuarios/EditarUsuario/EditarUsuario';
+import EditarNivel from './components/ListaDeNiveis/EditarNivel/EditarNivel';
 import ListaDeClientes from './components/ListaDeClientes/ListaDeClientes'
 import EditarCliente from './components/ListaDeClientes/EditarCliente/EditarCliente'
 import EditarVendas from './components/ListaDeVendas/EditarVendas/EditarVendas'
@@ -35,9 +43,17 @@ export default class App extends Component {
           <Route path="/FetchData" exact component={FetchData}/>
           <Route path="/div" exact component={Task}/>
           <Route path="/Vendas" exact component={Vendas}/>
+          <Route path="/AdicionarRemover" exact component={AdicionarRemover}/>
+          <Route path="/CriarRole" exact component={CriarRole}/>
+          <Route path="/GerenciarNiveis" exact component={GerenciarNiveis}/>
+          <Route path="/GerenciarPermissoes" exact component={GerenciarPermissoes}/>
+          <Route path="/ListaDeNiveis" exact component={ListaDeNiveis}/>
           <Route path="/ListaDeClientes" exact component={ListaDeClientes}/>
           <Route path="/EditarCliente" exact component={EditarCliente}/>
           <Route path="/ListaDeVendas" exact component={ListaDeVendas}/>
+          <Route path="/ListaDeUsuarios" exact component={ListaDeUsuarios}/>
+          <Route path="/EditarUsuario" exact component={EditarUsuario}/>
+          <Route path="/EditarNivel" exact component={EditarNivel}/>
           <Route path="/EditarVendas" exact component={EditarVendas}/>
           <Route path="/InformacoesVendas" exact component={InformacoesVendas}/>
           <Route path="/Perfil" exact component={Perfil}/>
