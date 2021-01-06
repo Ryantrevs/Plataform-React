@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PlataformaTccSuporte.Models;
 using PlataformaTccSuporte.Models.Repository;
@@ -17,13 +18,16 @@ namespace PlataformaTccSuporte.Controllers
         private readonly IExpensesRepository expensesRepository;
         private readonly IExpenseCategoryRepository expenseCategoryRepository;
         private readonly IIncomingRepository incomingRepository;
+        private readonly UserManager<User> userManager;
 
-        public FinanceController(IFinanceRepository financeRepository,IExpensesRepository expensesRepository, IIncomingRepository incomingRepository, IExpenseCategoryRepository expenseCategoryRepository)
+        public FinanceController(IFinanceRepository financeRepository,IExpensesRepository expensesRepository, IIncomingRepository incomingRepository, IExpenseCategoryRepository expenseCategoryRepository,
+                                 UserManager<User> userManager)
         {
             this.financeRepository = financeRepository;
             this.incomingRepository = incomingRepository;
             this.expenseCategoryRepository = expenseCategoryRepository;
             this.expensesRepository = expensesRepository;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -53,7 +57,7 @@ namespace PlataformaTccSuporte.Controllers
             var final = DateTime.Parse(DateTime.DaysInMonth(ActualYear, ActualMonth) + "/" + ActualMonth + "/" + ActualYear);
             List<Expenses> expenses = await expensesRepository.GetExpenses(init, final);
             List<Income> Incomes = await incomingRepository.getIncomingPerDate(init, final);
-            List<Finance> finances = financeRepository.GetBalance();
+            List<Finance> finan = financeRepository.GetBalance();
             if (expenses == null)
             {
                 finance.Expenses = new List<Expenses>();
@@ -70,55 +74,44 @@ namespace PlataformaTccSuporte.Controllers
             {
                 finance.Incomes = Incomes;
             }
-            if (finances == null)
+            if (finan == null)
             {
                 finance.finances = new List<Finance>();
             }
             else
             {
-                finance.finances = finances;
+                finance.finances = finan;
             }
 
             return finance;
+        }
+
+        [HttpPost]
+        [ActionName("newIncome")]
+        public Income newIncome(Income income)
+        {
+            return income;
         }
 
         [HttpGet]
-        [ActionName("GetFinances")]
-        public async Task<FinanceViewModel> GetExpenses()
+        [ActionName("GetCategory")]
+        public List<ExpenseCategory> GetCategory()
         {
-            var finance = new FinanceViewModel();
-            var ActualMonth = DateTime.Now.Month;
-            var ActualYear = DateTime.Now.Year;
-            var init = DateTime.Parse("01/" + ActualMonth + "/" + ActualYear);
-            var final = DateTime.Parse(DateTime.DaysInMonth(ActualYear,ActualMonth) +"/" + ActualMonth + "/" + ActualYear);
-            List<Expenses> expenses = await expensesRepository.GetExpenses(init, final);
-            List<Income> Incomes = await incomingRepository.getIncomingPerDate(init, final);
-            if (expenses == null)
-            {
-                finance.Expenses = new List<Expenses>();
-            }
-            else
-            {
-                finance.Expenses = expenses;
-            }
-            if (Incomes == null)
-            {
-                finance.Incomes = new List<Income>();
-            }
-            else
-            {
-                finance.Incomes = Incomes;
-            }
-
-            return finance;
+            var list = expenseCategoryRepository.Categories();
+            return list;
         }
 
-        /*[HttpGet]
-        [ActionName("GetExpenses")]
-        public List<ExpenseCategory> GetExpensesCategory()
+        [HttpPost]
+        [ActionName("NewExpense")]
+        public async Task<Expenses> newExpense([FromForm]Expenses expenses)
         {
-
-        }*/
+            var user = await userManager.GetUserAsync(User);
+            Finance balance = await financeRepository.GetUniqueBalance(expenses.Date);
+            expenses.Id = Guid.NewGuid().ToString();
+            expenses.Finance = balance;
+            expenses.user = user;
+            return expenses;
+        }
 
     }
 }

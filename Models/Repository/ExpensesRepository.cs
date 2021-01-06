@@ -33,5 +33,10 @@ namespace PlataformaTccSuporte.Models.Repository
         {
             return dbSet.Where(t => t.Date > init && t.Date < final).ToListAsync();
         }
+
+        public Task<String> InsertBalance(String balanceId)
+        {
+            dbSet.Add()
+        }
     }
 }

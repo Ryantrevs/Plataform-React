@@ -6,7 +6,8 @@ const BalanceContext = createContext(
     {
         Finance: [],
         Expensive: [],
-        income: []
+        Income: [],
+        setIncome: ()=>{},
     }
 );
 
@@ -29,12 +30,12 @@ export function BalanceProvider({ children }) {
         })
 }, [])
 
-useEffect(() => {
-    console.log(finance)
-}, [finance])
+    useEffect(() => {
+        console.log(income)
+    }, [income])
 
 return (
-    <BalanceContext.Provider value={{ Finance: finance,Expensive: expensive, Income: income }}>
+    <BalanceContext.Provider value={{ Finance: finance,Expensive: expensive, Income: income, setIncome:setIncome }}>
         {children}
     </BalanceContext.Provider>
 );

@@ -88,6 +88,7 @@ export function TaskProvider({ children }) {
     }
 
     useEffect(()=>{
+        let isSubscribed = true
         console.log(card);
         console.log("mudar visibilidade");
         if(visibilityCard==true){
@@ -100,17 +101,21 @@ export function TaskProvider({ children }) {
                 setVisibilityCard(true)
             }
         }
+        return () => isSubscribed = false
     },[card])
 
     useEffect(() => {
+        let isSubscribed = true
         request("get", {}, "/Task/Organization", function (response) {
             setTaskList(response.data);
             setActiveList(response.data[0].id.toString())
             console.log(response)
         });
+        return () => isSubscribed = false
     }, []);
 
     useEffect(()=>{
+        let isSubscribed = true
         var obj = new FormData();
         console.log(activeList)
         obj.append("Id",activeList)
@@ -123,6 +128,7 @@ export function TaskProvider({ children }) {
                 console.log(error)
             }
         });
+        return () => isSubscribed = false
     },[activeList]);
 
 

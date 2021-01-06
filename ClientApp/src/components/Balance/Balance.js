@@ -1,5 +1,6 @@
 import React from 'react'
 import {Doughnut,Line} from 'react-chartjs-2'
+import { Link } from 'react-router-dom';
 import {
     NewExpensiveButton,
     ExpensiveSection,
@@ -52,11 +53,11 @@ function Balance() {
                     <TradeSection>
                         <ExpensiveSection>
                             <ExpensiveValue type="submit">{"R$:" + teste}</ExpensiveValue>
-                            <NewExpensiveButton type="submit">Nova despesa</NewExpensiveButton>
+                            <Link to="/NewExpense"><NewExpensiveButton type="submit">Nova despesa</NewExpensiveButton></Link>
                         </ExpensiveSection>
                         <IncomeSection>
                             <IncomeValue>{"R$:"+ teste}</IncomeValue>
-                            <NewIncomeButton>Nova Receita</NewIncomeButton>
+                            <Link to="/NewIncome"><NewIncomeButton>Nova Receita</NewIncomeButton></Link>
                         </IncomeSection>
                     </TradeSection>
                     <EmployeeSection>

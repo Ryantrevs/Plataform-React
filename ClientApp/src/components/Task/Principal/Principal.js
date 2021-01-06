@@ -22,7 +22,9 @@ export function Principal() {
     const context = useTask();
 
     useEffect(()=>{
-        console.log(context.TaskList);   
+        let isSubscribed = true
+        console.log(context.TaskList);
+        return () => isSubscribed = false   
     },[])
 
     return (

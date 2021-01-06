@@ -116,9 +116,10 @@ namespace PlataformaTccSuporte.Controllers
         }
         [HttpPut]
         [ActionName("UpdateCard")]
-        public String ChangeCard([FromForm]Object obj)
+        public String ChangeCard([FromForm]Card card)
         {
-            return obj.ToString();
+            Console.WriteLine(card.describe);
+            return card.ToString();
             /*var card = GetCard(Id);
             card.Title = Titule;
             card.Describe = Describe;

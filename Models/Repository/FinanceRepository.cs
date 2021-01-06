@@ -11,6 +11,7 @@ namespace PlataformaTccSuporte.Models.Repository
     {
         public Task CreateBalance(List<int> lastDay);
         public List<Finance> GetBalance();
+        public Task<Finance> GetUniqueBalance(DateTime date);
     }
     public class FinanceRepository : BaseRepository<Finance>,IFinanceRepository
     {
@@ -40,6 +41,12 @@ namespace PlataformaTccSuporte.Models.Repository
             var NextTime = DateTime.Parse("" + 01 + "/" + 01 + "/" + nextYear);
 
             var response = dbSet.Where(t => t.FinalPeriod < NextTime && t.InitialPeriod > PreviousTime).ToList();
+            return response;
+        }
+        public async Task<Finance> GetUniqueBalance(DateTime date)
+        {
+
+            var response = await dbSet.Where(t => t.FinalPeriod <= date && t.InitialPeriod >= date).FirstOrDefaultAsync();
             return response;
         }
 

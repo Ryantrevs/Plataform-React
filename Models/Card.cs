@@ -29,8 +29,8 @@ namespace PlataformaTccSuporte.Models
         {
             this.id = id;
             this.title = titulo;
-            percentage = percentage;
-            describe = describe;
+            this.percentage = percentage;
+            this.describe = describe;
             ScopeId = scopeId;
         }
     }

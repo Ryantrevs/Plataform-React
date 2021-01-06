@@ -24,10 +24,15 @@ export function useRequest() {
 
 
 export async function Request(method, obj, url, callback) {
+    /*axios.defaults.headers.common = {
+        "Content-Type": 'application/x-www-form-urlencoded'
+      }*/
     switch (method) {
         case "post":
             axios.post(url, obj).then(t => {
                 callback(t);
+            }).catch(function(error){
+                callback(error);
             })
             break;
         case "get":

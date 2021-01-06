@@ -15,6 +15,8 @@ import DocEditor from "./components/DocEditor/Index";
 import PrivateRoute from './components/PrivateRoute';
 import Vendas from './components/vendas/Index';
 import Balance from './components/Balance/Index';
+import NewIncome from './components/NewIncome/Index';
+import NewExpense from './components/NewExpense/Index';
 export default class App extends Component {
   static displayName = App.name;
 
@@ -36,6 +38,8 @@ export default class App extends Component {
               <PrivateRoute path="/Vendas" component={Vendas} Role={"admin"}/>
               <Route path="/DocEditor" component={DocEditor} />
               <Route path="/Balance" component={Balance}/>
+              <Route path="/NewIncome" component={NewIncome}/>
+              <Route path="/NewExpense" component={NewExpense}/>
             </Switch>
           </RequestProvider>
         </UserProvider>
