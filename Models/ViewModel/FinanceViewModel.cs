@@ -7,8 +7,18 @@ namespace PlataformaTccSuporte.Models.ViewModel
 {
     public class FinanceViewModel
     {
-        public List<Income> Incomes { get; set; }
-        public List<Expenses> Expenses { get; set; }
-        public List<Finance> finances { get; set; }
+        public DateTime InitialPeriod { get; set; }
+        public DateTime FinalPeriod { get; set; }
+        public List<ExpensesViewModel> expensesViewModels { get; set; }
+
+        public FinanceViewModel()
+        {
+        }
+
+        public FinanceViewModel(DateTime initialPeriod, DateTime finalPeriod)
+        {
+            InitialPeriod = initialPeriod;
+            FinalPeriod = finalPeriod;
+        }
     }
 }

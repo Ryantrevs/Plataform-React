@@ -84,7 +84,7 @@ namespace PlataformaTccSuporte
         {
             if (env.IsDevelopment())
             {
-                app.UseExceptionHandler("/error-local-development");
+                app.UseDeveloperExceptionPage();
             }
             else
             {

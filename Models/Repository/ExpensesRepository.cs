@@ -11,7 +11,9 @@ namespace PlataformaTccSuporte.Models.Repository
     public interface IExpensesRepository
     {
         public void CreateExpense();
-        public Task<List<Expenses>> GetExpenses(DateTime init, DateTime final);
+        public Task<List<ExpensesViewModel>> GetExpenses(DateTime init, DateTime final);
+        public Task<String> InsertExpense(Expenses expenses);
+        public Task<List<Expenses>> GetPerBalance(String balanceId);
     }
     public class ExpensesRepository : BaseRepository<Expenses>,IExpensesRepository
     {
@@ -29,14 +31,21 @@ namespace PlataformaTccSuporte.Models.Repository
                 new Expenses(Guid.NewGuid().ToString(), "testando", values[rnd.Next(0, values.Length - 1)],dates[rnd.Next(0, dates.Length-1)]);
             }
         }
-        public Task<List<Expenses>> GetExpenses(DateTime init, DateTime final)
+        public Task<List<ExpensesViewModel>> GetExpenses(DateTime init, DateTime final)
         {
-            return dbSet.Where(t => t.Date > init && t.Date < final).ToListAsync();
+            var response = dbSet.Where(t => final >= t.Date && init <= t.Date).Select(x=>new ExpensesViewModel(x.Value,x.ExpenseCategory.Name)).ToListAsync();
+            return response;
         }
 
-        public Task<String> InsertBalance(String balanceId)
+        public async Task<String> InsertExpense(Expenses expenses)
         {
-            dbSet.Add()
+            dbSet.Add(expenses);
+            var response = await context.SaveChangesAsync();
+            return response.ToString();
+        }
+        public async Task<List<Expenses>> GetPerBalance(String balanceId)
+        {
+            return await dbSet.Where(t => t.Finance.Id == balanceId).ToListAsync();
         }
     }
 }
