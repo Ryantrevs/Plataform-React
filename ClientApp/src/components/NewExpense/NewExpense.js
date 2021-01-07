@@ -30,7 +30,7 @@ function NewExpense() {
         data.append("expenses.Description",NewExpense.Description);
         data.append("expenses.Value",NewExpense.Value);
         data.append("expenses.Date",NewExpense.Date);
-        data.append("expenses.Date",NewExpense.categ);
+        data.append("expenses.ExpenseCategory.name",NewExpense.Category);
         request("post",data, "/Finance/NewExpense", function(response){
             console.log(response.request.status)
             console.log(response);
@@ -84,15 +84,16 @@ function NewExpense() {
                     onChange={(event)=>{
                         setNewExpense({...NewExpense,Date:event.target.value});
                     }}/>
-                    {abc.map((item,index)=>(
-                        <label key={index}>
-                            <InputRadio 
-                            id={item.id} 
-                            type="radio"/>
-                            {item.name}
-                        </label>
-                    ))}
-                    
+                    <select name="categorias"
+                    value={abc[0].id} 
+                    onChange={(event)=>{
+                        event.preventDefault();
+                        setNewExpense({...NewExpense,Category:event.target.value});
+                    }}>
+                        {abc.map((item,index)=>(
+                            <option value={item.id} id={index}>{item.name}</option>
+                        ))}
+                    </select>
                 </InputArea>
                 <AddButton
                     onClick={
@@ -118,7 +119,7 @@ function emptyIncome(){
         Description:"",
         Value:0.00,
         Date: "",
-        Category:{}
+        Category:""
     })
 }
 function emptyCategory(){

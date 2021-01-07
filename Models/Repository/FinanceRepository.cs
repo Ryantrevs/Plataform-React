@@ -11,7 +11,7 @@ namespace PlataformaTccSuporte.Models.Repository
     public interface IFinanceRepository
     {
         public Task CreateBalance(List<int> lastDay);
-        public List<FinanceViewModel> GetBalance();
+        //'1'public List<FinanceViewModel> GetBalance();
         public Finance GetUniqueBalance(DateTime date);
         public void updateExpense(Finance finance);
     }
@@ -35,16 +35,16 @@ namespace PlataformaTccSuporte.Models.Repository
             }
             await context.SaveChangesAsync();
         }
-        public List<FinanceViewModel> GetBalance()
+        /*public List<FinanceViewModel> GetBalance()
         {
             int previousYear = DateTime.Now.Year - 1;
             var PreviousTime = DateTime.Parse("" + 31 + "/" + 12 + "/" + previousYear);
             int nextYear = DateTime.Now.Year + 1;
             var NextTime = DateTime.Parse("" + 01 + "/" + 01 + "/" + nextYear);
 
-            var response = dbSet.Where(t => t.FinalPeriod < NextTime && t.InitialPeriod > PreviousTime).Select(x=>new FinanceViewModel(x.InitialPeriod,x.FinalPeriod)).ToList();
+            var response = dbSet.Where(t => t.FinalPeriod < NextTime && t.InitialPeriod > PreviousTime).Select(x=>new FinanceViewModel(x.,x.FinalPeriod)).ToList();
             return response;
-        }
+        }*/
         public Finance GetUniqueBalance(DateTime date)
         {
             var response = dbSet.Where(t => t.FinalPeriod >= date  && t.InitialPeriod <= date).FirstOrDefault();
