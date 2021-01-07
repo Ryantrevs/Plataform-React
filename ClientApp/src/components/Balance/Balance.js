@@ -1,6 +1,5 @@
 import React from 'react'
-import {Doughnut,Line} from 'react-chartjs-2';
-import {Bar} from 'react-chartjs-2';
+import {Doughnut, Line, Bar} from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import {
     NewExpensiveButton,
@@ -39,9 +38,9 @@ const getState = () => ({
     datasets: [{
       data: [getRandomInt(50, 200), getRandomInt(100, 150), getRandomInt(150, 250)],
       backgroundColor: [
-      '#CCC',
-      '#36A2EB',
-      '#FFCE56'
+      'red',
+      'green',
+      'yellow'
       ],
       hoverBackgroundColor: [
       '#FF6384',
@@ -58,7 +57,7 @@ const getState = () => ({
         label: 'My First dataset',
         fill: false,
         lineTension: 0.1,
-        backgroundColor: 'rgba(75,192,192,0.4)',
+        backgroundColor: 'rgba(255,255,255,255)',
         borderColor: 'rgba(75,192,192,1)',
         borderCapStyle: 'butt',
         borderDash: [],
@@ -91,34 +90,32 @@ function Balance() {
         return (
             <Main>
                 <BalanceProvider>
-                    <DIV>
                         <Div>
                             <Doughnut className="Teste" 
                             data={getState}/>
-                        </Div><br/>
+                        </Div><br/> 
                         <TradeSection>
                             <ExpensiveSection>
                                 <ExpensiveValue type="submit">{"R$:" + teste}</ExpensiveValue>
                                 <Link to="/NewExpense"><NewExpensiveButton type="submit">Nova Despesa</NewExpensiveButton></Link>
                             </ExpensiveSection>
-                            <Bar
+                            <div style={{"width":"30em","margin-top":"7em"}}>
+                                <Bar
                                 data={barra}
                                 options={options}
                                 plugins={plugins}
                             />
+                            </div>
                             <IncomeSection>
                                 <IncomeValue>{"R$:"+ teste}</IncomeValue>
                                 <Link to="/NewIncome"><NewIncomeButton>Nova Receita</NewIncomeButton></Link>
                             </IncomeSection>
                         </TradeSection><br/>
                         <EmployeeSection>
-                            <h2>Bubble Example</h2><br/>
                             <Line 
-                            data={teste}
-                            height={30}
+                            data={data}
                             options={{ maintainAspectRatio: false }}/>
                         </EmployeeSection>
-                    </DIV>
                 </BalanceProvider>
             </Main>
         )
@@ -199,42 +196,41 @@ const data = {
       }
     },
     scales: {
-      xAxes: [
-        {
-          display: true,
-          gridLines: {
-            display: false
-          },
-          labels: {
-            show: true
+        xAxes: [
+            {
+              display: true,
+              gridLines: {
+                display: false
+              },
+          
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            }
+          ],
+          yAxes: [
+            {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              id: 'y-axis-1',
+              gridLines: {
+                display: false
+              },
+              labels: {
+                show: true
+              }
+            },
+            {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              id: 'y-axis-2',
+              gridLines: {
+                display: false
+              },
+              labels: {
+                show: true
+              }
+            }
+          ]
           }
-        }
-      ],
-      yAxes: [
-        {
-          type: 'linear',
-          display: true,
-          position: 'left',
-          id: 'y-axis-1',
-          gridLines: {
-            display: false
-          },
-          labels: {
-            show: true
-          }
-        },
-        {
-          type: 'linear',
-          display: true,
-          position: 'right',
-          id: 'y-axis-2',
-          gridLines: {
-            display: false
-          },
-          labels: {
-            show: true
-          }
-        }
-      ]
-    }
-  };
+          };

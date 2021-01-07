@@ -17,8 +17,7 @@ export const H2 = styled.h2`
 export const Div = styled.div`
     margin:auto;
     justify-content: center;
-    background-color:#242424;
-    width:80%;
+    width:60em;
     height: 20em;
     border:none;
     border-radius:8px;
@@ -26,10 +25,12 @@ export const Div = styled.div`
 `
 
 export const TradeSection = styled.button`
+    padding:3em;
     display:flex;
     aling-items:center;
     width:100%;
     height: 30em;
+    margin-top:10em !important;
     background-color:#242424;
     border:none;
     justify-content: space-around;
@@ -46,7 +47,7 @@ export const ExpensiveSection = styled.section`
     color:#fff;
     width:40vh;
     height:40vh;
-    background-color: #fe4a55;
+    background-color: #E41515;
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -63,7 +64,7 @@ export const IncomeSection = styled.section`
     color:#fff;
     width:40vh;
     height:40vh;
-    background: #fe4a55;
+    background: #178B17;
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -85,10 +86,10 @@ export const EmployeeSection = styled.section`
     display flex;
     align-items:center;
     justify-content:space-around;
-    background:#b2d23a;
-    width:100%;
+    background:#fff;
+    width:60em;
     height:20em;
-    margin-top:3em;
+    margin-top:5em !important;
     margin:auto;
     border:none;
 `
