@@ -34,11 +34,10 @@ body {
         border-style: dashed;
     }
 
-/* input {
-    border: none;
+ #EditDocxForm input {    
     text-align: center;
-    width: 550px
-} */
+    border:none;    
+}   
 
 .texto {
     margin-top: 10vh;
@@ -103,7 +102,6 @@ body {
     width: 100%;
     float: right;
 }
-
     .orientador input {
         border: 1px;
         border-style: dashed;
@@ -163,9 +161,13 @@ body {
     .tabelaSumario td, .tabelaReferencia td {
         text-align: left;
     }
-
+.desenPara{
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+}
 .desenvolvimento-texto textarea {
-    width: 670px;
+    width: 100%;
     border-style: dashed;
 }
 
@@ -176,10 +178,29 @@ body {
     .apendice input, .anexo input {
         text-align: center;
     }
+.apendice-texto{
+    width:80%;
+    margin-left:auto;
+    margin-right: auto;
+}
 
-.apendice-texto textarea, .anexo-texto textarea {
-    width: 670px;
-    height: 54px;
+.apendice-texto textarea{
+    width: 100%;
+    height: auto;
+}
+.anexo-texto {
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.anexo-texto textarea{
+    width:100%;
+}
+
+.conclusaoText{
+    width:100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 img {
@@ -187,21 +208,18 @@ img {
     height: 10px;
 }
 
-
-
-
 .paginaAssist {
     display: flex;
 }
 
-
-
 .introducao {
     margin-top: 15vh;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
-
-    .introducao textarea {
-        width: 70%;
+    .introducaoTextarea {
+        width: 100%;
         border-style: dashed;
     }
 
@@ -214,11 +232,14 @@ img {
     margin-top: 15vh;
 }
 
-/* .conclusao {
-} */
+.conclusao {
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
     .conclusao textarea {
-        width: 70%;
+        width: 100%;
         border-style: dashed;
     }
 
@@ -233,4 +254,7 @@ img {
     align-items:flex-end;
     flex-direction:row-reverse;
     
+}
+.ExportButton{
+
 }

@@ -291,6 +291,7 @@ namespace PlataformaTccSuporte.Controllers
             var user = await userManager.FindByIdAsync(Id);
             if (user == null)
             {
+               
                 ViewBag.ErrorMessage = $"Não foi possível exluir usuário, usuário não encontrado";
                 return View("NotFound");
             }

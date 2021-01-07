@@ -14,7 +14,6 @@ import { useUser } from "./../../context/UserContext"
 import { useRequest } from "./../../context/RequestContext"
 import { Div } from '../Element';
 
-
 export function Header(props) {
     var myContext = useUser();
     var Request = useRequest().Request;    
@@ -63,28 +62,28 @@ export function Header(props) {
                 <DivUl>
                     <NavUl>
                         <Li>
-                            <Link style={{"text-decoration":"none"}} to="/Vendas">Cadastrar Vendas</Link>
+                            <Link style={{"textDecoration":"none"}} to="/Vendas">Cadastrar Vendas</Link>
                         </Li>
                         <Li>
-                            <Link style={{"text-decoration":"none"}} to="/ListaDeClientes">Lista de Clientes</Link>
+                            <Link style={{"textDecoration":"none"}} to="/ListaDeClientes">Lista de Clientes</Link>
                         </Li>
                         <Li>
-                            <Link style={{"text-decoration":"none"}} to="/ListaDeVendas">Lista de Vendas</Link>
+                            <Link style={{"textDecoration":"none"}} to="/ListaDeVendas">Lista de Vendas</Link>
                         </Li>
                         <Li>
-                            <Link style={{"text-decoration":"none"}} to="/div">Tarefas</Link>
+                            <Link style={{"textDecoration":"none"}} to="/div">Tarefas</Link>
                         </Li>
                         <Li>
                             <Link to="/fetch-data">Fetch</Link>
                         </Li>
                         {/* <Li>
-                            <Link style={{"text-decoration":"none"}} to="/Counter">counter</Link>
+                            <Link style={{"textDecoration":"none"}} to="/Counter">counter</Link>
                         </Li>
                         <Li>
-                             <Link style={{"text-decoration":"none"}} to="/fetch-data">Fetch</Link>   
+                             <Link style={{"textDecoration":"none"}} to="/fetch-data">Fetch</Link>   
                         </Li> */}
                         <Li>
-                             <Link style={{"text-decoration":"none"}} to="/Perfil">Perfil</Link>   
+                             <Link style={{"textDecoration":"none"}} to="/Perfil">Perfil</Link>   
                         </Li> 
                         <Li>
                             <Link to="/DocEditor">Editor de documento</Link>

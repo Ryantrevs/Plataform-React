@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PlataformaTccSuporte.Migrations
 {
-    public partial class v1 : Migration
+    public partial class bancoConsultoria : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,6 +23,21 @@ namespace PlataformaTccSuporte.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BankData",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    BancoNum = table.Column<int>(nullable: false),
+                    BankName = table.Column<string>(nullable: true),
+                    Agency = table.Column<int>(nullable: false),
+                    BankAccountNumber = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BankData", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Client",
                 columns: table => new
                 {
@@ -38,46 +53,31 @@ namespace PlataformaTccSuporte.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DadosBancarios",
+                name: "Expenses",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    BancoNum = table.Column<int>(nullable: false),
-                    NomeBanco = table.Column<string>(nullable: true),
-                    Agencia = table.Column<int>(nullable: false),
-                    Conta = table.Column<int>(nullable: false)
+                    Description = table.Column<string>(nullable: true),
+                    Value = table.Column<double>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DadosBancarios", x => x.Id);
+                    table.PrimaryKey("PK_Expenses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Despesa",
+                name: "Income",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Descricao = table.Column<string>(nullable: true),
-                    Valor = table.Column<double>(nullable: false),
-                    Data = table.Column<DateTime>(nullable: false)
+                    Description = table.Column<string>(nullable: true),
+                    Value = table.Column<double>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Despesa", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Receita",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Descricao = table.Column<string>(nullable: true),
-                    Valor = table.Column<double>(nullable: false),
-                    Data = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Receita", x => x.Id);
+                    table.PrimaryKey("PK_Income", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -114,6 +114,43 @@ namespace PlataformaTccSuporte.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Cpf = table.Column<string>(nullable: true),
+                    Salary = table.Column<double>(nullable: true),
+                    TVerifyEmail = table.Column<DateTime>(nullable: true),
+                    BankAccountId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_BankData_BankAccountId",
+                        column: x => x.BankAccountId,
+                        principalTable: "BankData",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Job",
                 columns: table => new
                 {
@@ -138,43 +175,6 @@ namespace PlataformaTccSuporte.Migrations
                         name: "FK_Job_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Nome = table.Column<string>(nullable: true),
-                    Cpf = table.Column<string>(nullable: true),
-                    Salario = table.Column<double>(nullable: true),
-                    TVerifyEmail = table.Column<DateTime>(nullable: true),
-                    ContaBancoId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_DadosBancarios_ContaBancoId",
-                        column: x => x.ContaBancoId,
-                        principalTable: "DadosBancarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -284,6 +284,30 @@ namespace PlataformaTccSuporte.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserTasklist",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    TaskId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserTasklist", x => new { x.TaskId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_UserTasklist_TaskList_TaskId",
+                        column: x => x.TaskId,
+                        principalTable: "TaskList",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserTasklist_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sale",
                 columns: table => new
                 {
@@ -321,35 +345,11 @@ namespace PlataformaTccSuporte.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserTasklist",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    TaskId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserTasklist", x => new { x.TaskId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_UserTasklist_TaskList_TaskId",
-                        column: x => x.TaskId,
-                        principalTable: "TaskList",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserTasklist_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Card",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Titule = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
                     Describe = table.Column<string>(nullable: true),
                     Percentage = table.Column<int>(nullable: false),
                     ScopeId = table.Column<string>(nullable: true)
@@ -427,9 +427,9 @@ namespace PlataformaTccSuporte.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_ContaBancoId",
+                name: "IX_AspNetUsers_BankAccountId",
                 table: "AspNetUsers",
-                column: "ContaBancoId",
+                column: "BankAccountId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -494,10 +494,10 @@ namespace PlataformaTccSuporte.Migrations
                 name: "Card");
 
             migrationBuilder.DropTable(
-                name: "Despesa");
+                name: "Expenses");
 
             migrationBuilder.DropTable(
-                name: "Receita");
+                name: "Income");
 
             migrationBuilder.DropTable(
                 name: "Sale");
@@ -527,7 +527,7 @@ namespace PlataformaTccSuporte.Migrations
                 name: "TaskList");
 
             migrationBuilder.DropTable(
-                name: "DadosBancarios");
+                name: "BankData");
         }
     }
 }

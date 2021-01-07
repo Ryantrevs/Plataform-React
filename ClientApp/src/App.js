@@ -14,15 +14,12 @@ import './custom.css';
 import DocEditor from "./components/DocEditor/Index"
 import PrivateRoute from './components/PrivateRoute';
 import AccessDenied from "./components/AccessDenied";
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-
 import ListaDeClientes from './components/ListaDeClientes/ListaDeClientes'
 import EditarCliente from './components/ListaDeClientes/EditarCliente/EditarCliente'
 import EditarVendas from './components/ListaDeVendas/EditarVendas/EditarVendas'
 import ListaDeVendas from './components/ListaDeVendas/ListaDeVendas'
 import Perfil from './components/Perfil/Index';
+
 export default class App extends Component {
   static displayName = App.name;
   render() {
@@ -45,10 +42,8 @@ export default class App extends Component {
               <Route path="/Perfil" exact component={Perfil} />
               
               {/* usuarios em geral */}
-
               <Route path="/ListaDeClientes" exact component={ListaDeClientes} />
-              <Route path="/EditarCliente" exact component={EditarCliente} />
-             
+              <Route path="/EditarCliente" exact component={EditarCliente} />             
               {/* admin */}
 
 
