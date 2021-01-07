@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PlataformaTccSuporte.Migrations
 {
-    public partial class TccSuporte : Migration
+    public partial class banco : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,31 +53,28 @@ namespace PlataformaTccSuporte.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Expenses",
+                name: "ExpenseCategory",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Value = table.Column<double>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Expenses", x => x.Id);
+                    table.PrimaryKey("PK_ExpenseCategory", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Income",
+                name: "Finance",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Value = table.Column<double>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    InitialPeriod = table.Column<DateTime>(nullable: false),
+                    FinalPeriod = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Income", x => x.Id);
+                    table.PrimaryKey("PK_Finance", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,6 +172,27 @@ namespace PlataformaTccSuporte.Migrations
                         name: "FK_Job_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Income",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Value = table.Column<double>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    FinanceId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Income", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Income_Finance_FinanceId",
+                        column: x => x.FinanceId,
+                        principalTable: "Finance",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -284,6 +302,41 @@ namespace PlataformaTccSuporte.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Expenses",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Value = table.Column<double>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    FinanceId = table.Column<string>(nullable: true),
+                    userId = table.Column<string>(nullable: true),
+                    ExpenseCategoryId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Expenses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Expenses_ExpenseCategory_ExpenseCategoryId",
+                        column: x => x.ExpenseCategoryId,
+                        principalTable: "ExpenseCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Expenses_Finance_FinanceId",
+                        column: x => x.FinanceId,
+                        principalTable: "Finance",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Expenses_AspNetUsers_userId",
+                        column: x => x.userId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserTasklist",
                 columns: table => new
                 {
@@ -348,15 +401,15 @@ namespace PlataformaTccSuporte.Migrations
                 name: "Card",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Describe = table.Column<string>(nullable: true),
-                    Percentage = table.Column<int>(nullable: false),
+                    id = table.Column<string>(nullable: false),
+                    title = table.Column<string>(nullable: true),
+                    describe = table.Column<string>(nullable: true),
+                    percentage = table.Column<int>(nullable: false),
                     ScopeId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Card", x => x.Id);
+                    table.PrimaryKey("PK_Card", x => x.id);
                     table.ForeignKey(
                         name: "FK_Card_Scope_ScopeId",
                         column: x => x.ScopeId,
@@ -438,6 +491,26 @@ namespace PlataformaTccSuporte.Migrations
                 column: "ScopeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Expenses_ExpenseCategoryId",
+                table: "Expenses",
+                column: "ExpenseCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Expenses_FinanceId",
+                table: "Expenses",
+                column: "FinanceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Expenses_userId",
+                table: "Expenses",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Income_FinanceId",
+                table: "Income",
+                column: "FinanceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Job_ClientId",
                 table: "Job",
                 column: "ClientId");
@@ -510,6 +583,12 @@ namespace PlataformaTccSuporte.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "ExpenseCategory");
+
+            migrationBuilder.DropTable(
+                name: "Finance");
 
             migrationBuilder.DropTable(
                 name: "Job");

@@ -1,6 +1,6 @@
 ﻿import styled from 'styled-components'
 export const Nav = styled.nav`
-    background:#4c4c4c;
+    background:#242424;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -15,6 +15,8 @@ export const A = styled.a`
     white-space: normal;
     text-align: center;
     word-break: break-all;
+    text-decoration: none;
+    
 `
 export const DivUl = styled.div`
     display:flex;
@@ -26,5 +28,20 @@ export const NavUl = styled.ul`
     display:flex;
 `
 export const Li = styled.li`
-    margin:0.5em 1.5em 0 0;
+    margin:0.5em 0.5em 0 0;
+    font-size:14pt;
+    text-decoration: none;
 `
+export const Button = styled.button`
+    border:none;
+    border-radius:8px;
+    background-color: #fe4a55;
+    height: 2em;
+    transition: all .2s;
+    
+    &:hover {
+    background-color: #ff8082;
+    }
+`
+
+

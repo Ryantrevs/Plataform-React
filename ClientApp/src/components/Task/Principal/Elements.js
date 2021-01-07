@@ -11,6 +11,7 @@ export const PrincipalSection = styled.main`
 `
 
 export const Section = styled.section`
+    margin-top:1em;
     width: 310px;
     margin:2em 0 0 0;
     background-color: #fe4a55;
@@ -28,35 +29,35 @@ export const NavMenu = styled.nav`
     width: 100%;
     top: 60px;
 `
-export const MenuItem = styled.a`
-    text-decoration: none;
+export const MenuItem = styled.div`
+    width:100%;
 `
 
 export const Item = styled.div`
     background-color: #fff;
-    padding: 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     transition: all .2s linear;
     color: #242424;
     border-bottom: 2px solid #242424;
     width:100%;
+    height:100%;
     cursor:pointer;
 `
 
 export const Configure = styled.div`
-    width: 0%;
+    width: 20%;
+    height:1.2em;
+    float:right;
     font-family: Arial, Helvetica, sans-serif;  /*config "escondido" só aparece quando passa o mouse por cima*/
-    font-size: 0pt;
-    display: flex;
-    justify-content: space-around;
-    background-color: #fff;
+    font-size: 15pt;
+    background-color: #000000;
     transition: all .2s linear;
 `
 export const ButtonConfigure = styled.button`
-    font: #fff;
+    font: #000000;
     color: #fff;
-    background:#000000;
+    background:red;
     border:none;
 `
 export const ButtonTools = styled.button`
@@ -65,7 +66,6 @@ export const ButtonTools = styled.button`
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    width: 5em;
     transition: all .2s linear;
     margin:0.5em 0 0.3em 0.7em;
 `
@@ -99,6 +99,10 @@ export const Card = styled.div`
     margin: 0.25em 0 0 0;
     border-radius: 10px;
 `
+export const Icone = styled.i`
+    color:white;
+`
+
 export const CardTitle = styled.h3`
     color:red;
     margin:1em 0 0 0;

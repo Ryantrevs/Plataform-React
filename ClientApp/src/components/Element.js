@@ -7,7 +7,7 @@ export const Body = styled.div`
 `
 
 export const Div = styled.div`
-    background-color:#4c4c4c;
+    background-color:#242424;
     margin:auto;
     margin-top:10em;
     width:40em;

@@ -17,7 +17,7 @@ import {
     ButtonCopiar,
     ButtonLixo
 } from './Elements'
-import {useTask} from '../../../context/TaskContext'
+import {useTask} from '../../../Context/TaskContext'
 
 function Card(){
 

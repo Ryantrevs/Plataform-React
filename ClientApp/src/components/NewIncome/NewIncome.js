@@ -1,14 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import useScope from '../../hooks/useScope'
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import {useRequest} from '../../context/RequestContext'
 
+=======
+import {useRequest} from '../../Context/RequestContext'
+>>>>>>> 2ab09a18bca04d6c6067c6e497b35a93ef759453
 import {
     IncomeSection,
     Input,
     ButtonSubmit,
     Group,
-    InputRadio
+    InputRadio,
+    H1
 } from './elements'
 
 function NewIncome() {
@@ -42,6 +47,7 @@ function NewIncome() {
     return (
         <IncomeSection>
             <Group>
+                <H1>New Income</H1>
                 <Input 
                 type="text" 
                 placeholder="Descrição"

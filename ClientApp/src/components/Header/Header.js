@@ -7,10 +7,11 @@ import {
     A,
     DivUl,
     NavUl,
-    Li
+    Li,
+    Button
 } from './Elements';
-import { useUser } from "./../../context/UserContext"
-import { useRequest } from "./../../context/RequestContext"
+import { useUser } from "./../../Context/UserContext"
+import { useRequest } from "./../../Context/RequestContext"
 
 
 export function Header() {
@@ -55,13 +56,29 @@ export function Header() {
                             <Link to="/Vendas">Cadastrar Vendas</Link>
                         </Li>
                         <Li>
-                            <Link to="/div">lista</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeUsuarios">Lista de Usuarios</Link>
+                            </Button>
                         </Li>
                         <Li>
-                            <Link to="/">casa</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/vendas">Cadastrar Vendas</Link>
+                            </Button>
                         </Li>
                         <Li>
-                            <Link to="/Counter">counter</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeClientes">Lista de Clientes</Link>
+                            </Button>
+                        </Li>
+                        <Li>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeVendas">Lista de Vendas</Link>
+                            </Button>
+                        </Li>
+                        <Li>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/div">Tarefas</Link>
+                            </Button>
                         </Li>
                         <Li>
                             <Link to="/fetch-data">Fetch</Link>

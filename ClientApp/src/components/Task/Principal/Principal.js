@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useDrag } from 'react-dnd';
+import {DndProvider} from 'react-dnd';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { cog } from '@fortawesome/free-solid-svg-icons';
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
     PrincipalSection,
     Section,
@@ -7,15 +12,19 @@ import {
     MenuItem,
     Item,
     Configure,
-    ButtonConfigure,
     ButtonTools,
     TaskMenu,
     ScopeList,
     Card,
-    CardTitle
+    Icone,
+    CardTitle,
+    TaskList,
+    ButtonConfigure,
+    SetActiveList,
+
 } from './Elements'
 import { TiThMenuOutline } from "react-icons/ti";
-import {useTask} from '../../../context/TaskContext'
+import {useTask} from '../../../Context/TaskContext'
 
 export function Principal() {
 

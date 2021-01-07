@@ -11,9 +11,12 @@ import {
     IncomeValue,
     EmployeeSection,
     AddNewBalance,
-    Main
+    Main,
+    H2,
+    Div,
+    DIV
 } from './Elements'
-import {BalanceProvider} from '../../context/BalanceContext'
+import {BalanceProvider} from '../../Context/BalanceContext'
 
 
 const getState = () => ({
@@ -73,30 +76,33 @@ const teste = 2000.99
 function Balance() {
     if(teste){
         return (
-            <main>
+            <Main>
                 <BalanceProvider>
-                    <h2>Dynamicly refreshed Doughnut Example</h2>
-                    <Doughnut data={getState} />
-                    <TradeSection>
-                        <ExpensiveSection>
-                            <ExpensiveValue type="submit">{"R$:" + teste}</ExpensiveValue>
-                            <Link to="/NewExpense"><NewExpensiveButton type="submit">Nova despesa</NewExpensiveButton></Link>
-                        </ExpensiveSection>
-                        <IncomeSection>
-                            <IncomeValue>{"R$:"+ teste}</IncomeValue>
-                            <Link to="/NewIncome"><NewIncomeButton>Nova Receita</NewIncomeButton></Link>
-                        </IncomeSection>
-                    </TradeSection>
-                    <EmployeeSection>
-                        <h2>Bubble Example</h2>
-                        <Line 
-                        data={data}
-                        width={50}
-                        height={50}
-                        options={{ maintainAspectRatio: false }}/>
-                    </EmployeeSection>
+                    <DIV>
+                        <Div>
+                            <Doughnut className="Teste" 
+                            data={getState}/>
+                        </Div><br/>
+                        <TradeSection>
+                            <ExpensiveSection>
+                                <ExpensiveValue type="submit">{"R$:" + teste}</ExpensiveValue>
+                                <Link to="/NewExpense"><NewExpensiveButton type="submit">Nova Despesa</NewExpensiveButton></Link>
+                            </ExpensiveSection>
+                            <IncomeSection>
+                                <IncomeValue>{"R$:"+ teste}</IncomeValue>
+                                <Link to="/NewIncome"><NewIncomeButton>Nova Receita</NewIncomeButton></Link>
+                            </IncomeSection>
+                        </TradeSection><br/>
+                        <EmployeeSection>
+                            <h2>Bubble Example</h2><br/>
+                            <Line 
+                            data={data}
+                            height={30}
+                            options={{ maintainAspectRatio: false }}/>
+                        </EmployeeSection>
+                    </DIV>
                 </BalanceProvider>
-            </main>
+            </Main>
         )
     }else{
         return(

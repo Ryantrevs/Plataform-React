@@ -5,9 +5,10 @@ import {
     InputArea,
     InsertInput,
     AddButton,
-    InputRadio
+    InputRadio,
+    H1
 } from './Elements'
-import {useRequest} from '../../context/RequestContext'
+import {useRequest} from '../../Context/RequestContext'
 
 function NewExpense() {
     const request = useRequest().Request;
@@ -63,19 +64,20 @@ function NewExpense() {
     return (
         <MainNewExpense>
             <BackgroundNewExpense>
+                <H1>New Expense</H1>
                 <InputArea>
                     <InsertInput 
                     type="text" 
                     placeholder=""
                     onChange={(event)=>{
                         setNewExpense({...NewExpense,Description:event.target.value});
-                    }}/>
+                    }}/><br/>
                     <InsertInput 
                     type="number" 
                     placeholder=""
                     onChange={(event)=>{
                         setNewExpense({...NewExpense,Value:parseFloat(event.target.value)});
-                    }}/>
+                    }}/><br/>
                     <InsertInput 
                     type="Date" 
                     placeholder=""
@@ -93,17 +95,17 @@ function NewExpense() {
                     
                 </InputArea>
                 <AddButton
-                onClick={
-                    (event)=>{
-                        if(NewExpense.Description!="" && NewExpense.Value!=0 && NewExpense.Date!=""){
-                            event.preventDefault();
-                            console.log(NewExpense);
-                            Add(NewExpense);
-                        }else{
-                            alert("Preencha os campos para continuar");
-                        }
-                
-            }}>Criar</AddButton>
+                    onClick={
+                        (event)=>{
+                            if(NewExpense.Description!="" && NewExpense.Value!=0 && NewExpense.Date!=""){
+                                event.preventDefault();
+                                console.log(NewExpense);
+                                Add(NewExpense);
+                            }else{
+                                alert("Preencha os campos para continuar");
+                            }
+                    }}>Criar
+                </AddButton>
             </BackgroundNewExpense>
         </MainNewExpense>
     )
