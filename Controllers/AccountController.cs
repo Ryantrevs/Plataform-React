@@ -18,18 +18,35 @@ namespace PlataformaTccSuporte.Controllers
     {
         private readonly UserManager<User> UserManager;
         private readonly SignInManager<User> SignInManager;
-        private readonly IDadosBancariosRepository dadosBancariosRepository;
+        private readonly IBankDataRepository dadosBancariosRepository;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public AccountController(UserManager<User> UserManager, SignInManager<User> SignInManager,IDadosBancariosRepository dadosBancariosRepository)
+        public AccountController(UserManager<User> UserManager, SignInManager<User> SignInManager, IBankDataRepository dadosBancariosRepository,RoleManager<IdentityRole> roleManager)
         {
             this.UserManager = UserManager;
             this.SignInManager = SignInManager;
             this.dadosBancariosRepository = dadosBancariosRepository;
+            this.roleManager = roleManager;
         }
+
+        [HttpGet]
+        [ActionName("test")]
+        public async Task<string> test()
+        {
+            return "teste funciona";
+        }
+        [HttpPost]
+        [ActionName("test")]
+        public async Task<string> test(string var1)
+        {
+            return var1 + " : novo teste";
+        }
+
+
 
         [HttpPost]
         [ActionName("Register")]
-        public async Task Register(RegisterViewModel rvm)
+        public async Task<bool> Register([FromForm] RegisterViewModel rvm)
         {
             if (ModelState.IsValid)
             {
@@ -37,76 +54,80 @@ namespace PlataformaTccSuporte.Controllers
                 {
                     User user = new User() {
                         Id = Guid.NewGuid().ToString(),
-                        Nome = rvm.User.Nome,
-                        UserName = rvm.User.Nome,
+                        Name = rvm.User.Name,
+                        UserName = rvm.User.Name,
                         Email = rvm.User.Email,
                         Cpf = rvm.User.Cpf,
-                        Salario = 0
+                        Salary = 0
                     };
                     var result = await UserManager.CreateAsync(user, rvm.Password);
                     if (result.Succeeded)
                     {
-                        if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                        {
-                            //return RedirectToAction("ListUsers", "Administration");
-                        }
-                        //await SignInManager.SignInAsync(user, isPersistent: false);
-                       // return RedirectToAction("Index", "Home");
+                        return true;
                     }
-                    foreach (var error in result.Errors)
+                    else
                     {
-                        ModelState.AddModelError(" ", error.Description);
+                        return false;
                     }
                 }
-            }            
+                return false;
+            }
+            return false;
         }
         [HttpPost]
         [ActionName("LogIn")]
-        public async Task LogIn(LogInViewModel livm, string returnUrl)
+        public async Task<Object> LogIn([FromForm]LogInViewModel livm, string returnUrl)
         {
             if (ModelState.IsValid)
-            {
+            {                                
                 User user = await UserManager.FindByEmailAsync(livm.Email);
                 if (user != null)
                 {
-                    
+
                     var passValid = await UserManager.CheckPasswordAsync(user, livm.Password);
                     if (passValid)
                     {
                         if (!user.EmailConfirmed)//Verifica se conta está confirmada, se não retorna a mensagem
                         {
-                            ModelState.AddModelError("", "Email ainda não confirmado");
-                            
+                            return new { success = false, error = "Email ainda não confirmado" };
+                            //ModelState.AddModelError("", "Email ainda não confirmado");
+
                         }
                         await SignInManager.SignInAsync(user, false);
+                        return new { success = true, error = "" };
+                        //return true;
                         if (!string.IsNullOrEmpty(returnUrl))//se usuario tentou abrir um recurso
                         {
-                            
+
                         }
                         else
                         {
-                            
+
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Senha Incorreta!");
+                        return new { success = false, error = "Senha incorreta" };
+                        //ModelState.AddModelError("", "Senha Incorreta!");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Usuário não encontrado!");
+                    //ModelState.AddModelError("", "Usuário não encontrado!");
+                    return new { success = false, error = "Usuario Não Encontrado" };
                 }
 
-            }            
+            }
+            return false;
         }
 
         [ActionName("Logout")]
-        public async Task Logout()
+        public async Task<bool> Logout()
         {
-            await SignInManager.SignOutAsync();            
+            await SignInManager.SignOutAsync();
+            return true;
         }
-      
+
         [Authorize]
         [HttpGet]
         [ActionName("Profile")]
@@ -114,11 +135,11 @@ namespace PlataformaTccSuporte.Controllers
         {
             var user = await UserManager.GetUserAsync(User);
             var model = new ProfileViewModel(user);
-            if (user.ContaBancoId!=null)//conta encontrada
+            if (user.BankAccountId != null)//conta encontrada
             {
-                var dadosBan = dadosBancariosRepository.GetDadosBancarios(user.ContaBancoId);
+                var dadosBan = dadosBancariosRepository.GetBankData(user.BankAccountId);
                 model.dadosBancarios = dadosBan;
-            }            
+            }
             return model;
         }
 
@@ -141,8 +162,8 @@ namespace PlataformaTccSuporte.Controllers
                 ViewBag.ErrorMessage = $"Usuario não encontrado";
                 //return View("NotFound");
             }
-            user.Nome = profileViewModel.user.Nome;
-            user.UserName = profileViewModel.user.Nome;
+            user.Name = profileViewModel.user.Name;
+            user.UserName = profileViewModel.user.Name;
             user.Email = profileViewModel.user.Email;
             var result = await UserManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -175,22 +196,22 @@ namespace PlataformaTccSuporte.Controllers
                 //return View("NotFound");
             }
             var token = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-            var link = Url.Action("VerifyAccount", "Account",new { userId=user.Id,token=token}, Request.Scheme);
-            var nome = user.Nome;
+            var link = Url.Action("VerifyAccount", "Account", new { userId = user.Id, token = token }, Request.Scheme);
+            var nome = user.Name;
             var destinatario = user.Email;
             var assunto = "Verificação de email para Conta TccSuporte";
             var Mensagem = "Olá, para confirmarmos sua conta e permitir acesso, precisamos que verifique sua conta clicando no link a seguir: \n"
-                + link + "/" + user.Id + "\n"+"Este Email possui um tempo de validade de 2 horas.";
+                + link + "/" + user.Id + "\n" + "Este Email possui um tempo de validade de 2 horas.";
             user.TVerifyEmail = DateTime.Now;
             await UserManager.UpdateAsync(user);//salva hora do envio de email
             IServicoEmail serviceMail = new MailService();
             var resp = await serviceMail.EnviarEmail(nome, destinatario, Mensagem, assunto);
             //return RedirectToAction("ListUsers", "Administration");
         }
-        
+
         [HttpGet]
         [ActionName("VerifyAccount")]
-        public async Task VerifyAccount(string userId,string token){
+        public async Task VerifyAccount(string userId, string token) {
             var user = await UserManager.FindByIdAsync(userId);
             if (user == null)
             {
@@ -199,15 +220,15 @@ namespace PlataformaTccSuporte.Controllers
             }
             var model = new VerifyAccountViewModel()
             {
-                userId=userId,
-                token=token
+                userId = userId,
+                token = token
             };
             var time = DateTime.Now;
             var userMailTime = user.TVerifyEmail;
             var timeDif = time.Subtract(userMailTime).TotalMinutes;
-            if (timeDif>120)//diferença de tempo maior que 2 horas
+            if (timeDif > 120)//diferença de tempo maior que 2 horas
             {
-                ViewBag.VerrifyTimeError= "Tempo limite de email expirado";
+                ViewBag.VerrifyTimeError = "Tempo limite de email expirado";
                 ModelState.AddModelError("", "Tempo limite de email expirado");
                 //return View(model);
             }
@@ -227,13 +248,13 @@ namespace PlataformaTccSuporte.Controllers
                 ViewBag.ErrorMessage = $"Usuario não encontrado";
                 //return View("NotFound");
             }
-            var result= await UserManager.ConfirmEmailAsync(user,model.token);
+            var result = await UserManager.ConfirmEmailAsync(user, model.token);
             if (!result.Succeeded)
             {
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("",error.Description);
-                }                
+                    ModelState.AddModelError("", error.Description);
+                }
                 ModelState.AddModelError("", "Erro ao confirmar e-mail");
                 return model;
             }
@@ -242,7 +263,7 @@ namespace PlataformaTccSuporte.Controllers
 
         [HttpGet]
         [ActionName("EditDadosBancarios")]
-        public async  Task<EditDadosBancariosViewModel> EditDadosBancarios()
+        public async Task<EditDadosBancariosViewModel> EditDadosBancarios()
         {
             var user = await UserManager.GetUserAsync(User);//pega usuario logado para evitar passagem usuários por get
             if (user == null)
@@ -250,22 +271,22 @@ namespace PlataformaTccSuporte.Controllers
                 ViewBag.ErrorMessage = $"Usuario não encontrado";
                 //return View("NotFound");
             }
-            if (user.ContaBancoId==null)//se usuario ainda não cadastrou dados bancarios
+            if (user.BankAccountId == null)//se usuario ainda não cadastrou dados bancarios
             {
-                var dBancarios = new DadosBancarios()
+                var dBancarios = new BankData()
                 {
-                    Id = Guid.NewGuid().ToString()                    
+                    Id = Guid.NewGuid().ToString()
                 };
-                user.ContaBanco = dBancarios;
-                user.ContaBancoId = dBancarios.Id;
-                dadosBancariosRepository.CreateDadosBancarios(dBancarios);
+                user.BankAccount = dBancarios;
+                user.BankAccountId = dBancarios.Id;
+                dadosBancariosRepository.CreateBankData(dBancarios);
                 await UserManager.UpdateAsync(user);
             }
-            var dadosBancarios = dadosBancariosRepository.GetDadosBancarios(user.ContaBancoId);//pega conta de um usuario
+            var dadosBancarios = dadosBancariosRepository.GetBankData(user.BankAccountId);//pega conta de um usuario
             var model = new EditDadosBancariosViewModel
             {
                 User = user,
-                DadosBanco= dadosBancarios
+                DadosBanco = dadosBancarios
             };
             return model;
         }
@@ -273,14 +294,14 @@ namespace PlataformaTccSuporte.Controllers
         [ActionName("EditDadosBancarios")]
         public void EditDadosBancarios(EditDadosBancariosViewModel model)
         {
-            dadosBancariosRepository.UpdateDadosBancarios(model.DadosBanco);
+            dadosBancariosRepository.UpdateBankData(model.DadosBanco);
             //return RedirectToAction("Profile", "Account");
         }
         [HttpPost]
         [ActionName("CheckEmailExists")]
         public async Task<bool> CheckEmailExists(string email)
         {
-            if (await UserManager.FindByEmailAsync(email) !=null)
+            if (await UserManager.FindByEmailAsync(email) != null)
             {
                 return true;
             }
@@ -289,6 +310,68 @@ namespace PlataformaTccSuporte.Controllers
                 return false;
             }
         }
+        [HttpPost]
+        [ActionName("CheckCpfExists")]
+        public async Task<bool> CheckCpfExists([FromForm] string cpf)
+        {
+            
+            if (await UserManager.FindByCpfAsync(cpf) != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+        [HttpPost]
+        [ActionName("isLogged")]
+        public async Task<bool> IsLogged()
+        {
+            
+            if (SignInManager.IsSignedIn(User))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        [HttpPost]
+        [ActionName("getCurrentUser")]
+        public async Task<User> GetCurrentUser()
+        {
+            if (SignInManager.IsSignedIn(User))
+            {
+                return await UserManager.GetUserAsync(User);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        [HttpPost]
+        [ActionName("UserIsInRole")]
+        public async Task<Object> UserIsInRole([FromForm]string  role)
+        {
+            User user = await UserManager.GetUserAsync(User);
+            
+            if (await UserManager.IsInRoleAsync(user, role))
+            {
+                return new { success=true , erro=""};
+            }
+            else
+            {
+                return new { success=false, erro="Usuário não possui acesso." };
+            }
+        }
+
+
+
+
 
     }
 

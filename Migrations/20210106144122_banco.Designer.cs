@@ -9,8 +9,8 @@ using PlataformaTccSuporte.Data;
 namespace PlataformaTccSuporte.Migrations
 {
     [DbContext(typeof(PlataformaTccSuporteContext))]
-    [Migration("20201226125515_udptade-database")]
-    partial class udptadedatabase
+    [Migration("20210106144122_banco")]
+    partial class banco
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -217,24 +217,46 @@ namespace PlataformaTccSuporte.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PlataformaTccSuporte.Models.Card", b =>
+            modelBuilder.Entity("PlataformaTccSuporte.Models.BankData", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Describe")
+                    b.Property<int>("Agency")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BancoNum")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BankAccountNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BankName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("Percentage")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
+
+                    b.ToTable("BankData");
+                });
+
+            modelBuilder.Entity("PlataformaTccSuporte.Models.Card", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("ScopeId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Titule")
+                    b.Property<string>("describe")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("Id");
+                    b.Property<int>("percentage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("id");
 
                     b.HasIndex("ScopeId");
 
@@ -263,45 +285,91 @@ namespace PlataformaTccSuporte.Migrations
                     b.ToTable("Client");
                 });
 
-            modelBuilder.Entity("PlataformaTccSuporte.Models.DadosBancarios", b =>
+            modelBuilder.Entity("PlataformaTccSuporte.Models.ExpenseCategory", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<int>("Agencia")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BancoNum")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Conta")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NomeBanco")
+                    b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DadosBancarios");
+                    b.ToTable("ExpenseCategory");
                 });
 
-            modelBuilder.Entity("PlataformaTccSuporte.Models.Despesa", b =>
+            modelBuilder.Entity("PlataformaTccSuporte.Models.Expenses", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<DateTime>("Data")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Descricao")
+                    b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("Valor")
+                    b.Property<string>("ExpenseCategoryId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("FinanceId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("double");
+
+                    b.Property<string>("userId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpenseCategoryId");
+
+                    b.HasIndex("FinanceId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("PlataformaTccSuporte.Models.Finance", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("FinalPeriod")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("InitialPeriod")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Finance");
+                });
+
+            modelBuilder.Entity("PlataformaTccSuporte.Models.Income", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("FinanceId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<double>("Value")
                         .HasColumnType("double");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Despesa");
+                    b.HasIndex("FinanceId");
+
+                    b.ToTable("Income");
                 });
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Job", b =>
@@ -350,25 +418,6 @@ namespace PlataformaTccSuporte.Migrations
                     b.HasIndex("ClientId");
 
                     b.ToTable("Job");
-                });
-
-            modelBuilder.Entity("PlataformaTccSuporte.Models.Receita", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<double>("Valor")
-                        .HasColumnType("double");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Receita");
                 });
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Sale", b =>
@@ -476,22 +525,22 @@ namespace PlataformaTccSuporte.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("ContaBancoId")
+                    b.Property<string>("BankAccountId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Cpf")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("Salario")
+                    b.Property<double>("Salary")
                         .HasColumnType("double");
 
                     b.Property<DateTime>("TVerifyEmail")
                         .HasColumnType("datetime(6)");
 
-                    b.HasIndex("ContaBancoId")
+                    b.HasIndex("BankAccountId")
                         .IsUnique();
 
                     b.HasDiscriminator().HasValue("User");
@@ -550,9 +599,31 @@ namespace PlataformaTccSuporte.Migrations
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Card", b =>
                 {
-                    b.HasOne("PlataformaTccSuporte.Models.Scope", "Scope")
+                    b.HasOne("PlataformaTccSuporte.Models.Scope", "scope")
                         .WithMany("Cards")
                         .HasForeignKey("ScopeId");
+                });
+
+            modelBuilder.Entity("PlataformaTccSuporte.Models.Expenses", b =>
+                {
+                    b.HasOne("PlataformaTccSuporte.Models.ExpenseCategory", "ExpenseCategory")
+                        .WithMany("Expenses")
+                        .HasForeignKey("ExpenseCategoryId");
+
+                    b.HasOne("PlataformaTccSuporte.Models.Finance", "Finance")
+                        .WithMany("Expenses")
+                        .HasForeignKey("FinanceId");
+
+                    b.HasOne("PlataformaTccSuporte.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
+                });
+
+            modelBuilder.Entity("PlataformaTccSuporte.Models.Income", b =>
+                {
+                    b.HasOne("PlataformaTccSuporte.Models.Finance", "Finance")
+                        .WithMany("Incomes")
+                        .HasForeignKey("FinanceId");
                 });
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Job", b =>
@@ -616,9 +687,9 @@ namespace PlataformaTccSuporte.Migrations
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.User", b =>
                 {
-                    b.HasOne("PlataformaTccSuporte.Models.DadosBancarios", "ContaBanco")
+                    b.HasOne("PlataformaTccSuporte.Models.BankData", "BankAccount")
                         .WithOne("User")
-                        .HasForeignKey("PlataformaTccSuporte.Models.User", "ContaBancoId");
+                        .HasForeignKey("PlataformaTccSuporte.Models.User", "BankAccountId");
                 });
 #pragma warning restore 612, 618
         }

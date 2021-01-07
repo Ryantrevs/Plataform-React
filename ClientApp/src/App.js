@@ -29,44 +29,57 @@ import EditarBancarios from './components/Perfil/EditarBancarios/EditarBancarios
 import Perfil from './components/Perfil/Index';
 import { formatDiagnostic } from 'typescript';
 //const axios = require('axios').default;
+// import { Route, Switch } from 'react-router-dom';
+// import Header from './components/Header/Index';
+import Login from './components/Login/Index';
+//import Vendas from './components/Vendas/Index';
+//import Task from './components/Task/Index';
+//import Register from './components/Register/Index';
+import { RequestProvider } from './Context/RequestContext';
+import { UserProvider } from './Context/UserContext';
+import './custom.css';
+import DocEditor from "./components/DocEditor/Index";
+import PrivateRoute from './components/PrivateRoute';
+//import Vendas from './components/vendas/Index';
+import Balance from './components/Balance/Index';
+import NewIncome from './components/NewIncome/Index';
+import NewExpense from './components/NewExpense/Index';
 export default class App extends Component {
   static displayName = App.name;
-  
-  render () {
+
+  render() {
     return (
       <main>
-        <DndProvider backend ={HTML5Backend}>
-        <Header/>
-        <Switch>
-          <Route path="/" exact component={Home}/>
-          <Route path="/Counter" exact component={Counter}/>
-          <Route path="/FetchData" exact component={FetchData}/>
-          <Route path="/div" exact component={Task}/>
-          <Route path="/Vendas" exact component={Vendas}/>
-          <Route path="/AdicionarRemover" exact component={AdicionarRemover}/>
-          <Route path="/CriarRole" exact component={CriarRole}/>
-          <Route path="/GerenciarNiveis" exact component={GerenciarNiveis}/>
-          <Route path="/GerenciarPermissoes" exact component={GerenciarPermissoes}/>
-          <Route path="/ListaDeNiveis" exact component={ListaDeNiveis}/>
-          <Route path="/ListaDeClientes" exact component={ListaDeClientes}/>
-          <Route path="/EditarCliente" exact component={EditarCliente}/>
-          <Route path="/ListaDeVendas" exact component={ListaDeVendas}/>
-          <Route path="/ListaDeUsuarios" exact component={ListaDeUsuarios}/>
-          <Route path="/EditarUsuario" exact component={EditarUsuario}/>
-          <Route path="/EditarNivel" exact component={EditarNivel}/>
-          <Route path="/EditarVendas" exact component={EditarVendas}/>
-          <Route path="/InformacoesVendas" exact component={InformacoesVendas}/>
-          <Route path="/Perfil" exact component={Perfil}/>
-          <Route path="/EditarPerfil" exact component={EditarPerfil}/>
-          <Route path="/EditarBancarios" exact component={EditarBancarios}/>
-          <Route path="/Register" exact component={Register}/>
-        </Switch>
-        </DndProvider>
+        <UserProvider>
+          <RequestProvider>
+            <Header />
+            <Switch>
+              <Route path="/ListaDeUsuarios" exact component={ListaDeUsuarios} />
+              <Route path="/" exact component={Login} />
+              <Route path="/AcessoNegado" component={<div>AcessoNegado</div>}/>
+              {/* <Route path="/" exact component={Home} /> */}
+              <Route path="/Counter" exact component={Counter} />
+              <Route path="/FetchData" exact component={FetchData} />
+              {<Route path="/div" exact component={Task} />}
+              <Route path="/Vendas" exact component={Vendas}/> 
+              <Route path="/Register" exact component={Register} />
+              <PrivateRoute path="/Vendas" component={Vendas} Role={"admin"}/>
+              <Route path="/DocEditor" component={DocEditor} />
+              <Route path="/Balance" component={Balance}/>
+              <Route path="/NewIncome" component={NewIncome}/>
+              <Route path="/NewExpense" component={NewExpense}/>
+              <Route path="/ListaDeClientes" exact component={ListaDeClientes}/>
+              <Route path="/EditarCliente" exact component={EditarCliente}/>
+              <Route path="/ListaDeVendas" exact component={ListaDeVendas}/>
+              <Route path="/EditarVendas" exact component={EditarVendas}/>
+              <Route path="/InformacoesVendas" exact component={InformacoesVendas}/>
+              <Route path="/Perfil" exact component={Perfil}/>
+              <Route path="/EditarPerfil" exact component={EditarPerfil}/>
+              <Route path="/EditarBancarios" exact component={EditarBancarios}/>
+            </Switch>
+          </RequestProvider>
+          </UserProvider>
       </main>
-
-
-
-
     );
   }
 }

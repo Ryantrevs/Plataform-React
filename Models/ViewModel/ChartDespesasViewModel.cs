@@ -7,7 +7,7 @@ namespace PlataformaTccSuporte.Models.ViewModel
 {
     public class ChartDespesasViewModel
     {
-        public Despesa Despesa { get; set; }
+        public Expenses Despesa { get; set; }
         public DateTime mes { get; set; }
     }
 }

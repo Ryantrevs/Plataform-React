@@ -10,8 +10,8 @@ import {
     Select
 } from './Elements';
 
-export class CadastrarVendas extends Component {
-    static displayName = CadastrarVendas.name;
+export class Vendas extends Component {
+    static displayName = Vendas.name;
 
     render() {
         return (
@@ -72,5 +72,5 @@ export class CadastrarVendas extends Component {
     }
 }
 
-export default CadastrarVendas;
+export default Vendas;
 

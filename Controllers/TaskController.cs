@@ -15,16 +15,15 @@ namespace PlataformaTccSuporte.Controllers
     [Route("[controller]/[action]")]
     public class TaskController : Controller
     {
-        private readonly IUserRepository userRepository;
         private readonly ITaskListRepository taskListRepository;
         private readonly ICardRepository cardRepository;
         private readonly IScopeRepository scopeRepository;
         private readonly IUserTasklistRepository userTasklistRepository;
         private readonly UserManager<User> userManager;
         
-        public TaskController(IUserRepository userRepository, ITaskListRepository taskListRepository, ICardRepository cardRepository, IScopeRepository scopeRepository, IUserTasklistRepository userTasklistRepository,UserManager<User> userManager)
+        public TaskController(ITaskListRepository taskListRepository, ICardRepository cardRepository, IScopeRepository scopeRepository, IUserTasklistRepository userTasklistRepository,UserManager<User> userManager)
         {
-            this.userRepository = userRepository;
+            
             this.taskListRepository = taskListRepository;
             this.cardRepository = cardRepository;
             this.scopeRepository = scopeRepository;
@@ -37,7 +36,7 @@ namespace PlataformaTccSuporte.Controllers
         [ActionName("Organization")]
         public async Task<List<TasksViewModel>> Organization()
         {
-            User user2 = await userManager.FindByIdAsync("4cd02dd1-6cc6-42c7-ab0f-2fac8c9e62c4"); //retorna Usuario Logado
+            User user2 = await userManager.FindByIdAsync("39601aa7-2a63-4574-9a39-27758182d464"); //retorna Usuario Logado
             var lista = userTasklistRepository.GetListId(user2.Id);
             List<TasksViewModel> tasks = taskListRepository.getTasks(lista);
             return tasks;
@@ -45,7 +44,7 @@ namespace PlataformaTccSuporte.Controllers
 
         [HttpPost]
         [ActionName("GetCard")]
-        public Card GetCard(String Id)
+        public Card GetCard([FromForm]String Id)
         {
             var task = cardRepository.GetCard(Id);
             return task;
@@ -54,12 +53,12 @@ namespace PlataformaTccSuporte.Controllers
 
         [HttpPost]
         [ActionName("GetTasks")]
-        public List<ScopeViewModel> GetTasks(String Id)
+        public List<ScopeViewModel> GetTasks([FromForm]String Id)
         {
             
             var list = scopeRepository.getScope(Id);
-            var cards = cardRepository.getCards(list);
-            return cards;
+            List<ScopeViewModel> scope = cardRepository.getCards(list);
+            return scope;
         }
         [HttpPost]
         [ActionName("InsertScope")]
@@ -82,10 +81,8 @@ namespace PlataformaTccSuporte.Controllers
         {
             var id = Guid.NewGuid().ToString();
             var task = taskListRepository.InsertTaskList(id, Titulo);
-            var user = userRepository.GetUser("teste01");
-            var user2 = await userManager.GetUserAsync(User);
-            userTasklistRepository.InsertUserTasklist(task, user2);
-
+            var user = await userManager.GetUserAsync(User);
+            userTasklistRepository.InsertUserTasklist(task, user);
             return id;
         }
         [HttpPost]
@@ -117,15 +114,18 @@ namespace PlataformaTccSuporte.Controllers
             cardRepository.DeleteCard(Id);
             return "funcionou";
         }
-        [HttpPost]
-        public String ChangeCard(String Id,String Titule,String Describe,int Porc)
+        [HttpPut]
+        [ActionName("UpdateCard")]
+        public String ChangeCard([FromForm]Card card)
         {
-            var card = GetCard(Id);
-            card.Titule = Titule;
+            Console.WriteLine(card.describe);
+            return card.ToString();
+            /*var card = GetCard(Id);
+            card.Title = Titule;
             card.Describe = Describe;
             card.Percentage = Porc;
             cardRepository.UpdateCard(card);
-            return "funcionou";
+            return "funcionou";*/
         }
         [HttpPost]
         public String ExcludeList(String Id)
@@ -135,11 +135,10 @@ namespace PlataformaTccSuporte.Controllers
             return "teste";
         }
         [HttpPost]
-        public String AddUserOnList(String Email, String Id)
-        {
-            userRepository.GetUser(Email);
+        public async Task<String> AddUserOnList(String Email, String Id)
+        {   
             var task = taskListRepository.GetTask(Id);
-            var user = userRepository.GetUser("teste01");
+            var user = await userManager.FindByEmailAsync(Email);
             userTasklistRepository.InsertUserTasklist(task, user);
             return "teste";
         }

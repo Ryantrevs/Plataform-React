@@ -8,12 +8,12 @@ namespace PlataformaTccSuporte.Models.ViewModel
     public class ListUsersViewModel
     {
         public User User { get; set; }
-        public DadosBancarios DadosBancarios { get; set; }
+        public BankData DadosBancarios { get; set; }
         public ListUsersViewModel()
         {
 
         }
-        public ListUsersViewModel(User user, DadosBancarios dadosBancarios)
+        public ListUsersViewModel(User user, BankData dadosBancarios)
         {
             User = user;
             DadosBancarios = dadosBancarios;

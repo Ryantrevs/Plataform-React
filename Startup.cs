@@ -30,10 +30,11 @@ namespace PlataformaTccSuporte
         {
 
             services.AddControllersWithViews();
-
+            services.AddCors(options => options.AddDefaultPolicy(
+                    buider => buider.AllowAnyOrigin()
+                )); 
             services.AddTransient<IServicoEmail, MailService>();
             services.AddTransient<ITwilioService, TwilioService>();
-            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITaskListRepository, TaskListRepository>();
             services.AddTransient<ICardRepository, CardRepository>();
             services.AddTransient<IScopeRepository, ScopeRepository>();
@@ -41,7 +42,11 @@ namespace PlataformaTccSuporte
             services.AddTransient<IClientRepository, ClientRepository>();
             services.AddTransient<IJobRepository, JobRepository>();
             services.AddTransient<ISaleRepository, SaleRepository>();
-            services.AddTransient<IDadosBancariosRepository, DadosBancariosRepository>();
+            services.AddTransient<IBankDataRepository, BankDataRepository>();
+            services.AddTransient<IFinanceRepository, FinanceRepository>();
+            services.AddTransient<IExpensesRepository, ExpensesRepository>();
+            services.AddTransient<IExpenseCategoryRepository, ExpenseCategoryRepository>();
+            services.AddTransient<IIncomingRepository, IncomingRepository>();
             services.AddDbContext<PlataformaTccSuporteContext>(options => options.UseMySql(Configuration.GetConnectionString("bd")));
             services.AddIdentity<User, IdentityRole>(options =>
             {
@@ -66,6 +71,7 @@ namespace PlataformaTccSuporte
             }
                 );
 
+            
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -78,7 +84,7 @@ namespace PlataformaTccSuporte
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/error-local-development");
             }
             else
             {
@@ -92,8 +98,10 @@ namespace PlataformaTccSuporte
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
@@ -118,7 +126,7 @@ namespace PlataformaTccSuporte
             var user = new User
             {
                 Id = Guid.NewGuid().ToString(),
-                Nome = "admin",
+                Name = "admin",
                 UserName = "admin",
                 Email = "admin@gmail.com",
                 EmailConfirmed = true

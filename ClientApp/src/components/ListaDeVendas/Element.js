@@ -38,7 +38,8 @@ export const Tr = styled.tr`
 `
 export const Td = styled.td`
     border:none;
-    text-align: center;
+    margin:auto;
+    text-align: left;
 `
 export const Table = styled.table`
     color:white;

@@ -1,4 +1,4 @@
-﻿import React from 'react'
+﻿import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Logo from '../../Assets/logo.png'
 import {
@@ -9,21 +9,51 @@ import {
     NavUl,
     Li,
     Button
-} from './Elements'
+} from './Elements';
+import { useUser } from "./../../Context/UserContext"
+import { useRequest } from "./../../Context/RequestContext"
 
 
 export function Header() {
+    var myContext = useUser();;
+    var Request = useRequest().Request;
+    
+    async function LogOff() {
+        Request("post", "", "Account/Logout", (promise) => {
+            if (promise.data) {
+                myContext.setIsLogged(false);
+                myContext.setUser({});
+            }
+        })
+    }
+
+    var UserArea = () => {
+        if (myContext.isLogged) {
+            return (
+            <Li>
+                <span style={{ color: "#fff" ,margin:"0.5em 1.5em 0 0"}}>Bem vindo: {myContext.User.name}</span>
+                <button onClick={LogOff}>Logoff</button>
+            </Li>
+            );
+        } else {
+            return (
+                <Li>
+                    <Link to="/">Login</Link>
+                </Li>
+            );
+        }
+    }
+
+
     return (
 
         <header>
             <Nav>
                 <A><Img src={Logo} /></A>
-                <DivUl>
+                <DivUl>                    
                     <NavUl>
                         <Li>
-                            <Button>
-                                <Link style={{"text-decoration":"none"}} to="/ListaDeNiveis">Lista de Niveis</Link>
-                            </Button>
+                            <Link to="/Vendas">Cadastrar Vendas</Link>
                         </Li>
                         <Li>
                             <Button>
@@ -51,26 +81,18 @@ export function Header() {
                             </Button>
                         </Li>
                         <Li>
-                            <Button>
-                                <Link style={{"text-decoration":"none"}} to="/">Home</Link>
-                            </Button>
-                        </Li>
-                        {/* <Li>
-                            <Link style={{"text-decoration":"none"}} to="/Counter">counter</Link>
+                            <Link to="/fetch-data">Fetch</Link>
                         </Li>
                         <Li>
-                             <Link style={{"text-decoration":"none"}} to="/fetch-data">Fetch</Link>   
-                        </Li> */}
+                            <Link to="/Register">Registrar-se</Link>
+                        </Li>
                         <Li>
-                            <Button>
-                                <Link style={{"text-decoration":"none"}} to="/Perfil">Perfil</Link>
-                            </Button>  
-                        </Li> 
+                            <Link to="/DocEditor">Editor de documento</Link>
+                        </Li>
                         <Li>
-                            <Button>
-                                <Link style={{"text-decoration":"none"}} to="/Register">Registrar-se</Link>
-                            </Button>   
-                        </Li>   
+                            <Link to="/Balance">Balanço</Link>
+                        </Li>
+                        <UserArea/>
                     </NavUl>
                 </DivUl>
             </Nav>

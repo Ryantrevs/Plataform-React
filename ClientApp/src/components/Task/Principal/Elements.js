@@ -6,16 +6,19 @@ export const PrincipalSection = styled.main`
     background-color:#fe4a55;
     display: flex;
     flex-direction: row;
+    display:flex;
+    z-index:1;
 `
 
 export const Section = styled.section`
     margin-top:1em;
     width: 310px;
+    margin:2em 0 0 0;
     background-color: #fe4a55;
 `
 export const Menu = styled.div`
     background-color: #242424;
-    height: 100%;
+    height: 70vh;
     display: block;
     transition: all .2s linear;
     border: 1px solid;
@@ -74,7 +77,7 @@ export const TaskMenu = styled.section`
     transition: 0.5s;
     overflow: auto;
     margin: auto;
-    height: 35em;
+    height: 38em;
     width: 70%;
 `
 export const ScopeList = styled.div`
@@ -98,4 +101,9 @@ export const Card = styled.div`
 `
 export const Icone = styled.i`
     color:white;
+`
+
+export const CardTitle = styled.h3`
+    color:red;
+    margin:1em 0 0 0;
 `
