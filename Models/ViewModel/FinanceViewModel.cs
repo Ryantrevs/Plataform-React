@@ -7,8 +7,17 @@ namespace PlataformaTccSuporte.Models.ViewModel
 {
     public class FinanceViewModel
     {
-        public List<Income> Incomes { get; set; }
-        public List<Expenses> Expenses { get; set; }
-        public List<Finance> finances { get; set; }
+        public List<ExpensesViewModel> expensesViewModels { get; set; }
+        public List<IncomeViewModel> incomeViewModels { get; set; }
+
+        public FinanceViewModel()
+        {
+        }
+
+        public FinanceViewModel(List<ExpensesViewModel> expensesViewModels, List<IncomeViewModel> incomeViewModels)
+        {
+            this.expensesViewModels = expensesViewModels;
+            this.incomeViewModels = incomeViewModels;
+        }
     }
 }

@@ -4,9 +4,12 @@ import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { Route, Switch } from 'react-router-dom';
 import Header from './components/Header/Index';
-import Login from './components/Login/Index';
 import Task from './components/Task/Index';
-import Register from './components/Register/Index';
+import Register from './components/Register/Index'
+import './custom.css'
+import EditarPerfil from './components/Perfil/EditarPerfil/EditarPerfil';
+import EditarBancarios from './components/Perfil/EditarBancarios/EditarBancarios';
+import Login from './components/Login/Index';
 import { RequestProvider } from './context/RequestContext';
 import { UserProvider } from './context/UserContext';
 import './custom.css';

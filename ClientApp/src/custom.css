@@ -4,14 +4,15 @@ a {
   text-decoration: none;
   transition: all .2s
 }
+
 a:hover{
-  color: #fe4a55;
+  color: #fff;
 }
 
 code {
   color: #E01A76;
 }
-
+/*
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -21,3 +22,4 @@ code {
 input{
   text-align: left;
 }
+*/

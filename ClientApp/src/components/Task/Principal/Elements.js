@@ -99,6 +99,10 @@ export const Card = styled.div`
     margin: 0.25em 0 0 0;
     border-radius: 10px;
 `
+export const Icone = styled.i`
+    color:white;
+`
+
 export const CardTitle = styled.h3`
     color:red;
     margin:1em 0 0 0;

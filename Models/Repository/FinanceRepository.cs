@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlataformaTccSuporte.Data;
+using PlataformaTccSuporte.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,9 @@ namespace PlataformaTccSuporte.Models.Repository
     public interface IFinanceRepository
     {
         public Task CreateBalance(List<int> lastDay);
-        public List<Finance> GetBalance();
-        public Task<Finance> GetUniqueBalance(DateTime date);
+        //'1'public List<FinanceViewModel> GetBalance();
+        public Finance GetUniqueBalance(DateTime date);
+        public void updateExpense(Finance finance);
     }
     public class FinanceRepository : BaseRepository<Finance>,IFinanceRepository
     {
@@ -33,21 +35,25 @@ namespace PlataformaTccSuporte.Models.Repository
             }
             await context.SaveChangesAsync();
         }
-        public List<Finance> GetBalance()
+        /*public List<FinanceViewModel> GetBalance()
         {
             int previousYear = DateTime.Now.Year - 1;
             var PreviousTime = DateTime.Parse("" + 31 + "/" + 12 + "/" + previousYear);
             int nextYear = DateTime.Now.Year + 1;
             var NextTime = DateTime.Parse("" + 01 + "/" + 01 + "/" + nextYear);
 
-            var response = dbSet.Where(t => t.FinalPeriod < NextTime && t.InitialPeriod > PreviousTime).ToList();
+            var response = dbSet.Where(t => t.FinalPeriod < NextTime && t.InitialPeriod > PreviousTime).Select(x=>new FinanceViewModel(x.,x.FinalPeriod)).ToList();
+            return response;
+        }*/
+        public Finance GetUniqueBalance(DateTime date)
+        {
+            var response = dbSet.Where(t => t.FinalPeriod >= date  && t.InitialPeriod <= date).FirstOrDefault();
             return response;
         }
-        public async Task<Finance> GetUniqueBalance(DateTime date)
+        public void updateExpense(Finance finance)
         {
-
-            var response = await dbSet.Where(t => t.FinalPeriod <= date && t.InitialPeriod >= date).FirstOrDefaultAsync();
-            return response;
+            dbSet.Update(finance);
+            context.SaveChanges();
         }
 
 

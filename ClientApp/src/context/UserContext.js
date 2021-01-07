@@ -18,6 +18,7 @@ export function UserProvider({ children }) {
     const [user, setUser] = useState({});
     const [loaded, setloaded] = useState(false)
     useEffect(() => {
+        let teste = true;
         request("post", "", "Account/isLogged", (promise) => {
             var value = promise.data;
             if (value) {
@@ -30,7 +31,12 @@ export function UserProvider({ children }) {
                 })
             }
             setloaded(true);
+            return ()=>{
+                teste=false;
+            }
+            
         });
+        
     }, []);
 
     if(loaded){

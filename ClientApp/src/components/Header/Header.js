@@ -65,16 +65,35 @@ export function Header(props) {
                 <DivUl>
                     <NavUl>
                         <Li>
-                            <Link style={{"textDecoration":"none"}} to="/CadastrarVendas">Cadastrar Vendas</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeUsuarios">Lista de Usuarios</Link>
+                            </Button>
                         </Li>
                         <Li>
-                            <Link style={{"textDecoration":"none"}} to="/ListaDeClientes">Lista de Clientes</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/CadastrarVendas">Cadastrar Vendas</Link>
+                            </Button>
                         </Li>
                         <Li>
-                            <Link style={{"textDecoration":"none"}} to="/ListaDeVendas">Lista de Vendas</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeClientes">Lista de Clientes</Link>
+                            </Button>
                         </Li>
                         <Li>
-                            <Link style={{"textDecoration":"none"}} to="/div">Tarefas</Link>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/ListaDeVendas">Lista de Vendas</Link>
+                            </Button>
+                        </Li>
+                        <Li>
+                            <Button>
+                                <Link style={{"text-decoration":"none"}} to="/div">Tarefas</Link>
+                            </Button>
+                        </Li>
+                        <Li>
+                            <Link to="/fetch-data">Fetch</Link>
+                        </Li>
+                        <Li>
+                            <Link to="/Register">Registrar-se</Link>
                         </Li>
                         <Li>
                             <Link to="/DocEditor">Editor de documento</Link>

@@ -15,6 +15,7 @@ export const A = styled.a`
     white-space: normal;
     text-align: center;
     word-break: break-all;
+    text-decoration: none;
     
 `
 export const DivUl = styled.div`
@@ -27,12 +28,20 @@ export const NavUl = styled.ul`
     display:flex;
 `
 export const Li = styled.li`
-    margin:0.5em 1.5em 0 0;
+    margin:0.5em 0.5em 0 0;
     font-size:14pt;
+    text-decoration: none;
 `
 export const Button = styled.button`
     border:none;
     border-radius:8px;
-    backgroud-color: #fe4a55;
+    background-color: #fe4a55;
+    height: 2em;
+    transition: all .2s;
+    
+    &:hover {
+    background-color: #ff8082;
+    }
 `
+
 

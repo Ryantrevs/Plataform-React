@@ -1,5 +1,5 @@
 import React from 'react'
-import {Doughnut,Line} from 'react-chartjs-2'
+import {Doughnut, Line, Bar} from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import {
     NewExpensiveButton,
@@ -11,9 +11,22 @@ import {
     IncomeValue,
     EmployeeSection,
     AddNewBalance,
-    Main
+    Main,
+    H2,
+    Div,
+    DIV
 } from './Elements'
-import {BalanceProvider} from '../../context/BalanceContext'
+import {BalanceProvider} from '../../context/BalanceContext';
+
+
+  
+
+  const plugins = [{
+    afterDraw: (chartInstance, easing) => {
+        const ctx = chartInstance.chart.ctx;
+        ctx.fillText("This text drawn by a plugin", 100, 100);
+    }
+}];
 
 
 const getState = () => ({
@@ -25,9 +38,9 @@ const getState = () => ({
     datasets: [{
       data: [getRandomInt(50, 200), getRandomInt(100, 150), getRandomInt(150, 250)],
       backgroundColor: [
-      '#CCC',
-      '#36A2EB',
-      '#FFCE56'
+      'red',
+      'green',
+      'yellow'
       ],
       hoverBackgroundColor: [
       '#FF6384',
@@ -37,39 +50,74 @@ const getState = () => ({
     }]
   });
 
+  const data = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'My First dataset',
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: 'rgba(255,255,255,255)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'rgba(75,192,192,1)',
+        pointBackgroundColor: '#fff',
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+        pointHoverBorderColor: 'rgba(220,220,220,1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [65, 59, 80, 81, 56, 55, 40]
+      }
+    ]
+  };
+
   function getRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const teste = 2000.99
+const teste = 2000.99;
+
 
 function Balance() {
+    
     if(teste){
         return (
-            <main>
+            <Main>
                 <BalanceProvider>
-                    <h2>Dynamicly refreshed Doughnut Example</h2>
-                    <Doughnut data={getState} />
-                    <TradeSection>
-                        <ExpensiveSection>
-                            <ExpensiveValue type="submit">{"R$:" + teste}</ExpensiveValue>
-                            <Link to="/NewExpense"><NewExpensiveButton type="submit">Nova despesa</NewExpensiveButton></Link>
-                        </ExpensiveSection>
-                        <IncomeSection>
-                            <IncomeValue>{"R$:"+ teste}</IncomeValue>
-                            <Link to="/NewIncome"><NewIncomeButton>Nova Receita</NewIncomeButton></Link>
-                        </IncomeSection>
-                    </TradeSection>
-                    <EmployeeSection>
-                        <h2>Bubble Example</h2>
-                        <Line 
-                        data={data}
-                        width={50}
-                        height={50}
-                        options={{ maintainAspectRatio: false }}/>
-                    </EmployeeSection>
+                        <Div>
+                            <Doughnut className="Teste" 
+                            data={getState}/>
+                        </Div><br/> 
+                        <TradeSection>
+                            <ExpensiveSection>
+                                <ExpensiveValue type="submit">{"R$:" + teste}</ExpensiveValue>
+                                <Link to="/NewExpense"><NewExpensiveButton type="submit">Nova Despesa</NewExpensiveButton></Link>
+                            </ExpensiveSection>
+                            <div style={{"width":"30em","margin-top":"7em"}}>
+                                <Bar
+                                data={barra}
+                                options={options}
+                                plugins={plugins}
+                            />
+                            </div>
+                            <IncomeSection>
+                                <IncomeValue>{"R$:"+ teste}</IncomeValue>
+                                <Link to="/NewIncome"><NewIncomeButton>Nova Receita</NewIncomeButton></Link>
+                            </IncomeSection>
+                        </TradeSection><br/>
+                        <EmployeeSection>
+                            <Line 
+                            data={data}
+                            options={{ maintainAspectRatio: false }}/>
+                        </EmployeeSection>
                 </BalanceProvider>
-            </main>
+            </Main>
         )
     }else{
         return(
@@ -81,7 +129,7 @@ function Balance() {
 }
 
 export default Balance
-
+/*
 const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
@@ -108,3 +156,81 @@ const data = {
       }
     ]
   };
+*/
+
+  const barra = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [{
+        label: 'Sales',
+        type:'line',
+        data: [51, 65, 40, 49, 60, 37, 40],
+        fill: false,
+        borderColor: '#EC932F',
+        backgroundColor: '#EC932F',
+        pointBorderColor: '#EC932F',
+        pointBackgroundColor: '#EC932F',
+        pointHoverBackgroundColor: '#EC932F',
+        pointHoverBorderColor: '#EC932F',
+        yAxisID: 'y-axis-2'
+      },{
+        type: 'bar',
+        label: 'Visitor',
+        data: [200, 185, 590, 621, 250, 400, 95],
+        fill: false,
+        backgroundColor: '#71B37C',
+        borderColor: '#71B37C',
+        hoverBackgroundColor: '#71B37C',
+        hoverBorderColor: '#71B37C',
+        yAxisID: 'y-axis-1'
+      }]
+  };
+
+  const options = {
+    responsive: true,
+    tooltips: {
+      mode: 'label'
+    },
+    elements: {
+      line: {
+        fill: false
+      }
+    },
+    scales: {
+        xAxes: [
+            {
+              display: true,
+              gridLines: {
+                display: false
+              },
+          
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            }
+          ],
+          yAxes: [
+            {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              id: 'y-axis-1',
+              gridLines: {
+                display: false
+              },
+              labels: {
+                show: true
+              }
+            },
+            {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              id: 'y-axis-2',
+              gridLines: {
+                display: false
+              },
+              labels: {
+                show: true
+              }
+            }
+          ]
+          }
+          };
