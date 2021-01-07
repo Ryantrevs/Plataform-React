@@ -16,6 +16,7 @@ export function UserProvider({ children }) {
     const [isLogged, setIsLogged] = useState(false)
     const [user, setUser] = useState({});
     useEffect(() => {
+        let teste = true;
         request("post", "", "Account/isLogged", (promise) => {
             var value = promise.data;
             if (value) {
@@ -26,7 +27,12 @@ export function UserProvider({ children }) {
                     }
                 })
             }
+            return ()=>{
+                teste=false;
+            }
+            
         });
+        
     }, []);
 
 

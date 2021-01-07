@@ -32,9 +32,8 @@ namespace PlataformaTccSuporte.Controllers
 
         [HttpGet]
         [ActionName("CreateBalance")]
-        public async Task<List<Finance>> CreateBalance()
+        public async Task CreateBalance()
         {
-            var list = financeRepository.GetBalance();
             List<int> lastDay = new List<int>();
             for (int i = 0; i < 12; i++)
             {
@@ -42,76 +41,94 @@ namespace PlataformaTccSuporte.Controllers
             }
             await financeRepository.CreateBalance(lastDay);
             Console.WriteLine("asnlkdasnldsa");
-            return list;
+            return;
 
         }
 
         [HttpGet]
         [ActionName("GetBalance")]
-        public async Task<FinanceViewModel> GetBalance()
+        public async Task<List<FinanceViewModel>> GetBalance()
         {
-            var finance = new FinanceViewModel();
+
+            var finance = new List<FinanceViewModel>();
             var ActualMonth = DateTime.Now.Month;
             var ActualYear = DateTime.Now.Year;
             var init = DateTime.Parse("01/" + ActualMonth + "/" + ActualYear);
             var final = DateTime.Parse(DateTime.DaysInMonth(ActualYear, ActualMonth) + "/" + ActualMonth + "/" + ActualYear);
-            List<Expenses> expenses = await expensesRepository.GetExpenses(init, final);
-            List<Income> Incomes = await incomingRepository.getIncomingPerDate(init, final);
-            List<Finance> finan = financeRepository.GetBalance();
-            if (expenses == null)
-            {
-                finance.Expenses = new List<Expenses>();
-            }
-            else
-            {
-                finance.Expenses = expenses;
-            }
-            if (Incomes == null)
-            {
-                finance.Incomes = new List<Income>();
-            }
-            else
-            {
-                finance.Incomes = Incomes;
-            }
+            List<FinanceViewModel> finan = financeRepository.GetBalance();
             if (finan == null)
             {
-                finance.finances = new List<Finance>();
+                finance = new List<FinanceViewModel>();
             }
             else
             {
-                finance.finances = finan;
+                foreach (var item in finan)
+                {
+                    item.expensesViewModels = await expensesRepository.GetExpenses(item.InitialPeriod, item.FinalPeriod);
+                }
+                finance = finan;
             }
 
             return finance;
-        }
-
-        [HttpPost]
-        [ActionName("newIncome")]
-        public Income newIncome(Income income)
-        {
-            return income;
         }
 
         [HttpGet]
         [ActionName("GetCategory")]
         public List<ExpenseCategory> GetCategory()
         {
+            expenseCategoryRepository.EmployCategory();
             var list = expenseCategoryRepository.Categories();
             return list;
         }
 
         [HttpPost]
         [ActionName("NewExpense")]
-        public async Task<Expenses> newExpense([FromForm]Expenses expenses)
+        public async Task<String> newExpense([FromForm]Expenses expenses)
         {
             var user = await userManager.GetUserAsync(User);
-            Finance balance = await financeRepository.GetUniqueBalance(expenses.Date);
+            Finance balance = financeRepository.GetUniqueBalance(expenses.Date);
             expenses.Id = Guid.NewGuid().ToString();
             expenses.Finance = balance;
             expenses.user = user;
+            var response = await expensesRepository.InsertExpense(expenses);
+            if (response == "1")
+            {
+                balance.Expenses.Add(expenses);
+                financeRepository.updateExpense(balance);
+            }
+            return response;
+        }
+        [HttpPost]
+        [ActionName("NewIncome")]
+        public async Task<String> newIncome([FromForm]Income income)
+        {
+            var user = await userManager.GetUserAsync(User);
+            Finance balance = financeRepository.GetUniqueBalance(income.Date);
+            income.Id = Guid.NewGuid().ToString();
+            var response = incomingRepository.insertIncoming(income);
+            return response;
+
+        }
+        //public async Task<List<Expenses>> GetExpensesAsync([FromForm]String date)
+        [HttpPost]
+        [ActionName("GetExpenses")]
+        public async Task<List<ExpensesViewModel>> GetExpensesAsync([FromForm]String date)
+        {
+            DateTime todayDate = DateTime.Parse(date);
+            var finalDate = DateTime.Parse(DateTime.DaysInMonth(todayDate.Year, todayDate.Month) + "/" + todayDate.Month +"/"+ todayDate.Year);
+            var initDate = DateTime.Parse("01/" + todayDate.Month + "/" + todayDate.Year);
+            List<ExpensesViewModel> expenses = await expensesRepository.GetExpenses(initDate, finalDate);
             return expenses;
         }
-
+        [HttpPost]
+        [ActionName("GetIncoming")]
+        public async Task<List<Income>> GetIncoming([FromForm]String date)
+        {
+            DateTime todayDate = DateTime.Parse(date);
+            var finalDate = DateTime.Parse(DateTime.DaysInMonth(todayDate.Year, todayDate.Month) + "/" + todayDate.Month + "/" + todayDate.Year);
+            var initDate = DateTime.Parse("01/" + todayDate.Month + "/" + todayDate.Year);
+            List<Income> incomes = await incomingRepository.getIncomingPerDate(initDate, finalDate);
+            return incomes;
+        }
     }
 }

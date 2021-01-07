@@ -10,7 +10,7 @@ namespace PlataformaTccSuporte.Models.Repository
     public interface IIncomingRepository
     {
         public Task<List<Income>> getIncomingPerDate(DateTime init, DateTime final);
-        public void insertIncoming(Income income);
+        public String insertIncoming(Income income);
     }
     public class IncomingRepository : BaseRepository<Income>,IIncomingRepository
     {
@@ -18,10 +18,11 @@ namespace PlataformaTccSuporte.Models.Repository
         {
         }
 
-        public void insertIncoming(Income income)
+        public String insertIncoming(Income income)
         {
             dbSet.Add(income);
-            context.SaveChanges();
+            var response = context.SaveChanges();
+            return response.ToString();
         }
 
         public async Task<List<Income>> getIncomingPerDate(DateTime init,DateTime final)

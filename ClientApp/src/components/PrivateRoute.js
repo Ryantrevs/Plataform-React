@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom"
-import { useUser } from "./../Context/UserContext"
-import { useRequest } from "./../Context/RequestContext"
+import { useUser } from "../Context/UserContext"
+import { useRequest } from "../Context/RequestContext"
 
 export default function PrivateRoute({ Role, component: Component, ...rest }) {
     var myContext = useUser();

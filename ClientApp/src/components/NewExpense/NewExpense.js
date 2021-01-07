@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import {
     MainNewExpense,
     BackgroundNewExpense,
@@ -11,28 +11,56 @@ import {
 import {useRequest} from '../../Context/RequestContext'
 
 function NewExpense() {
-
-    const [category, setCategory] = useState([])
     const request = useRequest().Request;
     const [NewExpense, setNewExpense] = useState(emptyIncome);
+    const unmounted = useRef(false);
+
+    const [abc,setAbc] = useState(emptyCategory);
+
+
+
+    useEffect(() => {
+        GetCategories();
+        return () => { unmounted.current = true }
+    }, []);
+
 
     function Add(obj){
         var data = new FormData();
         data.append("expenses.Description",NewExpense.Description);
         data.append("expenses.Value",NewExpense.Value);
         data.append("expenses.Date",NewExpense.Date);
+        data.append("expenses.Date",NewExpense.categ);
         request("post",data, "/Finance/NewExpense", function(response){
             console.log(response.request.status)
             console.log(response);
         })
     }
-
-    useEffect(()=>{
+    async function GetCategories(){
         request("get",{}, "/Finance/GetCategory", function(response){
-            console.log(response.data);
-            setCategory(response.data);
-        })
-    },[])
+            if(response.data!=abc && response.data!=undefined){
+                console.log(abc);
+                console.log(response.data);
+                setAbc(response.data);
+            }
+        });
+    }
+
+    /*useEffect(()=>{
+        let subscribe = true;
+        
+        request("get",{}, "/Finance/GetCategory", function(response){
+            if(response.data!=categoryExpense && response.data!=undefined){
+                setCategoryExpense(response.data);
+            }
+        });
+
+        return () =>{
+            subscribe =false
+        };
+    },[categoryExpense])*/
+
+
     return (
         <MainNewExpense>
             <BackgroundNewExpense>
@@ -55,13 +83,17 @@ function NewExpense() {
                     placeholder=""
                     onChange={(event)=>{
                         setNewExpense({...NewExpense,Date:event.target.value});
-                    }}/><br/>
-                    {category.map((item,index)=>(
-                        <InputRadio 
-                        id={item.id} 
-                        key={index}>{item.name}</InputRadio>
+                    }}/>
+                    {abc.map((item,index)=>(
+                        <label key={index}>
+                            <InputRadio 
+                            id={item.id} 
+                            type="radio"/>
+                            {item.name}
+                        </label>
                     ))}
-                </InputArea><br/><br/>
+                    
+                </InputArea>
                 <AddButton
                     onClick={
                         (event)=>{
@@ -82,12 +114,22 @@ function NewExpense() {
 export default NewExpense
 
 function emptyIncome(){
-    var year = Date.prototype.getFullYear;
-    var month = Date.prototype.getMonth;
-    var day = Date.prototype.getDay;
     return({
         Description:"",
         Value:0.00,
-        Date: ""
+        Date: "",
+        Category:{}
     })
 }
+function emptyCategory(){
+    return([{
+        id:"",
+        name:"",
+        expenses:[]
+    }])
+}
+/*{categoryExpense.map((item,index)=>(
+                        <InputRadio 
+                        id={item.id} 
+                        key={index}>{item.name}</InputRadio>
+                    ))}*/
