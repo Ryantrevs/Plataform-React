@@ -34,6 +34,9 @@ export function Header(props) {
             return (
                 <Li>
                     <span style={{ color: "#fff", margin: "0.5em 1.5em 0 0" }}>Bem vindo: {myContext.User.name}</span>
+                    <Li>
+                             <Link style={{"textDecoration":"none"}} to="/Perfil">Perfil</Link>   
+                    </Li>                    
                     <button onClick={LogOff}>Logoff</button>
                 </Li>
             );
@@ -74,21 +77,12 @@ export function Header(props) {
                             <Link style={{"textDecoration":"none"}} to="/div">Tarefas</Link>
                         </Li>
                         <Li>
-                            <Link to="/fetch-data">Fetch</Link>
-                        </Li>
-                        {/* <Li>
-                            <Link style={{"textDecoration":"none"}} to="/Counter">counter</Link>
-                        </Li>
-                        <Li>
-                             <Link style={{"textDecoration":"none"}} to="/fetch-data">Fetch</Link>   
-                        </Li> */}
-                        <Li>
-                             <Link style={{"textDecoration":"none"}} to="/Perfil">Perfil</Link>   
-                        </Li> 
-                        <Li>
                             <Link to="/DocEditor">Editor de documento</Link>
                         </Li>
-                        <UserArea />
+                        <Li>
+                            <Link to="/Balance">Balanço</Link>
+                        </Li>
+                        <UserArea/>
                     </NavUl>
                 </DivUl>
             </Nav>

@@ -1,2 +1,2 @@
-import Vendas from './Vendas'
-export default Vendas;
+import CadastrarVendas from './CadastrarVendas'
+export default CadastrarVendas;

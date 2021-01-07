@@ -9,8 +9,8 @@ using PlataformaTccSuporte.Data;
 namespace PlataformaTccSuporte.Migrations
 {
     [DbContext(typeof(PlataformaTccSuporteContext))]
-    [Migration("20210106144241_bancoConsultoria")]
-    partial class bancoConsultoria
+    [Migration("20210107155418_banco")]
+    partial class banco
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -241,22 +241,22 @@ namespace PlataformaTccSuporte.Migrations
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Card", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Describe")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("Percentage")
-                        .HasColumnType("int");
 
                     b.Property<string>("ScopeId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("describe")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("Id");
+                    b.Property<int>("percentage")
+                        .HasColumnType("int");
+
+                    b.Property<string>("title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("id");
 
                     b.HasIndex("ScopeId");
 
@@ -285,6 +285,19 @@ namespace PlataformaTccSuporte.Migrations
                     b.ToTable("Client");
                 });
 
+            modelBuilder.Entity("PlataformaTccSuporte.Models.ExpenseCategory", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExpenseCategory");
+                });
+
             modelBuilder.Entity("PlataformaTccSuporte.Models.Expenses", b =>
                 {
                     b.Property<string>("Id")
@@ -296,12 +309,43 @@ namespace PlataformaTccSuporte.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("ExpenseCategoryId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("FinanceId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.Property<double>("Value")
                         .HasColumnType("double");
 
+                    b.Property<string>("userId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ExpenseCategoryId");
+
+                    b.HasIndex("FinanceId");
+
+                    b.HasIndex("userId");
+
                     b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("PlataformaTccSuporte.Models.Finance", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("FinalPeriod")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("InitialPeriod")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Finance");
                 });
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Income", b =>
@@ -315,10 +359,15 @@ namespace PlataformaTccSuporte.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("FinanceId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.Property<double>("Value")
                         .HasColumnType("double");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FinanceId");
 
                     b.ToTable("Income");
                 });
@@ -550,9 +599,31 @@ namespace PlataformaTccSuporte.Migrations
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Card", b =>
                 {
-                    b.HasOne("PlataformaTccSuporte.Models.Scope", "Scope")
+                    b.HasOne("PlataformaTccSuporte.Models.Scope", "scope")
                         .WithMany("Cards")
                         .HasForeignKey("ScopeId");
+                });
+
+            modelBuilder.Entity("PlataformaTccSuporte.Models.Expenses", b =>
+                {
+                    b.HasOne("PlataformaTccSuporte.Models.ExpenseCategory", "ExpenseCategory")
+                        .WithMany("Expenses")
+                        .HasForeignKey("ExpenseCategoryId");
+
+                    b.HasOne("PlataformaTccSuporte.Models.Finance", "Finance")
+                        .WithMany("Expenses")
+                        .HasForeignKey("FinanceId");
+
+                    b.HasOne("PlataformaTccSuporte.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
+                });
+
+            modelBuilder.Entity("PlataformaTccSuporte.Models.Income", b =>
+                {
+                    b.HasOne("PlataformaTccSuporte.Models.Finance", "Finance")
+                        .WithMany("Incomes")
+                        .HasForeignKey("FinanceId");
                 });
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Job", b =>

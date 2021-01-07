@@ -1,15 +1,15 @@
 import styled from 'styled-components'
 
-export const Body = styled.body`
+export const Body = styled.section`
     background-color: #fe4a55;
     position: absolute;
     height: 100%;
     width: 100%;
     z-index: 1;
-    left: -200em;
     display: flex;
     margin: 0;
     top: 0;
+    left: -200em;
 `
 
 export const Section = styled.div`

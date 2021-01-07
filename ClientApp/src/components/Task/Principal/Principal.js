@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
     PrincipalSection,
     Section,
@@ -14,18 +11,163 @@ import {
     TaskMenu,
     ScopeList,
     Card,
-    Icone
+    CardTitle,
+    ButtonConfigure
 } from './Elements'
 import { TiThMenuOutline } from "react-icons/ti";
+import {useTask} from '../../../context/TaskContext'
 
-//const element = <FontAwesomeIcon icon={cog} />
+export function Principal() {
 
-export function Principal({ Request }) {
+    const context = useTask();
 
-    const [TaskList, SetTaskList] = useState([]);
-    const [ActiveList, SetActiveList] = useState();
-    const [Scope, SetScope] = useState([]);
+    useEffect(()=>{
+        let isSubscribed = true
+        console.log(context.TaskList);
+        return () => isSubscribed = false   
+    },[])
 
+    return (
+        <PrincipalSection>
+            <Section>
+                <Menu>
+                    <TiThMenuOutline size={28} color="#fff"/><br/>
+                    <ButtonTools onClick={(event)=>{
+                        event.preventDefault();
+                        console.log("Adicionar Lista");
+                        context.newList();
+                        //NewTaskList();
+                    }}>+Lista</ButtonTools>
+                    <ButtonTools 
+                        onClick={(event)=>{
+                        console.log("Adicionar Escopo");
+                        context.newScope()
+                        //newScope();
+                    }}>+Escopo</ButtonTools>
+                    <ButtonTools onClick={(event)=>{
+                        console.log("Adicionar Tarefa");
+                        context.newTask();
+                        //newCard();
+                    }}>+Tarefa</ButtonTools>
+                    <NavMenu>
+
+                    </NavMenu>
+                    <MenuItem>
+                    {context.TaskList.map(teste => (
+                            <Item key={teste.id}
+                                id={teste.id}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    context.changeActiveList(event.target.id);
+                                    //SetActiveList(event.target.id)
+                                }}>
+                                {teste.titulo}
+                            </Item>))
+                        }
+                        <Configure>
+                            <ButtonConfigure>
+
+                            </ButtonConfigure>
+                        </Configure>
+                    </MenuItem>
+                </Menu>
+            </Section>
+            <TaskMenu>
+            {
+                context.Scope.map((scope,index)=>(
+                <ScopeList key={index}>
+                    <h3>{scope.titulo}</h3> 
+                    {scope.cards.map((card,subIndex)=>(
+                        <Card 
+                        onClick={(event)=>{
+                            event.preventDefault();
+                            context.TakeCard(event.target.id);
+                            //;
+                            //GetCard(event.target.id);
+                            }
+                        }
+                        id={card.id} 
+                        key={subIndex}><CardTitle>{card.titulo}</CardTitle>
+                        </Card>
+                    ))}
+                     
+                </ScopeList>   
+                ))
+            }
+                </TaskMenu>
+
+        </PrincipalSection>
+    )
+}
+
+/*<PrincipalSection>
+            <Section>
+                <Menu>
+                    <TiThMenuOutline size={28} color="#fff"/><br/>
+                    <ButtonTools onClick={(event)=>{
+                        event.preventDefault();
+                        console.log("Adicionar Lista");
+                        //NewTaskList();
+                    }}>+Lista</ButtonTools>
+                    <ButtonTools 
+                        onClick={(event)=>{
+                        console.log("Adicionar Escopo");
+                        //newScope();
+                    }}>+Escopo</ButtonTools>
+                    <ButtonTools onClick={(event)=>{
+                        console.log("Adicionar Tarefa");
+                        //newCard();
+                    }}>+Tarefa</ButtonTools>
+                    <NavMenu>
+
+                    </NavMenu>
+                    <MenuItem>
+                        {context.TaskList.map(teste => (
+                            <Item key={teste.id}
+                                id={teste.id}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    //SetActiveList(event.target.id)
+                                }}>
+                                {teste.titulo}
+                            </Item>))}
+                        <Configure>
+                            <ButtonConfigure>
+
+                            </ButtonConfigure>
+                        </Configure>
+                    </MenuItem>
+                </Menu>
+            </Section>
+            <TaskMenu>
+            {
+                context.scope.map((scope,index)=>(
+                <ScopeList key={index}>
+                    <h3>{scope.titulo}</h3> 
+                    {scope.cards.map((card,subIndex)=>(
+                        <Card 
+                        onClick={(event)=>{
+                            event.preventDefault();
+                            //GetCard(event.target.id);
+                            }
+                        }
+                        id={card.id} 
+                        key={subIndex}><CardTitle>{card.titulo}</CardTitle>
+                        </Card>
+                    ))}
+                     
+                </ScopeList>   
+                ))
+            }
+                </TaskMenu>
+
+        </PrincipalSection>
+    )
+
+/*
+const [TaskList,SetTaskList] = useState([]);
+    const [ActiveList,SetActiveList] = useState();
+    const [infoCard,setCard,changeCard] = useCard();
 
     useEffect(() => {
         Request("get", {}, "/Task/Organization", function (data) {
@@ -36,29 +178,31 @@ export function Principal({ Request }) {
 
     }, []);
 
-    useEffect(() => {
-        if (ActiveList) {
-            console.log(ActiveList)
+    useEffect(()=>{
+        if(ActiveList){
             GetTask(ActiveList)
-
+            console.log("a")
         }
     }, [ActiveList])
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (Scope) {
             console.log(Scope)
-            for (var item in Scope) {
-                console.log(item)
-            }
+            newScopeList(Scope);
         }
     }, [Scope])
 
 
-
-    async function GetTask(ActiveList) {
-        Request("post", { Id: ActiveList }, "/Task/GetTasks", function (data) {
-            try {
-                SetScope(data)
+    useEffect(()=>{
+        console.log(TaskList);
+    },[TaskList])
+    
+    async function GetTask(ActiveList){
+        var obj = new FormData();
+        obj.append("Id",ActiveList)
+        Request("post",obj,"/Task/GetTasks",function(data){
+            try{
+                newScopeList(data)
             }
             catch (error) {
                 console.log(error)
@@ -66,135 +210,39 @@ export function Principal({ Request }) {
         });
     }
 
-    async function teste() {
-        if (Scope) {
-            console.log("hgasusahasuah");
-        }
-    }
-
-
-    
-    /*
-    function handleOnDragEnd(result) {
-        const items = Array.from(card);
-        const [reorderedItem] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reorderedItem);
-
-        updateCard(items);  
-        
-    }
-
-    const [card, updateCard] = useState();
-    */
-
-
-
-
-
-
-   const onDragEnd = (result, scope, setScope) => {
-    if (!result.destination) return;
-    const { source, destination } = result;
-  
-    if (source.droppableId !== destination.droppableId) {
-      const sourceScope = scope[source.droppableId];
-      const destScope = scope[destination.droppableId];
-      const sourceItems = [...sourceScope.items];
-      const destItems = [...destScope.items];
-      const [removed] = sourceItems.splice(source.index, 1);
-      destItems.splice(destination.index, 0, removed);
-      setScope({
-        ...scope,
-        [source.droppableId]: {
-          ...sourceScope,
-          items: sourceItems
-        },
-        [destination.droppableId]: {
-          ...destScope,
-          items: destItems
-        }
-      });
-    } else {
-      const scope = scope[source.droppableId];
-      const copiedItems = [...scope.items];
-      const [removed] = copiedItems.splice(source.index, 1);
-      copiedItems.splice(destination.index, 0, removed);
-      setScope({
-        ...scope,
-        [source.droppableId]: {
-          ...scope,
-          items: copiedItems
-        }
-      });
-    }
-  };
-    return (
-        <PrincipalSection>
-            <Section>
-                <Menu>
-                    <TiThMenuOutline size={28} color="#fff" /><br />
-                    <ButtonTools>+Lista</ButtonTools>
-                    <ButtonTools>+Escopo</ButtonTools>
-                    <ButtonTools>+Tarefa</ButtonTools>
-                    <NavMenu>
-
-                    </NavMenu>
-                    <MenuItem>
-                        {TaskList.map(teste => (
-                            <Item key={teste.id}
-                                id={teste.id}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    SetActiveList(event.target.id)
-                                }}>
-                                {teste.titulo}
-                                <Configure>
-                                    <Icone>
-                                    </Icone>
-                                </Configure> 
-                            </Item>))}
-                    </MenuItem>
-                </Menu>
-            </Section>
-            <TaskMenu>
-                {
-                    <DragDropContext onDragEnd={result => onDragEnd(result, Scope, SetScope)}>
-                        {Scope.map((scope, index) => (
-                            <ScopeList key={scope.id}>
-                                <Droppable droppableId={scope.id} key={scope.id}>
-                                    {(provided) => (
-                                        <div className="ScopeList"
-                                            {...provided.droppableProps}
-                                            ref={provided.innerRef}>
-                                            <h3>{scope.titulo}</h3>
-                                            {scope.cards.map((card, subIndex) => {
-                                                return (
-                                                    <Draggable draggableId={card.id} key={card.id} index={index}>
-                                                        {(provided) => (
-                                                            <Card key={card.id}
-                                                                ref={provided.innerRef}
-                                                                {...provided.draggableProps}
-                                                                {...provided.dragHandleProps}>{card.titulo}</Card>
-                                                        )}
-                                                    </Draggable>
-                                                )
-                                            })}
-                                        </div>
-                                    )}
-                                </Droppable>
-                            </ScopeList>
-                        ))}
-                    </DragDropContext>
+    async function GetCard(id){
+        var obj = new FormData();
+        obj.append("Id",id)
+        Request("post",obj,"/Task/GetCard",function(data){
+            try{
+                    console.log(data);
+                    ChangeCardState(true,data);
                 }
-            </TaskMenu>
-        </PrincipalSection>
-    )
-}
+            catch(error){
+                console.log(error)
+            }
+        });
+    }
 
-/*{ScopeList.map(scope=>(
-    <ScopeList key={scope.Id}>
-        {scope.cards.map(card=>(
-            <Card key={card.Id}>{card.Titulo}</Card>
-        ))}
-    </ScopeList>
-))}*/
+    async function NewTaskList(){
+        const newList = {id:"teste",titulo:"novoCard",cards:[]}
+        SetTaskList([...ListScope,newList]);
+    }
+
+    async function newScope(){
+        const newscopes = {id:"abc", titulo:"patrick_TESTE",cards:[]}
+
+        newScopeList([...ListScope,newscopes]);
+    }
+
+    async function newCard(){
+        MenuCard(true,ListScope)
+    }
+
+    async function enableNewCard(){
+        if(ListScope.length>0){
+            return true;
+        }
+        return false;
+    }
+*/
