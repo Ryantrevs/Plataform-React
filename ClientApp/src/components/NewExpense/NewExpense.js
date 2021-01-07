@@ -8,7 +8,7 @@ import {
     InputRadio,
     H1
 } from './Elements'
-import {useRequest} from '../../Context/RequestContext'
+import {useRequest} from '../../context/RequestContext'
 
 function NewExpense() {
     const request = useRequest().Request;

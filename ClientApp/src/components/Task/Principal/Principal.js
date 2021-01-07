@@ -24,7 +24,7 @@ import {
 
 } from './Elements'
 import { TiThMenuOutline } from "react-icons/ti";
-import {useTask} from '../../../Context/TaskContext'
+import {useTask} from '../../../context/TaskContext'
 
 export function Principal() {
 

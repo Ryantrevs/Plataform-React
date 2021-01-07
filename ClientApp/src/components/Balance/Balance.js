@@ -16,7 +16,7 @@ import {
     Div,
     DIV
 } from './Elements'
-import {BalanceProvider} from '../../Context/BalanceContext'
+import {BalanceProvider} from '../../context/BalanceContext'
 
 
 const getState = () => ({

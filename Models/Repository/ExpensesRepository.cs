@@ -36,8 +36,6 @@ namespace PlataformaTccSuporte.Models.Repository
             var response = dbSet.Where(t => final >= t.Date && init <= t.Date).Select(x=>new ExpensesViewModel(x.Value,x.ExpenseCategory.Name)).ToListAsync();
             return response;
         }
-
-<<<<<<< HEAD
         public async Task<String> InsertExpense(Expenses expenses)
         {
             dbSet.Add(expenses);
@@ -47,12 +45,7 @@ namespace PlataformaTccSuporte.Models.Repository
         public async Task<List<Expenses>> GetPerBalance(String balanceId)
         {
             return await dbSet.Where(t => t.Finance.Id == balanceId).ToListAsync();
-=======
-      /*  public Task<String> InsertBalance(String balanceId)
-        {
-            dbSet.Add();
->>>>>>> 2ab09a18bca04d6c6067c6e497b35a93ef759453
         }
-       */
+       
     }
 }

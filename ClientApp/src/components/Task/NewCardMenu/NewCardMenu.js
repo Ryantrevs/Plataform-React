@@ -11,7 +11,7 @@ import {
     Button
 } from './Elements'
 import { MdCancel } from "react-icons/md";
-import {useTask} from '../../../Context/TaskContext'
+import {useTask} from '../../../context/TaskContext'
 
 export function NewCardMenu() {
     const context = useTask();

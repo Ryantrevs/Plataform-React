@@ -10,8 +10,8 @@ import {
     Li,
     Button
 } from './Elements';
-import { useUser } from "./../../Context/UserContext"
-import { useRequest } from "./../../Context/RequestContext"
+import { useUser } from "./../../context/UserContext"
+import { useRequest } from "./../../context/RequestContext"
 
 
 export function Header() {

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { Route,Switch} from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Header from './components/Header/Index'
-import Vendas from './components/Vendas/Index'
 import CriarRole from './components/CriarRole/CriarRole';
 import AdicionarRemover from './components/ListaDeNiveis/AdicionarRemover/AdicionarRemover';
 import GerenciarNiveis from './components/ListaDeUsuarios/EditarUsuario/GerenciarNiveis/GerenciarNiveis';
@@ -28,19 +25,13 @@ import EditarPerfil from './components/Perfil/EditarPerfil/EditarPerfil';
 import EditarBancarios from './components/Perfil/EditarBancarios/EditarBancarios';
 import Perfil from './components/Perfil/Index';
 import { formatDiagnostic } from 'typescript';
-//const axios = require('axios').default;
-// import { Route, Switch } from 'react-router-dom';
-// import Header from './components/Header/Index';
 import Login from './components/Login/Index';
-//import Vendas from './components/Vendas/Index';
-//import Task from './components/Task/Index';
-//import Register from './components/Register/Index';
-import { RequestProvider } from './Context/RequestContext';
-import { UserProvider } from './Context/UserContext';
+import { RequestProvider } from './context/RequestContext';
+import { UserProvider } from './context/UserContext';
+import {BalanceProvider} from './context/BalanceContext'
 import './custom.css';
 import DocEditor from "./components/DocEditor/Index";
 import PrivateRoute from './components/PrivateRoute';
-//import Vendas from './components/vendas/Index';
 import Balance from './components/Balance/Index';
 import NewIncome from './components/NewIncome/Index';
 import NewExpense from './components/NewExpense/Index';
@@ -61,13 +52,13 @@ export default class App extends Component {
               <Route path="/Counter" exact component={Counter} />
               <Route path="/FetchData" exact component={FetchData} />
               {<Route path="/div" exact component={Task} />}
-              <Route path="/Vendas" exact component={Vendas}/> 
               <Route path="/Register" exact component={Register} />
-              <PrivateRoute path="/Vendas" component={Vendas} Role={"admin"}/>
               <Route path="/DocEditor" component={DocEditor} />
-              <Route path="/Balance" component={Balance}/>
-              <Route path="/NewIncome" component={NewIncome}/>
-              <Route path="/NewExpense" component={NewExpense}/>
+              <BalanceProvider>
+                <Route path="/Balance" component={Balance}/>
+                <Route path="/NewIncome" component={NewIncome}/>
+                <Route path="/NewExpense" component={NewExpense}/>
+              </BalanceProvider>
               <Route path="/ListaDeClientes" exact component={ListaDeClientes}/>
               <Route path="/EditarCliente" exact component={EditarCliente}/>
               <Route path="/ListaDeVendas" exact component={ListaDeVendas}/>

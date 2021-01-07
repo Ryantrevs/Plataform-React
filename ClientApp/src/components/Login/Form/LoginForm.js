@@ -8,8 +8,8 @@ import {
     Button,
     InputCheckbox
 } from "./../Elements"
-import {useRequest} from "../../../Context/RequestContext" 
-import {useUser} from "../../../Context/UserContext"
+import {useRequest} from "../../../context/RequestContext" 
+import {useUser} from "../../../context/UserContext"
 function LoginForm() {
     const Request = useRequest().Request;
     var localUserContext = useUser();

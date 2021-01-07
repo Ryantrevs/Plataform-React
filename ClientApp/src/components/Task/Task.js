@@ -6,7 +6,7 @@ import NewCardMenu from './NewCardMenu/Index'
 import axios from 'axios'
 import useCard from '../../hooks/useCard'
 import useScope from '../../hooks/useScope'
-import {TaskProvider} from '../../Context/TaskContext'
+import {TaskProvider} from '../../context/TaskContext'
 
 export function Task() {
     
