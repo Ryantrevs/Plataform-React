@@ -1,5 +1,6 @@
 import React from 'react'
-import {Doughnut,Line} from 'react-chartjs-2'
+import {Doughnut,Line} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import {
     NewExpensiveButton,
@@ -16,7 +17,17 @@ import {
     Div,
     DIV
 } from './Elements'
-import {BalanceProvider} from '../../Context/BalanceContext'
+import {BalanceProvider} from '../../Context/BalanceContext';
+
+
+  
+
+  const plugins = [{
+    afterDraw: (chartInstance, easing) => {
+        const ctx = chartInstance.chart.ctx;
+        ctx.fillText("This text drawn by a plugin", 100, 100);
+    }
+}];
 
 
 const getState = () => ({
@@ -44,9 +55,11 @@ const getState = () => ({
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const teste = 2000.99
+const teste = 2000.99;
+
 
 function Balance() {
+    
     if(teste){
         return (
             <Main>
@@ -61,6 +74,11 @@ function Balance() {
                                 <ExpensiveValue type="submit">{"R$:" + teste}</ExpensiveValue>
                                 <Link to="/NewExpense"><NewExpensiveButton type="submit">Nova Despesa</NewExpensiveButton></Link>
                             </ExpensiveSection>
+                            <Bar
+                                data={barra}
+                                options={options}
+                                plugins={plugins}
+                            />
                             <IncomeSection>
                                 <IncomeValue>{"R$:"+ teste}</IncomeValue>
                                 <Link to="/NewIncome"><NewIncomeButton>Nova Receita</NewIncomeButton></Link>
@@ -113,4 +131,83 @@ const data = {
         data: [65, 59, 80, 81, 56, 55, 40]
       }
     ]
+  };
+
+
+  const barra = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [{
+        label: 'Sales',
+        type:'line',
+        data: [51, 65, 40, 49, 60, 37, 40],
+        fill: false,
+        borderColor: '#EC932F',
+        backgroundColor: '#EC932F',
+        pointBorderColor: '#EC932F',
+        pointBackgroundColor: '#EC932F',
+        pointHoverBackgroundColor: '#EC932F',
+        pointHoverBorderColor: '#EC932F',
+        yAxisID: 'y-axis-2'
+      },{
+        type: 'bar',
+        label: 'Visitor',
+        data: [200, 185, 590, 621, 250, 400, 95],
+        fill: false,
+        backgroundColor: '#71B37C',
+        borderColor: '#71B37C',
+        hoverBackgroundColor: '#71B37C',
+        hoverBorderColor: '#71B37C',
+        yAxisID: 'y-axis-1'
+      }]
+  };
+
+  const options = {
+    responsive: true,
+    tooltips: {
+      mode: 'label'
+    },
+    elements: {
+      line: {
+        fill: false
+      }
+    },
+    scales: {
+      xAxes: [
+        {
+          display: true,
+          gridLines: {
+            display: false
+          },
+          labels: {
+            show: true
+          }
+        }
+      ],
+      yAxes: [
+        {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          id: 'y-axis-1',
+          gridLines: {
+            display: false
+          },
+          labels: {
+            show: true
+          }
+        },
+        {
+          type: 'linear',
+          display: true,
+          position: 'right',
+          id: 'y-axis-2',
+          gridLines: {
+            display: false
+          },
+          labels: {
+            show: true
+          }
+        }
+      ]
+    }
   };
