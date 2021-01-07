@@ -1,15 +1,16 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { Route, Redirect } from "react-router-dom"
 import { useUser } from "./../context/UserContext"
 import { useRequest } from "./../context/RequestContext"
+import LoadingPage from "./LoadingPage"
+
 
 export default function PrivateRoute({ Role, component: Component, ...rest }) {
     var myContext = useUser();
     var Request = useRequest().Request;
     const [temAcesso, settemAcesso] = useState("");
 
-    if (myContext.isLogged === false) {//usuário não está logado redireciona pro login
-        console.log("Usuario deslogado");
+    if (myContext.isLogged === false) {//usuário não está logado redireciona pro login        
         return <Redirect to='/' />
     } else {
         //faz request async
@@ -30,7 +31,9 @@ export default function PrivateRoute({ Role, component: Component, ...rest }) {
                 <Route {...rest} render={(props) => (<Component {...props} />)} />
             );
         } else {//enquanto espera resposta do servidor mostra carregando.
-            return (<div>Carregando...</div>);
+            return (
+               <LoadingPage/>
+            );
         }
 
     }

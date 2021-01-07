@@ -65,7 +65,7 @@ export function Header(props) {
                 <DivUl>
                     <NavUl>
                         <Li>
-                            <Link style={{"textDecoration":"none"}} to="/Vendas">Cadastrar Vendas</Link>
+                            <Link style={{"textDecoration":"none"}} to="/CadastrarVendas">Cadastrar Vendas</Link>
                         </Li>
                         <Li>
                             <Link style={{"textDecoration":"none"}} to="/ListaDeClientes">Lista de Clientes</Link>
