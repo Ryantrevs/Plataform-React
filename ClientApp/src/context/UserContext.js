@@ -29,6 +29,7 @@ export function UserProvider({ children }) {
                     setloaded(true);//quando terminar de trazer ou não o usuário finaliza carregamento
                 })
             }
+            setloaded(true);
         });
     }, []);
 
