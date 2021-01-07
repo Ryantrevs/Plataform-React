@@ -47,16 +47,17 @@ namespace PlataformaTccSuporte.Controllers
 
         [HttpGet]
         [ActionName("GetBalance")]
-        public async Task<List<FinanceViewModel>> GetBalance()
+        public async Task<FinanceViewModel> GetBalance()
         {
 
-            var finance = new List<FinanceViewModel>();
-            var ActualMonth = DateTime.Now.Month;
+            var finance = new FinanceViewModel();
             var ActualYear = DateTime.Now.Year;
-            var init = DateTime.Parse("01/" + ActualMonth + "/" + ActualYear);
-            var final = DateTime.Parse(DateTime.DaysInMonth(ActualYear, ActualMonth) + "/" + ActualMonth + "/" + ActualYear);
-            List<FinanceViewModel> finan = financeRepository.GetBalance();
-            if (finan == null)
+            var init = DateTime.Parse("01/" + 01 + "/" + ActualYear);
+            var final = DateTime.Parse(DateTime.DaysInMonth(ActualYear, 12) + "/" + 12 + "/" + ActualYear);
+            //List<FinanceViewModel> finan = financeRepository.GetBalance();
+            finance.expensesViewModels = await expensesRepository.GetExpenses(init, final);
+            finance.incomeViewModels = await incomingRepository.getIncomingViewModelPerDate(init, final);
+            /*if (finan == null)
             {
                 finance = new List<FinanceViewModel>();
             }
@@ -68,7 +69,7 @@ namespace PlataformaTccSuporte.Controllers
                 }
                 finance = finan;
             }
-
+            */
             return finance;
         }
 
@@ -96,7 +97,7 @@ namespace PlataformaTccSuporte.Controllers
                 balance.Expenses.Add(expenses);
                 financeRepository.updateExpense(balance);
             }
-            return response;
+            return expenses.ExpenseCategory.Id;
         }
         [HttpPost]
         [ActionName("NewIncome")]

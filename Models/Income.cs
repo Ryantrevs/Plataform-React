@@ -12,6 +12,7 @@ namespace PlataformaTccSuporte.Models
         public double Value { get; set; }
         public DateTime Date { get; set; }
         public Finance Finance { get; set; }
+        public IncomeCategory incomeCategory { get; set; }
 
     }
 }
