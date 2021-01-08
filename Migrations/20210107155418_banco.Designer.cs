@@ -9,11 +9,8 @@ using PlataformaTccSuporte.Data;
 namespace PlataformaTccSuporte.Migrations
 {
     [DbContext(typeof(PlataformaTccSuporteContext))]
-<<<<<<< HEAD:Migrations/20210107155418_banco.Designer.cs
     [Migration("20210107155418_banco")]
-=======
-    [Migration("20210106144122_banco")]
->>>>>>> ec82d2b5ddf4353c86837a7291708fb06790f646:Migrations/20210106144122_banco.Designer.cs
+
     partial class banco
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

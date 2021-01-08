@@ -60,9 +60,6 @@ namespace PlataformaTccSuporte.Data
             builder.Entity<Expenses>().HasOne(t => t.ExpenseCategory).WithMany(t => t.Expenses);
             builder.Entity<Income>().HasKey(t => t.Id);
 
-            builder.Entity<Finance>().HasKey(t => t.Id);
-            builder.Entity<Finance>().HasMany(t => t.Incomes).WithOne(t => t.Finance);
-            builder.Entity<Finance>().HasMany(t => t.Expenses).WithOne(t => t.Finance);
 
 
         }

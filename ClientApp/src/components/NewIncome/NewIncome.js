@@ -14,30 +14,38 @@ import {
 
 function NewIncome() {
     const [newIncome, setNewIncome] = useState(emptyIncome());
-    const [incomeCategory, setIncomeCategory] = useState([])
+    const [incomeCategory, setIncomeCategory] = useState(emptyCategory())
     var request = useRequest().Request;
 
 
-    function AddIncome(obj){
+    function Add(obj){
         var data = new FormData();
         data.append("income.Description",newIncome.Description);
         data.append("income.Value",newIncome.Value);
         data.append("income.Date",newIncome.Date);
-        request("post",data, "/Finance/newIncome", function(response){
+        data.append("income.incomeCategory.id",newIncome.Category);
+        request("post",data, "/Finance/NewIncome", function(response){
             console.log(response.request.status)
+            console.log(response.body);
             console.log(response);
         })
     }
+    async function GetCategories(){
+        request("get",{}, "/Finance/getIncomingCategory", function(response){
+            if(response.data!=incomeCategory && response.data!=undefined){
+                console.log(response.request.status)
+                console.log(response.body);
+                console.log(response);
+                setIncomeCategory(response.data);
+                setNewIncome({...newIncome,Category:response.data[0].id})
+            }
+        });
+    }
 
     useEffect(()=>{
-        let isMounted = true;
-        request("get",{}, "/Finance/GetCategory", function(response){
-            console.log(response.data);
-            setIncomeCategory(response.data);
-        })
-        return () => {
-            isMounted = false;
-        };
+        let subscribe = true
+        GetCategories()
+        return ()=>{subscribe=false}
     },[])
 
     return (
@@ -47,7 +55,7 @@ function NewIncome() {
                 <Input 
                 type="text" 
                 placeholder="Descrição"
-                Value={NewIncome.Description}
+                Value={newIncome.Description}
                 onChange={(event)=>{
                     event.preventDefault();
                     setNewIncome({...newIncome,Description:event.target.value})
@@ -56,7 +64,7 @@ function NewIncome() {
                 <Input 
                 type="number" 
                 placeholder="Valor"
-                Value={NewIncome.Value}
+                Value={newIncome.Value}
                 onChange={(event)=>{
                     event.preventDefault();
                     setNewIncome({...newIncome,Value:event.target.value})
@@ -65,16 +73,29 @@ function NewIncome() {
                 <Input 
                 type="Date" 
                 placeholder="Data de entrada"
-                Value={NewIncome.Date}
+                Value={newIncome.Date}
                 onChange={(event)=>{
                     event.preventDefault();
                     setNewIncome({...newIncome,Date:event.target.value})
                 }}   
                 /><br/>
+
+                    <select name="categorias"
+                    value={incomeCategory[0].id} 
+                    onChange={(event)=>{
+                        event.preventDefault();
+                        setNewIncome({...newIncome,Category:event.target.value});
+                    }}>
+                        {incomeCategory.map((item,index)=>(
+                            <option 
+                            id={item.id}
+                            key={index}>{item.name}</option>
+                        ))}
+                    </select>
                 
                 <ButtonSubmit onClick={(event)=>{
                     event.preventDefault();
-                    AddIncome(newIncome);
+                    Add(newIncome);
                 }} >Salvar</ButtonSubmit>
             </Group>
             
@@ -84,11 +105,18 @@ function NewIncome() {
 
 export default NewIncome
 
+function emptyCategory(){
+    return([{
+        id:"",
+        name:"",
+        Incomes:[]
+    }])
+}
 function emptyIncome(){
     return({
         Description:"",
         Value:0.00,
-        Date: ""
+        Date: "",
+        Category:""
     })
 }
-

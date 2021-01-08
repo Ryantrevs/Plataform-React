@@ -11,7 +11,6 @@ namespace PlataformaTccSuporte.Models
         public string Description { get; set; }
         public double Value { get; set; }
         public DateTime Date { get; set; }
-        public virtual Finance Finance { get; set; }
         public User user { get; set; }
         public ExpenseCategory ExpenseCategory { get; set; }
 

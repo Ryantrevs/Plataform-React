@@ -14,20 +14,20 @@ namespace PlataformaTccSuporte.Controllers
     [Route("[controller]/[action]")]
     public class FinanceController : Controller
     {
-        private readonly IFinanceRepository financeRepository;
         private readonly IExpensesRepository expensesRepository;
         private readonly IExpenseCategoryRepository expenseCategoryRepository;
+        private readonly IIncomeCategoryRepository incomeCategoryRepository;
         private readonly IIncomingRepository incomingRepository;
         private readonly UserManager<User> userManager;
 
-        public FinanceController(IFinanceRepository financeRepository,IExpensesRepository expensesRepository, IIncomingRepository incomingRepository, IExpenseCategoryRepository expenseCategoryRepository,
-                                 UserManager<User> userManager)
+        public FinanceController(IExpensesRepository expensesRepository, IIncomingRepository incomingRepository, IExpenseCategoryRepository expenseCategoryRepository,
+                                 UserManager<User> userManager, IIncomeCategoryRepository incomeCategoryRepository)
         {
-            this.financeRepository = financeRepository;
             this.incomingRepository = incomingRepository;
             this.expenseCategoryRepository = expenseCategoryRepository;
             this.expensesRepository = expensesRepository;
             this.userManager = userManager;
+            this.incomeCategoryRepository = incomeCategoryRepository;
         }
 
         [HttpGet]
@@ -39,7 +39,7 @@ namespace PlataformaTccSuporte.Controllers
             {
                 lastDay.Add(DateTime.DaysInMonth(DateTime.Now.Year, i + 1));
             }
-            await financeRepository.CreateBalance(lastDay);
+            //await financeRepository.CreateBalance(lastDay);
             Console.WriteLine("asnlkdasnldsa");
             return;
 
@@ -74,11 +74,19 @@ namespace PlataformaTccSuporte.Controllers
         }
 
         [HttpGet]
-        [ActionName("GetCategory")]
-        public List<ExpenseCategory> GetCategory()
+        [ActionName("getExpenseCategory")]
+        public List<ExpenseCategory> getExpenseCategory()
         {
             expenseCategoryRepository.EmployCategory();
             var list = expenseCategoryRepository.Categories();
+            return list;
+        }
+        [HttpGet]
+        [ActionName("getIncomingCategory")]
+        public List<IncomeCategory> GetIncomingCategory()
+        {
+            incomeCategoryRepository.SalesCategory();
+            var list = incomeCategoryRepository.Categories();
             return list;
         }
 
@@ -87,16 +95,14 @@ namespace PlataformaTccSuporte.Controllers
         public async Task<String> newExpense([FromForm]Expenses expenses)
         {
             var user = await userManager.GetUserAsync(User);
-            Finance balance = financeRepository.GetUniqueBalance(expenses.Date);
+            var category = await expenseCategoryRepository.getCategory(expenses.ExpenseCategory.Id);
+
             expenses.Id = Guid.NewGuid().ToString();
-            expenses.Finance = balance;
             expenses.user = user;
+            expenses.ExpenseCategory = category;
+
             var response = await expensesRepository.InsertExpense(expenses);
-            if (response == "1")
-            {
-                balance.Expenses.Add(expenses);
-                financeRepository.updateExpense(balance);
-            }
+            
             return expenses.ExpenseCategory.Id;
         }
         [HttpPost]
@@ -104,10 +110,13 @@ namespace PlataformaTccSuporte.Controllers
         public async Task<String> newIncome([FromForm]Income income)
         {
             var user = await userManager.GetUserAsync(User);
-            Finance balance = financeRepository.GetUniqueBalance(income.Date);
+            var category = await incomeCategoryRepository.getCategory(income.incomeCategory.Id);
             income.Id = Guid.NewGuid().ToString();
+            income.user = user;
+            income.incomeCategory = category;
             var response = incomingRepository.insertIncoming(income);
-            return response;
+
+            return income.incomeCategory.Id;
 
         }
         //public async Task<List<Expenses>> GetExpensesAsync([FromForm]String date)

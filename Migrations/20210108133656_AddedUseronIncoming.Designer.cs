@@ -9,12 +9,8 @@ using PlataformaTccSuporte.Data;
 namespace PlataformaTccSuporte.Migrations
 {
     [DbContext(typeof(PlataformaTccSuporteContext))]
-<<<<<<< HEAD:Migrations/20210107155418_banco.Designer.cs
-    [Migration("20210107155418_banco")]
-=======
-    [Migration("20210106144122_banco")]
->>>>>>> ec82d2b5ddf4353c86837a7291708fb06790f646:Migrations/20210106144122_banco.Designer.cs
-    partial class banco
+    [Migration("20210108133656_AddedUseronIncoming")]
+    partial class AddedUseronIncoming
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -369,11 +365,34 @@ namespace PlataformaTccSuporte.Migrations
                     b.Property<double>("Value")
                         .HasColumnType("double");
 
+                    b.Property<string>("incomeCategoryId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("userId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FinanceId");
 
+                    b.HasIndex("incomeCategoryId");
+
+                    b.HasIndex("userId");
+
                     b.ToTable("Income");
+                });
+
+            modelBuilder.Entity("PlataformaTccSuporte.Models.IncomeCategory", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IncomeCategory");
                 });
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Job", b =>
@@ -628,6 +647,14 @@ namespace PlataformaTccSuporte.Migrations
                     b.HasOne("PlataformaTccSuporte.Models.Finance", "Finance")
                         .WithMany("Incomes")
                         .HasForeignKey("FinanceId");
+
+                    b.HasOne("PlataformaTccSuporte.Models.IncomeCategory", "incomeCategory")
+                        .WithMany("Incomes")
+                        .HasForeignKey("incomeCategoryId");
+
+                    b.HasOne("PlataformaTccSuporte.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Job", b =>

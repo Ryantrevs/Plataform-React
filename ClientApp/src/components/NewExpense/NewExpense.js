@@ -30,18 +30,20 @@ function NewExpense() {
         data.append("expenses.Description",NewExpense.Description);
         data.append("expenses.Value",NewExpense.Value);
         data.append("expenses.Date",NewExpense.Date);
-        data.append("expenses.ExpenseCategory.name",NewExpense.Category);
+        data.append("expenses.ExpenseCategory.id",NewExpense.Category);
         request("post",data, "/Finance/NewExpense", function(response){
             console.log(response.request.status)
+            console.log(response.body);
             console.log(response);
         })
     }
     async function GetCategories(){
-        request("get",{}, "/Finance/GetCategory", function(response){
+        request("get",{}, "/Finance/getExpenseCategory", function(response){
             if(response.data!=abc && response.data!=undefined){
                 console.log(abc);
                 console.log(response.data);
                 setAbc(response.data);
+                setNewExpense({...NewExpense,Category:response.data[0].id})
             }
         });
     }
@@ -91,7 +93,9 @@ function NewExpense() {
                         setNewExpense({...NewExpense,Category:event.target.value});
                     }}>
                         {abc.map((item,index)=>(
-                            <option value={item.id} id={index}>{item.name}</option>
+                            <option 
+                            id={item.id}
+                            key={index}>{item.name}</option>
                         ))}
                     </select>
                 </InputArea>

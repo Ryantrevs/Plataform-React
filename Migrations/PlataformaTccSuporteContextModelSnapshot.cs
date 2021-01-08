@@ -366,11 +366,16 @@ namespace PlataformaTccSuporte.Migrations
                     b.Property<string>("incomeCategoryId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
+                    b.Property<string>("userId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FinanceId");
 
                     b.HasIndex("incomeCategoryId");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("Income");
                 });
@@ -644,6 +649,10 @@ namespace PlataformaTccSuporte.Migrations
                     b.HasOne("PlataformaTccSuporte.Models.IncomeCategory", "incomeCategory")
                         .WithMany("Incomes")
                         .HasForeignKey("incomeCategoryId");
+
+                    b.HasOne("PlataformaTccSuporte.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("PlataformaTccSuporte.Models.Job", b =>

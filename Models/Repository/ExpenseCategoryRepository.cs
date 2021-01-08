@@ -1,4 +1,5 @@
-﻿using PlataformaTccSuporte.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PlataformaTccSuporte.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace PlataformaTccSuporte.Models.Repository
         public void InsertCategory(ExpenseCategory expenseCategory);
         public List<ExpenseCategory> Categories();
         public void EmployCategory();
+        public Task<ExpenseCategory> getCategory(string id);
     }
     public class ExpenseCategoryRepository: BaseRepository<ExpenseCategory>, IExpenseCategoryRepository
     {
@@ -31,11 +33,14 @@ namespace PlataformaTccSuporte.Models.Repository
         }
         public void EmployCategory()
         {
-
             if (dbSet.Where(t => t.Name == "Funcionarios").FirstOrDefault() == null) { 
                 dbSet.Add(new ExpenseCategory(Guid.NewGuid().ToString(), "Funcionarios"));
                 context.SaveChanges();
             }
+        }
+        public async Task<ExpenseCategory> getCategory(string id)
+        {
+            return await dbSet.Where(t => t.Id == id).FirstOrDefaultAsync();
         }
     }
 }
