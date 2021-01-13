@@ -36,8 +36,8 @@ namespace PlataformaTccSuporte.Controllers
         [ActionName("Organization")]
         public async Task<List<TasksViewModel>> Organization()
         {
-            User user2 = await userManager.FindByIdAsync("39601aa7-2a63-4574-9a39-27758182d464"); //retorna Usuario Logado
-            var lista = userTasklistRepository.GetListId(user2.Id);
+            var user = await userManager.GetUserAsync(User); //retorna Usuario Logado
+            var lista = userTasklistRepository.GetListId(user.Id);
             List<TasksViewModel> tasks = taskListRepository.getTasks(lista);
             return tasks;
         }
@@ -62,7 +62,7 @@ namespace PlataformaTccSuporte.Controllers
         }
         [HttpPost]
         [ActionName("InsertScope")]
-        public String InsertScope(String taskId)
+        public String InsertScope([FromForm]String taskId)
         {
             var id = Guid.NewGuid().ToString();
             var resultado = scopeRepository.InsertRepository(id, taskId);
@@ -77,7 +77,7 @@ namespace PlataformaTccSuporte.Controllers
         }
         [HttpPost]
         [ActionName("InsertTaskList")]
-        public async  Task<string> InsertTaskList(string Titulo)
+        public async  Task<string> InsertTaskList([FromForm]string Titulo)
         {
             var id = Guid.NewGuid().ToString();
             var task = taskListRepository.InsertTaskList(id, Titulo);
@@ -85,6 +85,7 @@ namespace PlataformaTccSuporte.Controllers
             userTasklistRepository.InsertUserTasklist(task, user);
             return id;
         }
+
         [HttpPost]
         [ActionName("ChangeScopeTitle")]
         public String changeScopeTitle(String titule, String id)

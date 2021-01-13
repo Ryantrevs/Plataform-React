@@ -32,7 +32,7 @@ namespace PlataformaTccSuporte.Models.Repository
         }
         public Task<List<ExpensesViewModel>> GetExpenses(DateTime init, DateTime final)
         {
-            var response = dbSet.Where(t => final >= t.Date && init <= t.Date).Select(x=>new ExpensesViewModel(x.Value,x.ExpenseCategory.Name)).ToListAsync();
+            var response = dbSet.Where(t => final >= t.Date && init <= t.Date).Select(x=>new ExpensesViewModel(x.Value,x.ExpenseCategory.Name, x.Date)).ToListAsync();
             return response;
         }
         public async Task<String> InsertExpense(Expenses expenses)

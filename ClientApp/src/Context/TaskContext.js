@@ -1,6 +1,7 @@
 import { User } from 'oidc-client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useRequest } from "./RequestContext"
+import LoadingPage from '../components/LoadingPage'
 
 const TaskContext = createContext(
     {
@@ -30,6 +31,8 @@ export function TaskProvider({ children }) {
     const [visibilityCard,setVisibilityCard] = useState(false);
     const [task,setTask] = useState(EmptyCard());
     const [visibilityTask,setVisibilityTask] = useState(false);
+    const [visibilityScope,setVisibilityScope] = useState(false);
+    const [ready, setReady] = useState(false);
 
     function changeActiveList(id){
         setActiveList(id);
@@ -58,11 +61,32 @@ export function TaskProvider({ children }) {
     }
 
     function newList(){
-        setTaskList([...TaskList,{titulo:"patrick",id:"asdnasdjkldas"}])
+        var obj = new FormData();
+        obj.append("Titulo","Nova Lista")
+        request("post",obj,"/Task/InsertTaskList",function(response){
+            console.log(response);
+            setTaskList([...TaskList,{titulo:"patrick",id:response.data}]);
+            setActiveList(response.data);
+        })
+        
     }
 
     function newScope(){
-        setScope([...scope,{titulo:"novo escopo",id:"asdalshsal",cards:[]}])
+        var obj = new FormData();
+        obj.append("taskId",activeList);
+        request("post",obj,"/Task/InsertScope",function(response){
+            setScope([...scope,{titulo:"Insira seu titulo aqui",id:response.data,cards:[]}])
+        })
+    }
+    function newCard(ScopeId, Titule, Describe){
+        var obj = new FormData();
+        obj.append("ScopeId",ScopeId);
+        obj.append("Titule",Titule);
+        obj.append("Describe",Describe);
+        console.log(obj);
+        /*request("post",obj,"/Task/InsertCard", function(response){
+            return response;
+        })*/
     }
 
     function newTask(){
@@ -88,6 +112,10 @@ export function TaskProvider({ children }) {
     }
 
     useEffect(()=>{
+        console.log(scope);
+    },[scope])
+
+    useEffect(()=>{
         let isSubscribed = true
         console.log(card);
         console.log("mudar visibilidade");
@@ -107,9 +135,12 @@ export function TaskProvider({ children }) {
     useEffect(() => {
         let isSubscribed = true
         request("get", {}, "/Task/Organization", function (response) {
-            setTaskList(response.data);
-            setActiveList(response.data[0].id.toString())
-            console.log(response)
+            if(response.data!=undefined){
+                setTaskList(response.data);
+                setActiveList(response.data[0].id.toString())
+                console.log(response)
+            }
+            setReady(true);
         });
         return () => isSubscribed = false
     }, []);
@@ -121,6 +152,7 @@ export function TaskProvider({ children }) {
         obj.append("Id",activeList)
         request("post",obj,"/Task/GetTasks",function(response){
             try{
+                
                 setScope(response.data)
                 console.log(response.data);
             }
@@ -128,10 +160,15 @@ export function TaskProvider({ children }) {
                 console.log(error)
             }
         });
+        if(activeList!=""){
+            setVisibilityScope(true);
+            console.log("entrou na visibilidade");
+        }
         return () => isSubscribed = false
     },[activeList]);
 
 
+if(ready!=false){
     return (
         <TaskContext.Provider value={{ 
                         ActiveList: activeList, 
@@ -148,10 +185,20 @@ export function TaskProvider({ children }) {
                         newList:newList,
                         newScope:newScope,
                         newTask:newTask,
-                        visibilityTask:visibilityTask}}>
+                        visibilityTask:visibilityTask,
+                        setVisibilityTask:setVisibilityTask,
+                        visibilityScope:visibilityScope,
+                        Task:task,
+                        newCard:newCard}}>
             {children}
         </TaskContext.Provider>
     );
+        }
+        else{
+            return(
+                <LoadingPage/>
+            )
+        }
 }
 
 export function useTask() {

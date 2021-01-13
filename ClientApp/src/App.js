@@ -22,9 +22,10 @@ import ListaDeVendas from './components/ListaDeVendas/ListaDeVendas';
 import CadastrarVendas from './components/Vendas/CadastrarVendas';
 import EditarVendas from './components/ListaDeVendas/EditarVendas/EditarVendas';
 import Perfil from './components/Perfil/Index';
-import Balance from './components/Balance/Index';
+import Balance from './components/Balance/index';
 import NewIncome from './components/NewIncome/Index';
 import NewExpense from './components/NewExpense/Index';
+import {BalanceProvider} from './context/BalanceContext'
 
 export default class App extends Component {
   static displayName = App.name;
@@ -55,8 +56,8 @@ export default class App extends Component {
               <Route path="/EditarVendas" exact component={EditarVendas} />
               
               <Route path="/DocEditor" component={DocEditor} />
-
               <Route path="/Balance" component={Balance}/>
+      
               <Route path="/NewIncome" component={NewIncome}/>
               <Route path="/NewExpense" component={NewExpense}/>
             </Switch>

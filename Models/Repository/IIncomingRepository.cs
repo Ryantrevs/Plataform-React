@@ -34,7 +34,7 @@ namespace PlataformaTccSuporte.Models.Repository
         }
         public async Task<List<IncomeViewModel>> getIncomingViewModelPerDate(DateTime init, DateTime final)
         {
-            List<IncomeViewModel> list = await dbSet.Where(t => t.Date >= init || t.Date <= final).Select(x => new IncomeViewModel(x.Value, x.incomeCategory.Name)).ToListAsync();
+            List<IncomeViewModel> list = await dbSet.Where(t => t.Date >= init || t.Date <= final).Select(x => new IncomeViewModel(x.Value, x.incomeCategory.Id, x.Date)).ToListAsync();
             return list;
         }
         
